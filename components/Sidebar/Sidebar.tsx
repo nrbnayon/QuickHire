@@ -193,7 +193,7 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
           : "text-foreground group-hover:text-foreground font-bold"
     );
 
-    // 1. If it's a valid React Element (pre-rendered JSX like <Bell />), clone it to inject classes if needed or just return
+    // 1. If it's a valid React Element (pre-rendered JSX like <Bell />)
     if (React.isValidElement(Icon)) {
       const iconElement = Icon as React.ReactElement<{ className?: string }>;
       return React.cloneElement(iconElement, {
@@ -201,24 +201,30 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
       });
     }
 
-    // 2. If it's a Hugeicon object (legacy check from @hugeicons/core-free-icons)
-    // We assume if it's an object with specific shape it might be Hugeicon data, but generally components are functions.
-    // However, the original code used HugeiconsIcon component which specifically takes `icon={icon}` data.
-    // Let's heuristics: if passed icon is likely not a component (function) but an object, try HugeiconsIcon.
-    // DashboardSquare02Icon is an object usually.
-    if (typeof Icon === 'object' && !React.isValidElement(Icon)) {
-         return (
-          <HugeiconsIcon
-            icon={Icon}
-            strokeWidth={2}
-            className={iconClasses}
-          />
-        );
+    // 2. If it's a Component function
+    if (typeof Icon === 'function') {
+      const IconComponent = Icon as React.ElementType;
+      return <IconComponent className={iconClasses} />;
     }
 
-    // 3. Assume it's a Component (Lucide, React-Icon, or FontAwesome component)
-    const IconComponent = Icon as React.ElementType;
-    return <IconComponent className={iconClasses} />;
+    // 3. If it's a Component object (like ForwardRef from Lucide/Hugeicons)
+    if (typeof Icon === 'object' && Icon !== null && (Icon as any).$$typeof) {
+      const IconComponent = Icon as any as React.ElementType;
+      return <IconComponent className={iconClasses} />;
+    }
+
+    // 4. If it's a raw Hugeicon data object
+    if (typeof Icon === 'object' && Icon !== null) {
+      return (
+        <HugeiconsIcon
+          icon={Icon as any}
+          strokeWidth={2}
+          className={iconClasses}
+        />
+      );
+    }
+
+    return null;
   }, []);
 
   const getRoleBadgeColor = (role: string) => {

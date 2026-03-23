@@ -43,7 +43,7 @@ export const sidebarLinks: SidebarLink[] = [
 	},
 	{
 		label: "Products",
-		href: "/products",
+		href: "/admin/products",
 		icon: PackageAddIcon,
 		roles: ["admin"],
 	},
@@ -79,7 +79,7 @@ export const sidebarLinks: SidebarLink[] = [
 	},
 	{
 		label: "Settings",
-		href: "/settings",
+		href: "/admin/settings",
 		icon: Settings01Icon,
 		roles: ["admin"],
 	},
