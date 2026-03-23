@@ -108,7 +108,7 @@ export const SignInForm = ({ isAdmin = false }: SignInFormProps) => {
     <div className="relative h-screen w-full flex flex-col lg:flex-row">
       
       {/* Left - Image (hidden on mobile) */}
-      <LeftSideImage image="/icons /signin.png" />
+      <LeftSideImage image="/icons/signin.png" />
       
       {/* Right - Form */}
       <motion.div

@@ -163,7 +163,7 @@ export const SignUpForm = () => {
                       className="h-5 w-5 border-2 data-[state=checked]:bg-primary rounded"
                     />
                     <Label htmlFor="agreeToTerms" className="text-sm sm:text-base text-secondary cursor-pointer font-normal">
-                      I agree to the <Link href="/terms" className="text-primary hover:underline">Terms & Conditions</Link>
+                      I agree to the <Link href="/terms" className="text-primary hover:underline">Terms & Conditions</Link> and <Link href="/privacy-policy" className="text-primary hover:underline">Privacy Policy</Link>
                     </Label>
                   </div>
                   {errors.agreeToTerms && <p className="text-red-500 text-xs px-1">{errors.agreeToTerms.message}</p>}

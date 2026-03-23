@@ -27,12 +27,15 @@ export default function Home() {
           fast and modern workflow.
         </p>
 
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <Button asChild size="lg">
-            <Link href="/signin">Signin</Link>
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <Button asChild size="lg" className="rounded-full px-8 shadow-sm hover:shadow-md transition-all">
+            <Link href="/signin">User Signin</Link>
           </Button>
-          <Button asChild variant="outline" size="lg">
-            <Link href="/dashboard">Go to Dashboard</Link>
+          <Button asChild variant="outline" size="lg" className="rounded-full px-8 border-2 shadow-sm hover:bg-muted/50 hover:text-primary transition-all">
+            <Link href="/signin/admin">Admin Signin</Link>
+          </Button>
+          <Button asChild variant="secondary" size="lg" className="rounded-full px-8 shadow-sm hover:shadow-md transition-all">
+            <Link href="/signup">Sign Up</Link>
           </Button>
         </div>
       </section>

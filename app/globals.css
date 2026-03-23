@@ -7,8 +7,8 @@
 @theme inline {
   --color-background:              var(--background);
   --color-foreground:              var(--foreground);
-  --font-sans:                     var(--font-epilogue);
-  --font-display:                  var(--font-clash-display);
+  --font-sans:                     var(--font-inter);
+  --font-display:                  var(--font-geist-sans);
   --font-mono:                     var(--font-geist-mono);
 
   --color-primary:                 var(--primary);
