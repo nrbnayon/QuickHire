@@ -1,0 +1,82 @@
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
+export default function Home() {
+  const appName = process.env.NEXT_PUBLIC_APP_NAME || "Your App";
+
+  return (
+    <main className="min-h-screen bg-linear-to-b from-background via-muted/20 to-background">
+      <section className="mx-auto flex w-full max-w-6xl flex-col items-center px-6 py-16 text-center md:py-24">
+        <span className="rounded-full border bg-background px-4 py-1 text-sm text-muted-foreground">
+          Welcome to {appName}
+        </span>
+
+        <h1 className="mt-6 max-w-4xl text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+          Manage your business operations from one clean dashboard
+        </h1>
+
+        <p className="mt-5 max-w-2xl text-base text-muted-foreground md:text-lg">
+          Access products, users, payments, orders, and notifications with a
+          fast and modern workflow.
+        </p>
+
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <Button asChild size="lg">
+            <Link href="/login">Login</Link>
+          </Button>
+          <Button asChild variant="outline" size="lg">
+            <Link href="/dashboard">Go to Dashboard</Link>
+          </Button>
+        </div>
+      </section>
+
+      <section className="mx-auto grid w-full max-w-6xl gap-4 px-6 pb-16 md:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <CardTitle>Centralized Management</CardTitle>
+            <CardDescription>
+              Keep everything in one place without switching tools.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-sm text-muted-foreground">
+            Manage users, products, and orders from a single interface designed
+            for speed.
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Operational Visibility</CardTitle>
+            <CardDescription>
+              Track key workflows and status updates in real time.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-sm text-muted-foreground">
+            Review commission and payment data with a structured, consistent
+            experience.
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Secure Access</CardTitle>
+            <CardDescription>
+              Sign in and continue exactly where you left off.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-sm text-muted-foreground">
+            Authentication and route protection keep your data safer and access
+            controlled.
+          </CardContent>
+        </Card>
+      </section>
+    </main>
+  );
+}
