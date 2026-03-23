@@ -69,12 +69,12 @@ const ResetPassword = () => {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       console.log("Password Reset Data:", data);
       
-      toast.success("Password reset successfully! Please login.");
+      toast.success("Password reset successfully! Please signin.");
       
       // Clear the verification cookie
       document.cookie = "reset_verified=; path=/; max-age=0; SameSite=Strict";
       
-      router.push("/login"); 
+      router.push("/signin"); 
     } catch (error) {
       console.error("Reset failed:", error);
       toast.error("Something went wrong. Please try again.");

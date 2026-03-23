@@ -57,7 +57,7 @@ export const SignUpForm = () => {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       
       toast.success("Account created successfully! Please log in.");
-      router.push("/login");
+      router.push("/signin");
     } catch (error) {
       console.error("Signup error:", error);
       toast.error("Registration failed. Please try again.");
@@ -68,7 +68,7 @@ export const SignUpForm = () => {
 
   return (
     <div className="relative min-h-screen w-full flex flex-col lg:flex-row overflow-y-auto">
-      <LeftSideImage image="/icons/login.jpg" />
+      <LeftSideImage image="/icons/signup.png" />
       
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -114,41 +114,41 @@ export const SignUpForm = () => {
               onChange={handleTrimChange("email")}
             />
 
-            <div className="relative">
-              <FloatingInput
-                label="Password"
-                type={showPassword ? "text" : "password"}
-                error={errors.password?.message}
-                className="h-14 rounded-full border-2 focus:border-primary focus:ring-0 px-6 pr-14 text-base"
-                {...register("password")}
-                onChange={handleTrimChange("password")}
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors z-10 p-1"
-              >
-                {showPassword ? <Eye className="h-5 w-5" /> : <EyeOff className="h-5 w-5" />}
-              </button>
-            </div>
+            <FloatingInput
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              error={errors.password?.message}
+              className="h-14 rounded-full border-2 focus:border-primary focus:ring-0 px-6 pr-14 text-base"
+              {...register("password")}
+              onChange={handleTrimChange("password")}
+              suffix={
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="mr-5 text-gray-400 hover:text-primary transition-colors z-10 p-1"
+                >
+                  {showPassword ? <Eye className="h-5 w-5" /> : <EyeOff className="h-5 w-5" />}
+                </button>
+              }
+            />
 
-            <div className="relative">
-              <FloatingInput
-                label="Confirm Password"
-                type={showConfirmPassword ? "text" : "password"}
-                error={errors.confirmPassword?.message}
-                className="h-14 rounded-full border-2 focus:border-primary focus:ring-0 px-6 pr-14 text-base"
-                {...register("confirmPassword")}
-                onChange={handleTrimChange("confirmPassword")}
-              />
-              <button
-                type="button"
-                onClick={() => setShowConfirmPassword((prev) => !prev)}
-                className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors z-10 p-1"
-              >
-                {showConfirmPassword ? <Eye className="h-5 w-5" /> : <EyeOff className="h-5 w-5" />}
-              </button>
-            </div>
+            <FloatingInput
+              label="Confirm Password"
+              type={showConfirmPassword ? "text" : "password"}
+              error={errors.confirmPassword?.message}
+              className="h-14 rounded-full border-2 focus:border-primary focus:ring-0 px-6 pr-14 text-base"
+              {...register("confirmPassword")}
+              onChange={handleTrimChange("confirmPassword")}
+              suffix={
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword((prev) => !prev)}
+                  className="mr-5 text-gray-400 hover:text-primary transition-colors z-10 p-1"
+                >
+                  {showConfirmPassword ? <Eye className="h-5 w-5" /> : <EyeOff className="h-5 w-5" />}
+                </button>
+              }
+            />
 
             <Controller
               name="agreeToTerms"
@@ -189,7 +189,7 @@ export const SignUpForm = () => {
             <div className="text-center text-sm sm:text-base">
               <span className="text-secondary">Already have an account? </span>
               <Link
-                href="/login"
+                href="/signin"
                 className="text-primary font-semibold hover:text-primary/80 hover:underline transition-colors"
               >
                 Log In

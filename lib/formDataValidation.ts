@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-// Login Validation schema
-export const loginValidationSchema = z.object({
+// Signin Validation schema
+export const signinValidationSchema = z.object({
   email: z
     .string()
     .min(1, "Email is required")

@@ -99,7 +99,7 @@ export function useUser() {
     console.log("User logged out successfully");
 
     // 3. Redirect
-    router.push("/login");
+    router.push("/signin");
   };
 
   return {

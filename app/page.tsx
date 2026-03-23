@@ -29,7 +29,7 @@ export default function Home() {
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Button asChild size="lg">
-            <Link href="/login">Login</Link>
+            <Link href="/signin">Signin</Link>
           </Button>
           <Button asChild variant="outline" size="lg">
             <Link href="/dashboard">Go to Dashboard</Link>

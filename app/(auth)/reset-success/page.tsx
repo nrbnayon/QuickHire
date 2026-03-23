@@ -33,7 +33,7 @@ export default function ResetSuccessPage() {
           <div className="space-y-4">
             <h1 className="text-3xl sm:text-4xl font-bold text-primary">Success!</h1>
             <p className="text-lg sm:text-xl text-secondary max-w-sm mx-auto">
-              Password Reset successful! You can now login with your new password.
+              Password Reset successful! You can now signin with your new password.
             </p>
           </div>
 
@@ -42,7 +42,7 @@ export default function ResetSuccessPage() {
               asChild
               className="w-full h-14 bg-primary hover:bg-primary/90 text-white text-lg font-semibold rounded-full shadow-md transition-all duration-200"
             >
-              <Link href="/login">Log In</Link>
+              <Link href="/signin">Log In</Link>
             </Button>
           </div>
         </div>

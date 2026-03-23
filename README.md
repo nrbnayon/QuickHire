@@ -12,7 +12,7 @@ A modern, full-featured fleet and parcel tracking management system built with N
 - **Parcel Management**: Create, manage, and track parcel shipments
 - **Seller Management**: Manage seller accounts and operations (Super Admin only)
 - **Analytics & Reporting**: Detailed analytics with charts and export functionality (PDF/Excel)
-- **User Authentication**: Secure login, registration, and OTP verification
+- **User Authentication**: Secure signin, registration, and OTP verification
 - **Multi-Language Support**: Full internationalization (i18n) support
 - **Progressive Web App (PWA)**: Offline capability with service worker support
 
@@ -108,7 +108,7 @@ A modern, full-featured fleet and parcel tracking management system built with N
 track-fleet-pro-web/
 ├── app/                          # Next.js app directory
 │   ├── (auth)/                   # Authentication pages
-│   │   ├── login/
+│   │   ├── signin/
 │   │   ├── signup/
 │   │   ├── forgot-password/
 │   │   ├── reset-password/

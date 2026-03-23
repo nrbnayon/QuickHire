@@ -40,7 +40,7 @@ export default function MyComponent() {
   const user = useAppSelector((state) => state.auth.user);
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
-  const handleLogin = () => {
+  const handleSignin = () => {
     dispatch(setCredentials({
       user: { email: 'user@example.com', role: 'customer' },
       token: 'your-token-here'
@@ -56,7 +56,7 @@ export default function MyComponent() {
       {isAuthenticated ? (
         <p>Welcome, {user?.email}</p>
       ) : (
-        <button onClick={handleLogin}>Login</button>
+        <button onClick={handleSignin}>Signin</button>
       )}
     </div>
   );
@@ -92,17 +92,17 @@ export default function TrackParcel() {
 
 ```tsx
 'use client';
-import { useLoginMutation } from '@/lib/redux/services/authApi';
+import { useSigninMutation } from '@/lib/redux/services/authApi';
 import { useAppDispatch } from '@/lib/redux/hooks';
 import { setCredentials } from '@/lib/redux/features/authSlice';
 
-export default function LoginForm() {
+export default function SigninForm() {
   const dispatch = useAppDispatch();
-  const [login, { isLoading, error }] = useLoginMutation();
+  const [signin, { isLoading, error }] = useSigninMutation();
 
   const handleSubmit = async (email: string, password: string) => {
     try {
-      const result = await login({ email, password }).unwrap();
+      const result = await signin({ email, password }).unwrap();
       
       // Save to Redux state
       dispatch(setCredentials({
@@ -114,7 +114,7 @@ export default function LoginForm() {
       document.cookie = `accessToken=${result.accessToken}`;
       
     } catch (err) {
-      console.error('Login failed:', err);
+      console.error('Signin failed:', err);
     }
   };
 
@@ -124,9 +124,9 @@ export default function LoginForm() {
       handleSubmit('user@example.com', 'password');
     }}>
       <button type="submit" disabled={isLoading}>
-        {isLoading ? 'Logging in...' : 'Login'}
+        {isLoading ? 'Logging in...' : 'Signin'}
       </button>
-      {error && <p>Login failed</p>}
+      {error && <p>Signin failed</p>}
     </form>
   );
 }
@@ -145,7 +145,7 @@ NEXT_PUBLIC_API_URL=https://your-api.com/api
 ### Step 2: API Endpoints Are Ready!
 
 All API endpoints are already configured in:
-- `lib/redux/services/authApi.ts` - Login, Signup, OTP verification
+- `lib/redux/services/authApi.ts` - Signin, Signup, OTP verification
 - `lib/redux/services/parcelApi.ts` - Track parcels, CRUD operations
 
 ### Step 3: Replace Dummy Data
@@ -260,7 +260,7 @@ updateParcel: builder.mutation({
 
 ## 🔒 Authentication Flow
 
-1. **Login** → Save token to Redux + cookies
+1. **Signin** → Save token to Redux + cookies
 2. **API Requests** → Auto-include token in headers (configured in `apiSlice.ts`)
 3. **Logout** → Clear Redux state + cookies
 

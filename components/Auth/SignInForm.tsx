@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, Loader2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -18,10 +18,10 @@ import { Label } from "@/components/ui/label";
 import { useAppDispatch } from "@/redux/hooks";
 import { setCredentials } from "@/redux/features/authSlice";
 import { toast } from "sonner";
-import { loginValidationSchema } from "@/lib/formDataValidation";
+import { signinValidationSchema } from "@/lib/formDataValidation";
 import { LeftSideImage } from "./LeftSideImage";
 
-type FormValues = z.infer<typeof loginValidationSchema>;
+type FormValues = z.infer<typeof signinValidationSchema>;
 
 interface SignInFormProps {
   isAdmin?: boolean;
@@ -40,7 +40,7 @@ export const SignInForm = ({ isAdmin = false }: SignInFormProps) => {
     setValue,
     formState: { errors },
   } = useForm<FormValues>({
-    resolver: zodResolver(loginValidationSchema),
+    resolver: zodResolver(signinValidationSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -65,7 +65,7 @@ export const SignInForm = ({ isAdmin = false }: SignInFormProps) => {
     setIsLoading(true);
     try {
       // Replace with real API call
-      // const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+      // const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth /signin`, {
       //   method: "POST",
       //   headers: { "Content-Type": "application/json" },
       //   body: JSON.stringify(cleanData),
@@ -97,8 +97,8 @@ export const SignInForm = ({ isAdmin = false }: SignInFormProps) => {
       toast.success(isAdmin ? "Admin logged in successfully!" : "Logged in successfully!");
       router.push(isAdmin ? "/admin" : "/user");
     } catch (error) {
-      console.error("Login error:", error);
-      toast.error("Login failed. Please try again.");
+      console.error("Signin error:", error);
+      toast.error("Signin failed. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -108,7 +108,7 @@ export const SignInForm = ({ isAdmin = false }: SignInFormProps) => {
     <div className="relative h-screen w-full flex flex-col lg:flex-row">
       
       {/* Left - Image (hidden on mobile) */}
-      <LeftSideImage image="/icons/login.jpg" />
+      <LeftSideImage image="/icons /signin.png" />
       
       {/* Right - Form */}
       <motion.div
@@ -131,12 +131,12 @@ export const SignInForm = ({ isAdmin = false }: SignInFormProps) => {
               />
             </div>
             <h1 className="text-2xl sm:text-3xl font-semibold text-foreground">
-              {isAdmin ? "Admin Login" : "Log In"}
+              {isAdmin ? "Admin Signin" : "Log In"}
             </h1>
             <p className="text-lg sm:text-xl text-secondary">
               {isAdmin 
-                ? "Please login with your admin credentials." 
-                : "Please login to continue to your account."}
+                ? "Please signin with your admin credentials." 
+                : "Please signin to continue to your account."}
             </p>
           </div>
 
@@ -149,32 +149,32 @@ export const SignInForm = ({ isAdmin = false }: SignInFormProps) => {
               autoComplete="email"
               error={errors.email?.message}
               labelClassName="text-secondary"
-              className="h-14 rounded-md border-2 focus:border-primary focus:ring-0 px-6 text-base"
+              className="h-14 rounded-full border-2 focus:border-primary focus:ring-0 px-6 text-base"
               {...register("email")}
               onChange={handleTrimChange("email")}
             />
 
             {/* Password with eye toggle */}
-            <div className="relative">
-              <FloatingInput
-                label="Password"
-                type={showPassword ? "text" : "password"}
-                autoComplete="current-password"
-                error={errors.password?.message}
-                labelClassName="text-secondary"
-                className="h-14 rounded-full border-2 focus:border-primary focus:ring-0 px-6 pr-14 text-base"
-                {...register("password")}
-                onChange={handleTrimChange("password")}
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors z-10 p-1"
-                aria-label={showPassword ? "Hide password" : "Show password"}
-              >
-                {showPassword ? <Eye className="h-5 w-5" /> : <EyeOff className="h-5 w-5" />}
-              </button>
-            </div>
+            <FloatingInput
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              autoComplete="current-password"
+              error={errors.password?.message}
+              labelClassName="text-secondary"
+              className="h-14 rounded-full border-2 focus:border-primary focus:ring-0 px-6 pr-14 text-base"
+              {...register("password")}
+              onChange={handleTrimChange("password")}
+              suffix={
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="mr-5 text-gray-400 hover:text-primary transition-colors z-10 p-1"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <Eye className="h-5 w-5" /> : <EyeOff className="h-5 w-5" />}
+                </button>
+              }
+            />
 
             <div className="flex items-center justify-between">
               {/* Remember me */}
@@ -232,9 +232,9 @@ export const SignInForm = ({ isAdmin = false }: SignInFormProps) => {
                 <span className="text-secondary">Don't have an account? </span>
                 <Link
                   href="/signup"
-                  className="text-primary font-semibold hover:text-primary/80 hover:underline transition-colors"
+                  className="text-primary font-semibold hover:text-primary/80 hover:underline transition-colors inline-flex items-center"
                 >
-                  Sign Up
+                  Sign Up Now <ArrowRight className="h-5 w-5" />
                 </Link>
               </div>
             )}

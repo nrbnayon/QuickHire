@@ -28,8 +28,8 @@
  *    PUBLIC-ONLY routes  (/success etc.)
  *      ↓
  *    PROTECTED — deny-by-default
- *        ├─ unauthenticated      → /login?redirect=...
- *        ├─ missing / bad role   → /login?error=missing_role
+ *        ├─ unauthenticated      →  /signin?redirect=...
+ *        ├─ missing / bad role   →  /signin?error=missing_role
  *        ├─ universal routes     → any valid role
  *        ├─ role-specific routes → exact role match
  *        └─ catch-all            → role default path
@@ -127,7 +127,8 @@ const SECURE_COOKIE_BASE = {
  * Authenticated users are bounced to their home dashboard.
  */
 const AUTH_ROUTES: string[] = [
-  "/login",
+  "/signin",
+  "/signin/admin",
   "/signup",
   "/forgot-password",
   "/reset-password",
@@ -174,7 +175,7 @@ const ROLE_ROUTES: Record<Role, string[]> = {
   ]
 };
 
-/** After login, each role lands here */
+/** After signin, each role lands here */
 const ROLE_DEFAULT_PATHS: Record<Role, string> = {
   [ROLES.ADMIN]: "/admin",
   [ROLES.USER]: "/user",
@@ -199,7 +200,7 @@ function matchesRoute(pathname: string, routes: string[]): boolean {
 }
 
 function getRoleDefaultPath(role: string): string {
-  return ROLE_DEFAULT_PATHS[role as Role] ?? "/login";
+  return ROLE_DEFAULT_PATHS[role as Role] ?? "/signin";
 }
 
 function hasRoleAccess(pathname: string, role: string): boolean {
@@ -394,7 +395,7 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
   // ─────────────────────────────────────────────────────────────────────────
   //  STEP 1 — Development auth bypass
   //  Set DEV_AUTH_BYPASS=true  DEV_BYPASS_ROLE=admin|user  in .env.local
-  //  Injects fake cookies so every page loads without a real login session.
+  //  Injects fake cookies so every page loads without a real signin session.
   //  The IS_DEV guard in ENV prevents this from ever activating in prod.
   // ─────────────────────────────────────────────────────────────────────────
   if (ENV.DEV_AUTH_BYPASS) {
@@ -459,7 +460,7 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
 
   // ─────────────────────────────────────────────────────────────────────────
   //  STEP 7 — AUTH routes — bounce if already signed in
-  //  /login  /forgot-password  /reset-password  /reset-success  /verify-otp
+  //   /signin  /forgot-password  /reset-password  /reset-success  /verify-otp
   // ─────────────────────────────────────────────────────────────────────────
   if (matchesRoute(pathname, AUTH_ROUTES)) {
     if (isAuthenticated && isValidRole(userRole)) {
@@ -481,17 +482,17 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
   //  STEP 9 — Everything else is PROTECTED — deny by default
   // ─────────────────────────────────────────────────────────────────────────
 
-  // 9a. Not authenticated → /login?redirect=<original path>
+  // 9a. Not authenticated →  /signin?redirect=<original path>
   if (!isAuthenticated) {
     const dest = encodeURIComponent(pathname + search);
-    devLog("🔒 Not authenticated — redirecting to /login", { pathname });
-    return redirectTo(`/login?redirect=${dest}`, request);
+    devLog("🔒 Not authenticated — redirecting to  /signin", { pathname });
+    return redirectTo(` /signin?redirect=${dest}`, request);
   }
 
   // 9b. Authenticated but role cookie absent or unrecognized
   if (!userRole || !isValidRole(userRole)) {
     devLog("⚠️  Invalid or missing role cookie", { userRole });
-    return redirectTo("/login?error=missing_role", request);
+    return redirectTo(" /signin?error=missing_role", request);
   }
 
   // 9c. Universal protected routes — any valid role

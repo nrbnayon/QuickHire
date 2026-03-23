@@ -1,13 +1,13 @@
 // redux/services/authApi.ts
 import { apiSlice } from './apiSlice';
 
-interface LoginRequest {
+interface SigninRequest {
   email: string;
   password: string;
   rememberMe?: boolean;
 }
 
-interface LoginResponse {
+interface SigninResponse {
   user: {
     email: string;
     role: string;
@@ -29,10 +29,10 @@ interface VerifyOtpResponse {
 // Inject endpoints into the API slice
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    // Login endpoint
-    login: builder.mutation<LoginResponse, LoginRequest>({
+    // Signin endpoint
+    signin: builder.mutation<SigninResponse, SigninRequest>({
       query: (credentials) => ({
-        url: '/auth/login',
+        url: '/auth /signin',
         method: 'POST',
         body: credentials,
       }),
@@ -58,7 +58,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
     
     // Get current user
-    getCurrentUser: builder.query<LoginResponse['user'], void>({
+    getCurrentUser: builder.query<SigninResponse['user'], void>({
       query: () => '/auth/me',
       providesTags: ['Auth'],
     }),
@@ -67,7 +67,7 @@ export const authApi = apiSlice.injectEndpoints({
 
 // Export hooks for usage in functional components
 export const {
-  useLoginMutation,
+  useSigninMutation,
   useVerifyOtpMutation,
   useLogoutMutation,
   useGetCurrentUserQuery,

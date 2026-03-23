@@ -89,7 +89,7 @@ const VerifyOtp = () => {
         document.cookie = "reset_verified=true; path=/; max-age=300; SameSite=Strict";
         router.push("/reset-password");
       } else {
-        router.push("/login"); 
+        router.push("/signin"); 
       } 
     } catch (error) {
       console.error("Verification failed:", error);

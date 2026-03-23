@@ -41,7 +41,7 @@ export default function SuccessPage() {
               asChild
               className="w-full h-14 bg-primary hover:bg-primary/90 text-white text-lg font-semibold rounded-full shadow-md transition-all duration-200 truncate"
             >
-              <Link href="/login">Log In</Link>
+              <Link href="/signin">Log In</Link>
             </Button>
           </div>
         </div>

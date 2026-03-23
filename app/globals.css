@@ -58,6 +58,7 @@
 
 /* ===== Light Theme — QuickHire Design Tokens ===== */
 :root {
+  --radius: 0.5rem;
 
   /* Backgrounds */
   --background:        #F8F8FD; 
@@ -113,6 +114,7 @@
 
 /* ===== Dark Theme ===== */
 .dark {
+  --radius: 0.5rem;
   --background:        #0D1117;
   --foreground:        #E8EDF2;
 
