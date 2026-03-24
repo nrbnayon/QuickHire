@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Twitter, Instagram, Linkedin, Facebook } from "lucide-react";
+import Image from "next/image";
 
 export default function PublicFooter() {
   const currentYear = new Date().getFullYear();
@@ -13,10 +14,7 @@ export default function PublicFooter() {
           <div className="sm:col-span-2 lg:col-span-1 flex flex-col gap-6">
             <Link href="/" className="flex items-center gap-2.5">
               <div className="w-8 h-8 bg-[#4640DE] rounded-full flex items-center justify-center shrink-0">
-                <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
-                  <circle cx="7.5" cy="7.5" r="5.5" stroke="white" strokeWidth="2" />
-                  <path d="M11.5 11.5L16 16" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                </svg>
+                <Image src="/icons/logo.svg" alt="Logo" width={32} height={32} />
               </div>
               <span className="font-bold text-[22px] text-white tracking-tight">QuickHire</span>
             </Link>
