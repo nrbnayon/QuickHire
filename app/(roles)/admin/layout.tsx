@@ -1,3 +1,4 @@
+import React from "react";
 import DashboardWrapper from "@/components/Sidebar/Sidebar";
 
 export default function AdminLayout({

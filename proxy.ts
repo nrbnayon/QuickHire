@@ -171,14 +171,15 @@ const ROLE_ROUTES: Record<Role, string[]> = {
 
   // ── User pages ─────────────────────────────────────────────────────────────
   [ROLES.USER]: [
-    "/user",               // app/(roles)/user  —  role-aware root redirect sends users here
+    "/",
+    "/user", // app/(roles)/user  —  role-aware root redirect sends users here
   ]
 };
 
 /** After signin, each role lands here */
 const ROLE_DEFAULT_PATHS: Record<Role, string> = {
   [ROLES.ADMIN]: "/admin",
-  [ROLES.USER]: "/user",
+  [ROLES.USER]: "/", //[ROLES.USER]: "/user",
 };
 
 /** HTTP methods that require a valid CSRF token */
@@ -452,10 +453,13 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
   // ─────────────────────────────────────────────────────────────────────────
   if (pathname === "/") {
     if (isAuthenticated && isValidRole(userRole)) {
-      devLog("🏠 Root redirect", { to: getRoleDefaultPath(userRole) });
-      return redirectTo(getRoleDefaultPath(userRole), request);
+      const dest = getRoleDefaultPath(userRole);
+      if (dest !== "/" && dest !== "") {
+        devLog("🏠 Root redirect", { to: dest });
+        return redirectTo(dest, request);
+      }
     }
-    return allow(); // landing / marketing page
+    return allow(); // landing / marketing page or user dashboard switch
   }
 
   // ─────────────────────────────────────────────────────────────────────────

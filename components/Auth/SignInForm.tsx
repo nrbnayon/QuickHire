@@ -95,7 +95,7 @@ export const SignInForm = ({ isAdmin = false }: SignInFormProps) => {
       document.cookie = `userEmail=${encodeURIComponent(mockUser.email)}; path=/; ${maxAge ? `max-age=${maxAge};` : ""} samesite=lax`;
 
       toast.success(isAdmin ? "Admin logged in successfully!" : "Logged in successfully!");
-      router.push(isAdmin ? "/admin" : "/user");
+      router.push(isAdmin ? "/admin" : "/");
     } catch (error) {
       console.error("Signin error:", error);
       toast.error("Signin failed. Please try again.");
