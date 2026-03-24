@@ -1,115 +1,66 @@
-"use client";
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { 
+  ArrowRight, 
+  PenTool, 
+  BarChart3, 
+  Megaphone, 
+  CreditCard, 
+  Code2, 
+  Wrench, 
+  Briefcase, 
+  Users2 
+} from "lucide-react";
 
 const categories = [
   {
     id: "design",
     name: "Design",
     jobs: 235,
-    icon: (active: boolean) => (
-      <svg viewBox="0 0 48 48" fill="none" className="w-10 h-10">
-        <circle cx="18" cy="18" r="8" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" />
-        <circle cx="32" cy="28" r="6" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" />
-        <path d="M24 12 L36 8 L40 24 L28 28" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" strokeLinejoin="round" />
-        <path d="M12 32 L16 24 L20 32" stroke={active ? "white" : "#4640DE"} strokeWidth="1.5" strokeLinejoin="round" />
-      </svg>
-    ),
+    icon: (active: boolean) => <PenTool className={`w-8 h-8 ${active ? "text-white" : "text-[#4640DE]"}`} />,
   },
   {
     id: "sales",
     name: "Sales",
     jobs: 756,
-    icon: (active: boolean) => (
-      <svg viewBox="0 0 48 48" fill="none" className="w-10 h-10">
-        <rect x="7" y="28" width="7" height="14" rx="1" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" />
-        <rect x="18" y="20" width="7" height="22" rx="1" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" />
-        <rect x="29" y="13" width="7" height="29" rx="1" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" />
-        <path d="M10 24 L21 17 L32 10" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="32" cy="10" r="2.5" fill={active ? "white" : "#4640DE"} />
-      </svg>
-    ),
+    icon: (active: boolean) => <BarChart3 className={`w-8 h-8 ${active ? "text-white" : "text-[#4640DE]"}`} />,
   },
   {
     id: "marketing",
     name: "Marketing",
     jobs: 140,
-    icon: (active: boolean) => (
-      <svg viewBox="0 0 48 48" fill="none" className="w-10 h-10">
-        <path d="M10 24 C10 16 16 10 24 10 L24 38 C16 38 10 32 10 24Z" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" />
-        <path d="M24 10 L38 15 L38 33 L24 38" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" strokeLinejoin="round" />
-        <circle cx="36" cy="14" r="4" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" />
-        <circle cx="36" cy="34" r="4" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" />
-      </svg>
-    ),
+    icon: (active: boolean) => <Megaphone className={`w-8 h-8 ${active ? "text-white" : "text-[#4640DE]"}`} />,
   },
   {
     id: "finance",
     name: "Finance",
     jobs: 325,
-    icon: (active: boolean) => (
-      <svg viewBox="0 0 48 48" fill="none" className="w-10 h-10">
-        <rect x="6" y="10" width="36" height="28" rx="2" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" />
-        <path d="M15 20 L33 20" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" strokeLinecap="round" />
-        <path d="M15 26 L24 26" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" strokeLinecap="round" />
-        <circle cx="33" cy="30" r="5" fill={active ? "rgba(255,255,255,0.15)" : "white"} stroke={active ? "white" : "#4640DE"} strokeWidth="1.5" />
-        <path d="M33 27 L33 33 M31 29.5 L35 29.5" stroke={active ? "white" : "#4640DE"} strokeWidth="1.4" strokeLinecap="round" />
-      </svg>
-    ),
+    icon: (active: boolean) => <CreditCard className={`w-8 h-8 ${active ? "text-white" : "text-[#4640DE]"}`} />,
   },
   {
     id: "technology",
     name: "Technology",
     jobs: 436,
-    icon: (active: boolean) => (
-      <svg viewBox="0 0 48 48" fill="none" className="w-10 h-10">
-        <rect x="4" y="10" width="40" height="28" rx="2" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" />
-        <path d="M16 20 L12 24 L16 28" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M32 20 L36 24 L32 28" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M27 16 L21 32" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" strokeLinecap="round" />
-      </svg>
-    ),
+    icon: (active: boolean) => <Code2 className={`w-8 h-8 ${active ? "text-white" : "text-[#4640DE]"}`} />,
   },
   {
     id: "engineering",
     name: "Engineering",
     jobs: 542,
-    icon: (active: boolean) => (
-      <svg viewBox="0 0 48 48" fill="none" className="w-10 h-10">
-        <path d="M24 8 L8 18 L8 40 L40 40 L40 18 Z" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" strokeLinejoin="round" />
-        <rect x="18" y="28" width="12" height="12" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" />
-        <path d="M20 16 L28 16 M20 20 L25 20" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" strokeLinecap="round" />
-      </svg>
-    ),
+    icon: (active: boolean) => <Wrench className={`w-8 h-8 ${active ? "text-white" : "text-[#4640DE]"}`} />,
   },
   {
     id: "business",
     name: "Business",
     jobs: 211,
-    icon: (active: boolean) => (
-      <svg viewBox="0 0 48 48" fill="none" className="w-10 h-10">
-        <rect x="8" y="20" width="32" height="22" rx="1" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" />
-        <path d="M16 20 L16 16 C16 11.6 19.6 8 24 8 C28.4 8 32 11.6 32 16 L32 20" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" />
-        <circle cx="24" cy="30" r="2.5" fill={active ? "white" : "#4640DE"} />
-      </svg>
-    ),
+    icon: (active: boolean) => <Briefcase className={`w-8 h-8 ${active ? "text-white" : "text-[#4640DE]"}`} />,
   },
   {
     id: "hr",
     name: "Human Resource",
     jobs: 346,
-    icon: (active: boolean) => (
-      <svg viewBox="0 0 48 48" fill="none" className="w-10 h-10">
-        <circle cx="16" cy="17" r="5" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" />
-        <circle cx="32" cy="17" r="5" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" />
-        <path d="M6 38 C6 31 10.5 27 16 27" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" strokeLinecap="round" />
-        <path d="M42 38 C42 31 37.5 27 32 27" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" strokeLinecap="round" />
-        <path d="M16 38 C16 31 19.6 27 24 27 C28.4 27 32 31 32 38" stroke={active ? "white" : "#4640DE"} strokeWidth="1.8" strokeLinecap="round" />
-      </svg>
-    ),
+    icon: (active: boolean) => <Users2 className={`w-8 h-8 ${active ? "text-white" : "text-[#4640DE]"}`} />,
   },
 ];
 
@@ -129,7 +80,7 @@ export default function CategoriesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="font-bold text-[32px] sm:text-[40px] lg:text-[48px] leading-tight text-[#25324B]"
+            className="font-clash font-bold text-[32px] sm:text-[40px] lg:text-[48px] leading-[1.1] text-[#25324B]"
           >
             Explore by <span className="text-[#26A4FF]">category</span>
           </motion.h2>

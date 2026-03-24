@@ -58,7 +58,7 @@ export default function PublicNavbar() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-2 h-full">
             <Link
-              href="#"
+              href="/jobs"
               className="font-medium text-[16px] text-[#515B6F] hover:text-[#4640DE] transition-colors px-3 py-2"
             >
               Find Jobs

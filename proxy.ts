@@ -140,7 +140,7 @@ const AUTH_ROUTES: string[] = [
  * PUBLIC-ONLY ROUTES
  * Accessible to everyone; authenticated users are NOT bounced away.
  */
-const PUBLIC_ONLY_ROUTES: string[] = ["/success"];
+const PUBLIC_ONLY_ROUTES: string[] = ["/success", "/jobs"];
 
 /**
  * INFO / LEGAL ROUTES
@@ -165,8 +165,11 @@ const UNIVERSAL_PROTECTED_ROUTES: string[] = ["/profile"];
 const ROLE_ROUTES: Record<Role, string[]> = {
   // ── Admin pages ────────────────────────────────────────────────────────────
   [ROLES.ADMIN]: [
-    "/admin",       // app/(roles)/admin
+    "/admin",           // app/(roles)/admin
     "/admin/dashboard", // app/(roles)/admin/dashboard
+    "/admin/users",
+    "/admin/jobs",
+    "/admin/settings",
   ],
 
   // ── User pages ─────────────────────────────────────────────────────────────

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { MapPin, Search, ChevronDown } from "lucide-react";
 
 function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
@@ -19,27 +20,29 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 export default function HeroSection() {
   return (
     <section className="relative min-h-[700px] bg-[#F8F8FD] overflow-hidden flex items-center">
-      {/* Background geometric pattern */}
-      <div className="absolute inset-0 pointer-events-none">
-        <svg className="absolute right-0 top-0 h-full w-[55%] opacity-40" viewBox="0 0 600 700" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="120" y="60" width="340" height="340" stroke="#CCCCF5" strokeWidth="1.5" transform="rotate(8 290 230)" />
-          <rect x="190" y="120" width="250" height="250" stroke="#CCCCF5" strokeWidth="1.5" transform="rotate(8 315 245)" />
-          <rect x="250" y="170" width="180" height="180" stroke="#CCCCF5" strokeWidth="1.5" transform="rotate(8 340 260)" />
-          <rect x="60" y="260" width="440" height="440" stroke="#CCCCF5" strokeWidth="0.8" transform="rotate(8 280 480)" />
-        </svg>
+      {/* Background pattern */}
+      <div className="absolute inset-0 pointer-events-none z-0 flex justify-end">
+        <Image
+          src="/images/Hero-bg-pattern.svg"
+          alt="Background pattern"
+          width={650}
+          height={700}
+          className="hidden lg:block h-full w-auto object-cover object-left opacity-90"
+          priority
+        />
       </div>
 
       <div className="relative z-10 w-full max-w-[1240px] mx-auto px-5 sm:px-8 lg:px-[62px] xl:px-0 py-16 lg:py-20 flex flex-col lg:flex-row items-center gap-8">
         {/* Left Content */}
         <div className="flex-1 flex flex-col gap-6 max-w-[600px]">
           <FadeUp delay={0.1}>
-            <h1 className="font-bold text-[42px] sm:text-[56px] lg:text-[72px] leading-[1.08] text-[#25324B] tracking-tight">
+            <h1 className="font-clash font-bold text-[42px] sm:text-[56px] lg:text-[72px] leading-[1.1] text-[#25324B] tracking-tight">
               Discover<br />more than<br />
-              <span className="text-[#26A4FF] relative inline-block">
+              <span className="text-[#26A4FF] relative inline-block pb-4">
                 5000+ Jobs
-                <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 380 14" fill="none">
-                  <path d="M2 10 C70 2,160 14,280 6 S355 2,378 8" stroke="#26A4FF" strokeWidth="4" strokeLinecap="round" fill="none" />
-                </svg>
+                <div className="absolute -bottom-1 left-0 w-full mt-2">
+                  <Image src="/images/hero-wave.svg" alt="" width={380} height={20} className="w-full h-auto" />
+                </div>
               </span>
             </h1>
           </FadeUp>
@@ -83,9 +86,12 @@ export default function HeroSection() {
                 </div>
 
                 {/* Search Button */}
-                <button className="bg-[#4640DE] text-white font-bold text-[16px] px-8 py-5 hover:bg-[#3530C4] transition-colors duration-200 whitespace-nowrap shrink-0 w-full sm:w-auto cursor-pointer">
+                <Link
+                  href="/jobs"
+                  className="bg-[#4640DE] text-white font-bold text-[16px] px-8 py-5 hover:bg-[#3530C4] transition-colors duration-200 whitespace-nowrap shrink-0 w-full sm:w-auto text-center"
+                >
                   Search my job
-                </button>
+                </Link>
               </div>
 
               <p className="text-[15px] text-[#202430]/70">

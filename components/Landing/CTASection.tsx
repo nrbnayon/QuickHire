@@ -2,66 +2,48 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function CTASection() {
   return (
-    <section className="bg-[#F8F8FD] py-16 sm:py-20 px-5 sm:px-8 lg:px-[124px]">
+    <section className="bg-white py-16 sm:py-20 px-5 sm:px-8 lg:px-[124px]">
       <div className="max-w-[1240px] mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="border border-[#D6DDEB] overflow-hidden flex flex-col lg:flex-row"
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="bg-[#4640DE] rounded-xl overflow-hidden flex flex-col lg:flex-row relative"
         >
-          {/* Job Seekers */}
-          <div className="flex-1 bg-white p-10 sm:p-14 lg:p-16 flex flex-col gap-6 lg:border-r border-b lg:border-b-0 border-[#D6DDEB]">
-            <span className="inline-flex items-center justify-center px-4 py-1 border-2 border-[#4640DE] text-[#4640DE] font-bold text-[13px] w-fit">
-              For Job Seekers
-            </span>
-            <h3 className="font-bold text-[28px] sm:text-[34px] lg:text-[38px] leading-tight text-[#25324B]">
-              Search, Apply &<br />Get Your Dream Jobs.
-            </h3>
-            <p className="text-[15px] sm:text-[16px] text-[#515B6F] leading-relaxed">
-              Lorem ipsum dolor sit amet consectetur adipiscing elit. Volutpat commodo proin libero pharetra.
+          {/* Content */}
+          <div className="flex-1 p-10 sm:p-14 lg:p-16 flex flex-col gap-6 relative z-10">
+            <h2 className="font-clash font-bold text-[36px] sm:text-[42px] lg:text-[48px] leading-[1.1] text-white max-w-[440px]">
+              Start posting jobs today
+            </h2>
+            <p className="text-[16px] sm:text-[18px] text-white/80 leading-relaxed max-w-[360px]">
+              Start posting job for free
             </p>
-            <a
-              href="#"
-              className="inline-flex items-center gap-3 border-2 border-[#4640DE] text-[#4640DE] font-bold text-[15px] px-6 py-3.5 w-fit hover:bg-[#4640DE] hover:text-white transition-all duration-200 group"
+            <Link
+              href="/signup"
+              className="bg-white text-[#4640DE] font-bold text-[16px] px-8 py-4 w-fit hover:bg-white/90 transition-all duration-200"
             >
-              Search Jobs
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </a>
+              Sign up for free
+            </Link>
           </div>
 
-          {/* Employers */}
-          <div className="flex-1 bg-[#25324B] p-10 sm:p-14 lg:p-16 flex flex-col gap-6 relative overflow-hidden">
-            {/* Decorative dashboard image */}
-            <div className="absolute right-0 top-0 w-[55%] h-full opacity-15 pointer-events-none">
-              <Image
-                src="/images/Dashboard-Company.png"
-                alt="Dashboard"
-                fill
-                className="object-cover object-left"
-              />
-            </div>
-            <span className="inline-flex items-center justify-center px-4 py-1 border-2 border-[#26A4FF] text-[#26A4FF] font-bold text-[13px] w-fit relative z-10">
-              For Employers
-            </span>
-            <h3 className="font-bold text-[28px] sm:text-[34px] lg:text-[38px] leading-tight text-white relative z-10">
-              Start Posting<br />Jobs Today.
-            </h3>
-            <p className="text-[15px] sm:text-[16px] text-white/70 leading-relaxed relative z-10">
-              Lorem ipsum dolor sit amet consectetur adipiscing elit. Volutpat commodo proin libero pharetra.
-            </p>
-            <a
-              href="#"
-              className="inline-flex items-center gap-3 bg-[#26A4FF] text-white font-bold text-[15px] px-6 py-3.5 w-fit hover:bg-[#1a8ee0] transition-colors duration-200 group relative z-10"
-            >
-              Post a Job
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </a>
+          {/* Large Dashboard Image */}
+          <div className="flex-1 relative min-h-[300px] lg:min-h-0">
+             {/* Gradient overlay for better text contrast if needed */}
+             <div className="absolute inset-0 bg-gradient-to-r from-[#4640DE] via-[#4640DE]/40 to-transparent lg:z-10" />
+             
+             <div className="relative w-full h-full min-h-[400px] lg:min-h-[500px]">
+                <Image
+                  src="/images/Dashboard-Company.png"
+                  alt="Dashboard Preview"
+                  fill
+                  className="object-contain object-left-top scale-110 lg:scale-125 translate-x-10 lg:translate-x-20 pt-10"
+                />
+             </div>
           </div>
         </motion.div>
       </div>
