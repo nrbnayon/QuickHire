@@ -1,83 +1,104 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Twitter, Instagram, Linkedin, Facebook } from "lucide-react";
 
 export default function PublicFooter() {
   const currentYear = new Date().getFullYear();
-  const appName = process.env.NEXT_PUBLIC_APP_NAME || "App";
 
   return (
-    <footer className="w-full bg-white dark:bg-background border-t border-border pt-20 pb-10 ">
-      <div className="container mx-auto px-5 lg:px-4 grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-20">
-        {/* Company Info */}
-        <div className="md:col-span-1 space-y-6">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="relative w-10 h-10 overflow-hidden transform group-hover:rotate-12 transition-transform">
-              <Image 
-                src="/icons/logo.svg" 
-                alt="Logo" 
-                fill 
-                className="object-contain" 
-              />
+    <footer className="w-full bg-[#25324B]">
+      <div className="max-w-[1240px] mx-auto px-5 sm:px-8 lg:px-0 pt-16 pb-10">
+        {/* Top Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+          {/* Brand */}
+          <div className="sm:col-span-2 lg:col-span-1 flex flex-col gap-6">
+            <Link href="/" className="flex items-center gap-2.5">
+              <div className="w-8 h-8 bg-[#4640DE] rounded-full flex items-center justify-center shrink-0">
+                <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
+                  <circle cx="7.5" cy="7.5" r="5.5" stroke="white" strokeWidth="2" />
+                  <path d="M11.5 11.5L16 16" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+              </div>
+              <span className="font-bold text-[22px] text-white tracking-tight">QuickHire</span>
+            </Link>
+            <p className="text-[15px] text-white/50 leading-relaxed">
+              Great platform for the job seeker that searching for new career heights and passionate about startups.
+            </p>
+            <div className="flex items-center gap-3">
+              {[
+                { icon: Facebook, label: "Facebook" },
+                { icon: Twitter, label: "Twitter" },
+                { icon: Linkedin, label: "LinkedIn" },
+                { icon: Instagram, label: "Instagram" },
+              ].map(({ icon: Icon, label }) => (
+                <Link
+                  key={label}
+                  href="#"
+                  aria-label={label}
+                  className="w-10 h-10 border border-white/20 flex items-center justify-center text-white/50 hover:border-white hover:text-white transition-all duration-200"
+                >
+                  <Icon className="w-4 h-4" />
+                </Link>
+              ))}
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-              {appName}
-            </span>
-          </Link>
-          <p className="text-sm text-secondary leading-relaxed">
-            Delivering the next generation of business management solutions. 
-            Automate your workflow and scale your impact.
-          </p>
-          <div className="flex items-center gap-4 pt-2">
-            <Link href="#" className="p-2.5 bg-[#F5F6FA] hover:bg-primary hover:text-white rounded-xl transition-all" aria-label="Twitter">
-              <Twitter className="w-4 h-4" />
-            </Link>
-            <Link href="#" className="p-2.5 bg-[#F5F6FA] hover:bg-pink-500 hover:text-white rounded-xl transition-all" aria-label="Instagram">
-              <Instagram className="w-4 h-4" />
-            </Link>
-            <Link href="#" className="p-2.5 bg-[#F5F6FA] hover:bg-blue-600 hover:text-white rounded-xl transition-all" aria-label="LinkedIn">
-              <Linkedin className="w-4 h-4" />
-            </Link>
+          </div>
+
+          {/* About */}
+          <div className="flex flex-col gap-5">
+            <h3 className="font-bold text-[17px] text-white">About</h3>
+            <ul className="flex flex-col gap-3">
+              {["Companies", "Pricing", "Terms", "Advice", "Privacy Policy"].map((item) => (
+                <li key={item}>
+                  <Link href="#" className="text-[15px] text-white/50 hover:text-white transition-colors">
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Resources */}
+          <div className="flex flex-col gap-5">
+            <h3 className="font-bold text-[17px] text-white">Resources</h3>
+            <ul className="flex flex-col gap-3">
+              {["Help Docs", "Guide", "Updates", "Contact Us"].map((item) => (
+                <li key={item}>
+                  <Link href="#" className="text-[15px] text-white/50 hover:text-white transition-colors">
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Newsletter */}
+          <div className="flex flex-col gap-5">
+            <h3 className="font-bold text-[17px] text-white">Get Job Notifications</h3>
+            <p className="text-[13px] text-white/50 leading-relaxed">
+              The latest job news, articles, sent to your inbox weekly.
+            </p>
+            <div className="flex">
+              <input
+                type="email"
+                placeholder="Email Address"
+                className="flex-1 min-w-0 px-4 py-3 bg-white/8 border border-white/15 text-white text-[14px] outline-none placeholder:text-white/40 focus:border-white/40 transition-colors font-[Epilogue,sans-serif]"
+              />
+              <button className="px-4 py-3 bg-[#4640DE] text-white font-bold text-[14px] hover:bg-[#3530C4] transition-colors whitespace-nowrap shrink-0 cursor-pointer">
+                Subscribe
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Quick Links */}
-        <div className="space-y-6">
-          <h3 className="text-base font-bold text-foreground">Solutions</h3>
-          <ul className="space-y-4">
-            <li><Link href="/products" className="text-sm text-secondary hover:text-primary transition-colors">Products</Link></li>
-            <li><Link href="/pricing" className="text-sm text-secondary hover:text-primary transition-colors">Pricing</Link></li>
-            <li><Link href="/about" className="text-sm text-secondary hover:text-primary transition-colors">About Us</Link></li>
-          </ul>
-        </div>
-
-        {/* Support Links */}
-        <div className="space-y-6">
-          <h3 className="text-base font-bold text-foreground">Support</h3>
-          <ul className="space-y-4">
-            <li><Link href="/help" className="text-sm text-secondary hover:text-primary transition-colors">Help Center</Link></li>
-            <li><Link href="/contact" className="text-sm text-secondary hover:text-primary transition-colors">Contact Support</Link></li>
-            <li><Link href="/feedback" className="text-sm text-secondary hover:text-primary transition-colors">Feedback</Link></li>
-          </ul>
-        </div>
-
-        {/* Legal Links */}
-        <div className="space-y-6">
-          <h3 className="text-base font-bold text-foreground">Legal</h3>
-          <ul className="space-y-4">
-            <li><Link href="/terms" className="text-sm text-secondary hover:text-primary transition-colors">Terms of Service</Link></li>
-            <li><Link href="/privacy-policy" className="text-sm text-secondary hover:text-primary transition-colors">Privacy Policy</Link></li>
-            <li><Link href="/cookies" className="text-sm text-secondary hover:text-primary transition-colors">Cookie Policy</Link></li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Bottom Bar */}
-      <div className="container mx-auto px-6 py-8 mt-16 border-t border-border/50 text-center md:flex md:justify-between items-center text-xs text-secondary/60">
-        <p>© {currentYear} {appName}. All rights reserved.</p>
-        <div className="flex items-center justify-center gap-6 mt-4 md:mt-0">
-          <Link href="/security" className="hover:text-primary transition-colors">Security</Link>
-          <Link href="/compliance" className="hover:text-primary transition-colors">Compliance</Link>
+        {/* Bottom Bar */}
+        <div className="mt-14 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-[14px] text-white/50">
+            {currentYear} @ QuickHire. All rights reserved.
+          </p>
+          <div className="flex items-center gap-6 flex-wrap justify-center">
+            <Link href="#" className="text-[14px] text-white/50 hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="#" className="text-[14px] text-white/50 hover:text-white transition-colors">Terms of Service</Link>
+            <Link href="#" className="text-[14px] text-white/50 hover:text-white transition-colors">Cookie Settings</Link>
+          </div>
         </div>
       </div>
     </footer>

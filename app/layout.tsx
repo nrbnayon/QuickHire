@@ -1,13 +1,15 @@
 // app\layout.tsx
 import type { Metadata, Viewport } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
+import { Epilogue, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Toaster } from "sonner";
 import StoreProvider from "@/redux/StoreProvider";
-const inter = Inter({
+
+const epilogue = Epilogue({
   variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 const geistMono = Geist_Mono({
@@ -20,11 +22,11 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
   ),
   title: {
-    default: `Welcome to ${process.env.NEXT_PUBLIC_APP_NAME || "Your App"}`,
-    template: "%s | ",
+    default: `QuickHire – Discover more than 5000+ Jobs`,
+    template: "%s | QuickHire",
   },
   description:
-    "Streamline your workflow with our intuitive admin panel. Manage users, monitor analytics, and customize settings with ease. Empower your team to make data-driven decisions and optimize performance. Experience the future of administration today.",
+    "QuickHire is the great platform for job seekers searching for new career heights and passionate about startups. Discover more than 5000+ jobs across Design, Technology, Engineering and more.",
   keywords: [
     "Admin Panel",
     "User Management",
@@ -128,7 +130,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${geistMono.variable} antialiased bg-background font-sans`}
+        className={`${epilogue.variable} ${geistMono.variable} antialiased bg-background font-sans`}
         suppressHydrationWarning
       >
         <ThemeProvider

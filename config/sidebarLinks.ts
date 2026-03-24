@@ -2,13 +2,10 @@ import type React from "react";
 import type { IconSvgElement } from "@hugeicons/react";
 import {
 	Bell,
-	CreditCard,
-	ScrollText,
 	ShieldCheck,
 } from "lucide-react";
 import {
 	DashboardSquare02Icon,
-	Dollar01Icon,
 	PackageAddIcon,
 	Settings01Icon,
 	UserMultiple03Icon,
@@ -42,29 +39,12 @@ export const sidebarLinks: SidebarLink[] = [
 		roles: ["admin"],
 	},
 	{
-		label: "Products",
-		href: "/admin/products",
+		label: "Job Management",
+		href: "/admin/jobs",
 		icon: PackageAddIcon,
 		roles: ["admin"],
 	},
-	{
-		label: "Payment History",
-		href: "/admin/payment-history",
-		icon: CreditCard,
-		roles: ["admin"],
-	},
-	{
-		label: "Order Management",
-		href: "/admin/order-management",
-		icon: ScrollText,
-		roles: ["admin"],
-	},
-	{
-		label: "Commission Tracking",
-		href: "/admin/commission-tracking",
-		icon: Dollar01Icon,
-		roles: ["admin"],
-	},
+
 	{
 		label: "Privacy & policy",
 		href: "/admin/privacy-policy",

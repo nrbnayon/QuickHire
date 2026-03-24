@@ -1,171 +1,180 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { Bell, LogOut, Menu, X } from "lucide-react";
-import { useState, useEffect } from "react";
-import { useUser } from "@/hooks/useUser";
-import LogoutModal from "@/components/Shared/LogoutModal";
-import { Button } from "@/components/ui/button";
+import { Menu, X, LogOut } from "lucide-react";
+import { useState } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useUser } from "@/hooks/useUser";
+import LogoutModal from "@/components/Shared/LogoutModal";
+import Image from "next/image";
+
+function QuickHireLogo() {
+  return (
+    <Link href="/" className="flex items-center gap-2.5">
+      <div className="w-8 h-8 bg-[#4640DE] rounded-full flex items-center justify-center shrink-0">
+        <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
+          <circle cx="7.5" cy="7.5" r="5.5" stroke="white" strokeWidth="2" />
+          <path d="M11.5 11.5L16 16" stroke="white" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      </div>
+      <span className="font-bold text-[22px] text-[#25324B] tracking-tight leading-none">
+        QuickHire
+      </span>
+    </Link>
+  );
+}
 
 export default function PublicNavbar() {
   const { name, role, image, isAuthenticated, logout } = useUser();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   const { scrollY } = useScroll();
-
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
-    
-    // Scrolled state for backdrop/border changes
-    if (latest > 50) {
-      setScrolled(true);
-    } else {
-      setScrolled(false);
-    }
-
-    // Hidden state for scroll direction
-    if (latest > previous && latest > 150) {
-      setHidden(true);
-    } else {
-      setHidden(false);
-    }
+    setScrolled(latest > 10);
+    setHidden(latest > previous && latest > 120);
   });
 
   return (
-    <motion.header 
-      variants={{
-        visible: { y: 0 },
-        hidden: { y: "-100%" },
-      }}
-      animate={hidden ? "hidden" : "visible"}
-      transition={{ duration: 0.35, ease: "easeInOut" }}
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300",
-        scrolled 
-          ? "bg-white/70 dark:bg-background/70 backdrop-blur-xl border-b border-border/50 shadow-sm py-2" 
-          : "bg-transparent py-4 border-b border-transparent"
-      )}
-    >
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
-        {/* Logo Section */}
-        <Link href="/" className="flex items-center gap-2 group shrink-0">
-          <div className="relative w-10 h-10 overflow-hidden transform group-hover:scale-110 transition-transform">
-             <Image 
-                src="/icons/logo.svg" 
-                alt="Logo" 
-                fill 
-                sizes="40px"
-                className="object-contain" 
-                priority 
-             />
+    <>
+      <motion.header
+        variants={{ visible: { y: 0 }, hidden: { y: "-100%" } }}
+        animate={hidden ? "hidden" : "visible"}
+        transition={{ duration: 0.35, ease: "easeInOut" }}
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300",
+          scrolled
+            ? "bg-white/90 backdrop-blur-xl border-b border-[#D6DDEB] shadow-sm"
+            : "bg-[#F8F8FD]"
+        )}
+      >
+        <div className="max-w-[1240px] mx-auto px-5 sm:px-8 lg:px-0 h-[76px] flex items-center justify-between gap-8">
+          <QuickHireLogo />
+
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-2 h-full">
+            <Link
+              href="#"
+              className="font-medium text-[16px] text-[#515B6F] hover:text-[#4640DE] transition-colors px-3 py-2"
+            >
+              Find Jobs
+            </Link>
+            <Link
+              href="#"
+              className="font-medium text-[16px] text-[#515B6F] hover:text-[#4640DE] transition-colors px-3 py-2"
+            >
+              Browse Companies
+            </Link>
+          </nav>
+
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center gap-4">
+            {isAuthenticated ? (
+              <>
+                <Link href="/profile" className="flex items-center gap-2.5 group">
+                  <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-[#D6DDEB] group-hover:border-[#4640DE] transition-colors relative bg-[#F8F8FD]">
+                    <Image src={image || "/images/avatar.png"} alt="Profile" fill className="object-cover" sizes="36px" />
+                  </div>
+                  <span className="text-[14px] font-semibold text-[#25324B]">{name || "User"}</span>
+                </Link>
+                <button
+                  onClick={() => setShowLogoutModal(true)}
+                  className="p-2 text-[#515B6F] hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                >
+                  <LogOut className="w-5 h-5" />
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/signin"
+                  className="font-bold text-[16px] text-[#4640DE] px-6 py-3 hover:bg-[#CCCCF5]/30 rounded transition-colors"
+                >
+                  Login
+                </Link>
+                <div className="w-px h-10 bg-[#D6DDEB]" />
+                <Link
+                  href="/signup"
+                  className="font-bold text-[16px] text-white bg-[#4640DE] px-6 py-3 hover:bg-[#3530C4] transition-colors"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
-          <span className="text-xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent hidden sm:inline-block">
-            {process.env.NEXT_PUBLIC_APP_NAME || "App"}
-          </span>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-          <Link href="/products" className="text-foreground/70 hover:text-primary transition-colors">Products</Link>
-          <Link href="/pricing" className="text-foreground/70 hover:text-primary transition-colors">Pricing</Link>
-          <Link href="/about" className="text-foreground/70 hover:text-primary transition-colors">About</Link>
-          {isAuthenticated && role === 'admin' && (
-            <Link href="/admin" className="text-primary font-semibold hover:opacity-80 transition-all">Admin Dashboard</Link>
-          )}
-        </nav>
-
-        {/* Actions Section */}
-        <div className="flex items-center gap-3">
-          {isAuthenticated ? (
-            <div className="flex items-center gap-3 md:gap-5">
-              {/* Notifications */}
-              <Link 
-                href="/notifications"
-                className="relative p-2.5 bg-muted/50 hover:bg-muted rounded-xl transition-all hidden sm:flex"
-                aria-label="Notifications"
-              >
-                <Bell className="w-5 h-5 text-blue-500" />
-                <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
-              </Link>
-
-              {/* Profile Shortcut */}
-              <Link href="/profile" className="flex items-center gap-3 group">
-                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20 group-hover:border-primary transition-all bg-muted relative">
-                  <Image 
-                    src={image || "/images/avatar.png"} 
-                    alt="Profile" 
-                    fill 
-                    sizes="40px"
-                    className="object-cover" 
-                  />
-                </div>
-                <div className="hidden lg:flex flex-col text-right">
-                  <span className="text-sm font-bold text-foreground truncate max-w-[120px]">{name || "User"}</span>
-                  <span className="text-[10px] text-muted-foreground capitalize font-semibold leading-none">{role}</span>
-                </div>
-              </Link>
-
-              {/* Logout */}
-              <button 
-                onClick={() => setShowLogoutModal(true)}
-                className="p-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-xl transition-all"
-                title="Logout"
-              >
-                <LogOut className="w-5 h-5" />
-              </button>
-            </div>
-          ) : (
-            <div className="hidden sm:flex items-center gap-3">
-               <Button asChild variant="ghost" className="rounded-full font-semibold">
-                 <Link href="/signin">Sign In</Link>
-               </Button>
-               <Button asChild className="rounded-full font-semibold px-6 shadow-md hover:shadow-lg transition-all">
-                 <Link href="/signup">Get Started</Link>
-               </Button>
-            </div>
-          )}
 
           {/* Mobile Menu Toggle */}
-          <button 
-            className="md:hidden p-2 text-foreground hover:bg-muted rounded-lg"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          <button
+            className="md:hidden p-2 text-[#25324B] hover:bg-[#F8F8FD] rounded-lg transition-colors"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? <X /> : <Menu />}
+            {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
-      </div>
 
-      {/* Mobile Menu Content */}
-      {mobileMenuOpen && (
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden absolute top-full left-0 w-full bg-background border-b border-border p-6 space-y-4 shadow-2xl backdrop-blur-xl bg-background/95"
-        >
-          <Link href="/products" className="block text-lg font-medium" onClick={() => setMobileMenuOpen(false)}>Products</Link>
-          <Link href="/pricing" className="block text-lg font-medium" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
-          <Link href="/about" className="block text-lg font-medium" onClick={() => setMobileMenuOpen(false)}>About</Link>
-          {!isAuthenticated && (
-             <div className="pt-4 space-y-3">
-                <Button asChild variant="outline" className="w-full rounded-full" onClick={() => setMobileMenuOpen(false)}><Link href="/signin">Sign In</Link></Button>
-                <Button asChild className="w-full rounded-full" onClick={() => setMobileMenuOpen(false)}><Link href="/signup">Get Started</Link></Button>
-             </div>
-          )}
-        </motion.div>
-      )}
+        {/* Mobile Menu */}
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="md:hidden bg-white border-b border-[#D6DDEB] shadow-lg px-5 pb-6 pt-2 space-y-1"
+          >
+            <Link
+              href="#"
+              className="block py-3 text-[16px] font-medium text-[#515B6F] hover:text-[#4640DE] border-b border-[#D6DDEB]"
+              onClick={() => setMobileOpen(false)}
+            >
+              Find Jobs
+            </Link>
+            <Link
+              href="#"
+              className="block py-3 text-[16px] font-medium text-[#515B6F] hover:text-[#4640DE] border-b border-[#D6DDEB]"
+              onClick={() => setMobileOpen(false)}
+            >
+              Browse Companies
+            </Link>
+            {!isAuthenticated ? (
+              <div className="flex gap-3 pt-4">
+                <Link
+                  href="/signin"
+                  className="flex-1 text-center font-bold text-[15px] text-[#4640DE] border-2 border-[#4640DE] py-3 rounded transition-colors hover:bg-[#CCCCF5]/30"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className="flex-1 text-center font-bold text-[15px] text-white bg-[#4640DE] py-3 rounded transition-colors hover:bg-[#3530C4]"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Sign Up
+                </Link>
+              </div>
+            ) : (
+              <div className="pt-4">
+                <button
+                  onClick={() => { setShowLogoutModal(true); setMobileOpen(false); }}
+                  className="w-full flex items-center gap-2 text-red-500 font-semibold py-3 px-4 rounded hover:bg-red-50 transition-colors"
+                >
+                  <LogOut className="w-4 h-4" /> Logout
+                </button>
+              </div>
+            )}
+          </motion.div>
+        )}
+      </motion.header>
 
-      {/* Logout Modal Overlay */}
-      <LogoutModal 
-        isOpen={showLogoutModal} 
+      <LogoutModal
+        isOpen={showLogoutModal}
         onClose={() => setShowLogoutModal(false)}
         onConfirm={logout}
       />
-    </motion.header>
+    </>
   );
 }
