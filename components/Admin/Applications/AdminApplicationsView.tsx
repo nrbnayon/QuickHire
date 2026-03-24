@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Search, Mail, FileText, X, ChevronRight, ExternalLink, Loader2 } from "lucide-react";
 import { useGetApplicationsQuery } from "@/redux/services/applicationApi";
 import { TableSkeleton } from "@/components/Skeleton/TableSkeleton";
 import DashboardHeader from "@/components/Shared/DashboardHeader";
+import { TablePagination } from "@/components/Shared/TablePagination";
+
+const DEFAULT_PAGE_SIZE = 15;
 
 function ApplicationDetailModal({
   app,
@@ -105,14 +108,21 @@ function ApplicationDetailModal({
 
 export default function AdminApplicationsView() {
   const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
   const [search, setSearch] = useState("");
   const [selectedApp, setSelectedApp] = useState<any | null>(null);
 
-  const { data, isLoading, isError } = useGetApplicationsQuery({ page, limit: 15 });
+  const { data, isLoading, isError } = useGetApplicationsQuery({ page, limit: pageSize });
 
   const applications = data?.data || [];
   const total = data?.pagination?.total || 0;
   const totalPages = data?.pagination?.totalPages || 0;
+
+  useEffect(() => {
+    if (!isLoading && totalPages > 0 && page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [isLoading, page, totalPages]);
 
   // Client-side filter by name/email (since backend doesn't support search on applications)
   const filtered = search
@@ -137,7 +147,10 @@ export default function AdminApplicationsView() {
         <input
           type="text"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(1);
+          }}
           placeholder="Search by name or email…"
           className="flex-1 bg-transparent border-none outline-none text-[14px] text-[#25324B] placeholder:text-[#7C8493]/70"
         />
@@ -229,37 +242,20 @@ export default function AdminApplicationsView() {
 
         {/* Pagination */}
         {totalPages > 1 && !isLoading && (
-          <div className="flex items-center justify-center gap-2 py-5 border-t border-[#D6DDEB]">
-            <button
-              type="button"
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
-              disabled={page === 1}
-              className="px-4 py-2 border border-[#D6DDEB] bg-white text-[#515B6F] text-[13px] font-semibold hover:border-[#4640DE] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-            >
-              ← Prev
-            </button>
-            {Array.from({ length: Math.min(totalPages, 7) }, (_, idx) => (
-              <button
-                type="button"
-                key={idx + 1}
-                onClick={() => setPage(idx + 1)}
-                className={`w-9 h-9 border text-[13px] font-semibold transition-colors ${
-                  page === idx + 1
-                    ? "bg-[#4640DE] text-white border-[#4640DE]"
-                    : "bg-white text-[#515B6F] border-[#D6DDEB] hover:border-[#4640DE]"
-                }`}
-              >
-                {idx + 1}
-              </button>
-            ))}
-            <button
-              type="button"
-              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-              disabled={page === totalPages}
-              className="px-4 py-2 border border-[#D6DDEB] bg-white text-[#515B6F] text-[13px] font-semibold hover:border-[#4640DE] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-            >
-              Next →
-            </button>
+          <div className="border-t border-[#D6DDEB]">
+            <TablePagination
+              currentPage={page}
+              totalPages={totalPages}
+              totalItems={total}
+              itemsPerPage={pageSize}
+              onPageChange={(nextPage) => setPage(Math.min(Math.max(1, nextPage), totalPages))}
+              showPageSize
+              pageSizeOptions={[10, 15, 25, 50]}
+              onPageSizeChange={(size) => {
+                setPageSize(size);
+                setPage(1);
+              }}
+            />
           </div>
         )}
       </div>

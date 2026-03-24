@@ -8,8 +8,9 @@ import { categories, jobTypes, JobCategory, JobType } from "@/data/jobsData";
 import JobCard from "@/components/Landing/JobCard";
 import { useGetJobsQuery } from "@/redux/services/jobApi";
 import { TableSkeleton } from "@/components/Skeleton/TableSkeleton";
+import { TablePagination } from "@/components/Shared/TablePagination";
 
-const PAGE_SIZE = 12;
+const DEFAULT_PAGE_SIZE = 12;
 
 function CategorySidebar({
   selectedCategories,
@@ -105,6 +106,7 @@ export default function JobsPageView() {
   const [showFilters, setShowFilters] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
 
   // Debounce search inputs
   useEffect(() => {
@@ -124,7 +126,7 @@ export default function JobsPageView() {
   }, [inputLocation]);
 
   // Build API params
-  const apiParams: Record<string, any> = { page: currentPage, limit: PAGE_SIZE };
+  const apiParams: Record<string, any> = { page: currentPage, limit: pageSize };
   if (query) apiParams.search = query;
   if (locationQuery) apiParams.location = locationQuery;
   if (selectedCategories.length === 1) apiParams.category = selectedCategories[0];
@@ -135,6 +137,12 @@ export default function JobsPageView() {
   const jobs = jobsResp?.data || [];
   const total = jobsResp?.pagination?.total || 0;
   const totalPages = jobsResp?.pagination?.totalPages || 0;
+
+  useEffect(() => {
+    if (!isLoading && totalPages > 0 && currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [isLoading, totalPages, currentPage]);
 
   const toggleCategory = (cat: JobCategory) => {
     setSelectedCategories((prev) =>
@@ -382,37 +390,20 @@ export default function JobsPageView() {
 
             {/* Pagination */}
             {totalPages > 1 && !isLoading && (
-              <div className="flex items-center justify-center gap-2 mt-8 flex-wrap">
-                <button
-                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                  disabled={currentPage === 1}
-                  className="px-5 py-2 border border-[#D6DDEB] bg-white text-[#515B6F] font-semibold text-[14px] hover:border-[#4640DE] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                >
-                  ← Prev
-                </button>
-                {Array.from({ length: Math.min(totalPages, 7) }, (_, idx) => {
-                  const page = idx + 1;
-                  return (
-                    <button
-                      key={page}
-                      onClick={() => setCurrentPage(page)}
-                      className={`w-10 h-10 border font-semibold text-[14px] transition-colors ${
-                        currentPage === page
-                          ? "bg-[#4640DE] text-white border-[#4640DE]"
-                          : "bg-white text-[#515B6F] border-[#D6DDEB] hover:border-[#4640DE]"
-                      }`}
-                    >
-                      {page}
-                    </button>
-                  );
-                })}
-                <button
-                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                  disabled={currentPage === totalPages}
-                  className="px-5 py-2 border border-[#D6DDEB] bg-white text-[#515B6F] font-semibold text-[14px] hover:border-[#4640DE] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                >
-                  Next →
-                </button>
+              <div className="mt-8 bg-white border border-[#D6DDEB]">
+                <TablePagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  totalItems={total}
+                  itemsPerPage={pageSize}
+                  onPageChange={(page) => setCurrentPage(Math.min(Math.max(1, page), totalPages))}
+                  showPageSize
+                  pageSizeOptions={[6, 12, 24, 48]}
+                  onPageSizeChange={(size) => {
+                    setPageSize(size);
+                    setCurrentPage(1);
+                  }}
+                />
               </div>
             )}
           </div>
