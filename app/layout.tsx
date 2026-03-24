@@ -93,7 +93,7 @@ export const metadata: Metadata = {
     siteName: process.env.NEXT_PUBLIC_APP_NAME || "Your App",
     title: `${process.env.NEXT_PUBLIC_APP_NAME || "Your App"} - Site Panel`,
     description:
-      "Streamline your workflow with our intuitive admin panel. Manage users, monitor analytics, and customize settings with ease. Empower your team to make data-driven decisions and optimize performance. Experience the future of administration today.",
+      "QuickHire is the great platform for job seekers searching for new career heights and passionate about startups. Discover more than 5000+ jobs across Design, Technology, Engineering and more.",
     images: [
       {
         url: "/icons/logo.png",
@@ -107,7 +107,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${process.env.NEXT_PUBLIC_APP_NAME || "Your App"} - Site Panel`,
     description:
-      "Streamline your workflow with our intuitive admin panel. Manage users, monitor analytics, and customize settings with ease. Empower your team to make data-driven decisions and optimize performance. Experience the future of administration today.",
+      "QuickHire is the great platform for job seekers searching for new career heights and passionate about startups. Discover more than 5000+ jobs across Design, Technology, Engineering and more.",
     images: ["/icons/logo.png"],
     creator: "@nrbnayon",
   },
@@ -138,7 +138,7 @@ export default function RootLayout({
     applicationCategory: "Dashboard Management System",
     operatingSystem: "Web",
     description:
-      "Streamline your workflow with our intuitive admin panel. Manage users, monitor analytics, and customize settings with ease. Empower your team to make data-driven decisions and optimize performance. Experience the future of administration today.",
+      "QuickHire is the great platform for job seekers searching for new career heights and passionate about startups. Discover more than 5000+ jobs across Design, Technology, Engineering and more.",
     offers: {
       "@type": "Offer",
       price: "0",

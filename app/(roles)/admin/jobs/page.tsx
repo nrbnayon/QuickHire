@@ -1,4 +1,4 @@
-import AdminJobsView from "@/components/Landing/AdminJobsView";
+import AdminJobsView from "@/components/Admin/Jobs/AdminJobsView";
 
 export const metadata = {
   title: "Job Management | QuickHire Admin",

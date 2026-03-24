@@ -33,18 +33,17 @@ export const sidebarLinks: SidebarLink[] = [
 		roles: ["admin"],
 	},
 	{
-		label: "User Management",
-		href: "/admin/users",
-		icon: UserMultiple03Icon,
-		roles: ["admin"],
-	},
-	{
 		label: "Job Management",
 		href: "/admin/jobs",
 		icon: PackageAddIcon,
 		roles: ["admin"],
 	},
-
+	{
+		label: "User Management",
+		href: "/admin/users",
+		icon: UserMultiple03Icon,
+		roles: ["admin"],
+	},
 	{
 		label: "Privacy & policy",
 		href: "/admin/privacy-policy",
