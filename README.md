@@ -1,317 +1,145 @@
-# FitMate AI - Web
+# Quick Hire Frontend
 
-A modern, full-featured fleet and parcel tracking management system built with Next.js 16, React 19, and TypeScript. Designed for logistics companies to manage drivers, track parcels in real-time, and handle seller operations with an intuitive dashboard interface.
+Modern job portal frontend built with Next.js, React, and TypeScript.
 
-## 🚀 Features
+This app includes:
+- Public landing pages and job browsing
+- Authentication flows (sign in, sign up, forgot/reset password, OTP verification)
+- Role-based dashboards (User/Admin)
+- Admin job and application management views
+- Reusable UI components with responsive layouts
 
-### Core Features
+## Tech Stack
 
-- **Real-Time Parcel Tracking**: Live GPS tracking for parcels with interactive maps (Leaflet)
-- **Multi-Role Dashboard**: Dedicated dashboards for Super Admins and Seller Admins
-- **Driver Management**: Comprehensive driver profile management and assignment
-- **Parcel Management**: Create, manage, and track parcel shipments
-- **Seller Management**: Manage seller accounts and operations (Super Admin only)
-- **Analytics & Reporting**: Detailed analytics with charts and export functionality (PDF/Excel)
-- **User Authentication**: Secure signin, registration, and OTP verification
-- **Multi-Language Support**: Full internationalization (i18n) support
-- **Progressive Web App (PWA)**: Offline capability with service worker support
+- Next.js 16 (App Router)
+- React 19 + TypeScript
+- Tailwind CSS 4
+- Redux Toolkit + RTK Query
+- Framer Motion
+- Recharts
+- Radix UI
 
-### Advanced Features
+## Prerequisites
 
-- **Role-Based Access Control (RBAC)**: Granular permission management
-- **Real-Time Notifications**: WebSocket-based notifications system
-- **Export Capabilities**: Export data to PDF and Excel formats
-- **Google Maps Integration**: Enhanced mapping and location features
-- **Responsive Design**: Fully responsive UI with mobile-first approach
-- **Dark/Light Theme Support**: Theme switching with persistence
+- Node.js 18+
+- npm 9+
 
-## 🛠️ Tech Stack
+## Getting Started
 
-### Frontend
+1. Install dependencies:
 
-- **Framework**: Next.js 16.0.10
-- **UI Library**: React 19.2.1
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS 4
-- **UI Components**: Radix UI
-- **Icons**: Hugeicons, Tabler Icons, Lucide React
-- **Forms**: React Hook Form with Zod validation
-
-### State Management & Data
-
-- **State Management**: Redux Toolkit with Redux hooks
-- **Maps**: Leaflet & React Leaflet with Google Maps API integration
-- **Charts**: Recharts
-
-### Utilities & Libraries
-
-- **Authentication**: jose (JWT handling)
-- **Export**: ExcelJS, jsPDF with AutoTable
-- **Notifications**: Sonner (Toast notifications)
-- **Motion**: Framer Motion animations
-- **Form Validation**: Zod with React Hook Form resolvers
-
-### Development Tools
-
-- **Linting**: ESLint
-- **PWA Support**: next-pwa with Workbox
-- **Node Version**: Requires Node.js with npm
-
-## 📋 Prerequisites
-
-- Node.js 18+ and npm 9+
-- Modern web browser with JavaScript enabled
-- Google Maps API key (for mapping features)
-
-## 🔧 Installation
-
-1. **Clone the repository**
-
-   ```bash
-   git clone <repository-url>
-   cd track-fleet-pro-web
-   ```
-
-2. **Install dependencies**
-
-   ```bash
-   npm install
-   ```
-
-3. **Configure environment variables**
-   Create a `.env.local` file in the root directory with required variables:
-
-   ```env
-   NEXT_PUBLIC_API_URL=<your-api-url>
-   NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=<your-google-maps-api-key>
-   NEXT_PUBLIC_APP_URL=<your-app-url>
-   ```
-
-4. **Run development server**
-
-   ```bash
-   npm run dev
-   ```
-
-   Open [http://localhost:3000](http://localhost:3000) in your browser
-
-## 📦 Available Scripts
-
-- **`npm run dev`** - Start development server with Webpack
-- **`npm run build`** - Build for production with optimization
-- **`npm start`** - Start production server
-- **`npm run lint`** - Run ESLint for code quality checks
-
-## 📁 Project Structure
-
-```
-track-fleet-pro-web/
-├── app/                          # Next.js app directory
-│   ├── (auth)/                   # Authentication pages
-│   │   ├── signin/
-│   │   ├── signup/
-│   │   ├── forgot-password/
-│   │   ├── reset-password/
-│   │   ├── verify-otp/
-│   │   └── reset-success/
-│   ├── (landing)/                # Landing pages
-│   │   ├── track-parcel/
-│   │   ├── about-us/
-│   │   └── coverage/
-│   ├── (roles)/                  # Role-based layouts
-│   │   ├── seller-admin/         # Seller Admin dashboard
-│   │   ├── super-admin/          # Super Admin dashboard
-│   │   └── (shared)/             # Shared role components
-│   ├── api/                      # API routes
-│   │   └── translate/            # Translation API
-│   ├── layout.tsx                # Root layout
-│   ├── page.tsx                  # Home page
-│   └── globals.css               # Global styles
-├── components/                   # Reusable React components
-│   ├── Auth/                     # Authentication components
-│   ├── Common/                   # Common components
-│   ├── Landing/                  # Landing page components
-│   ├── Notifications/            # Notification components
-│   ├── SellerAdmin/              # Seller Admin specific components
-│   ├── SupperAdmin/              # Super Admin components
-│   ├── Sidebar/                  # Navigation sidebar
-│   ├── Shared/                   # Shared UI components
-│   └── ui/                       # Base UI components (Radix UI wrapped)
-├── context/                      # React Context providers
-│   └── LanguageContext.tsx       # Language/i18n context
-├── hooks/                        # Custom React hooks
-│   ├── usePermission.ts          # Role-based permission checks
-│   ├── useTranslate.ts           # Translation hook
-│   ├── useUser.ts                # User data hook
-│   ├── useLogout.ts              # Logout functionality
-│   └── use-mobile.ts             # Mobile detection
-├── lib/                          # Utility functions & helpers
-│   ├── utils.ts                  # Common utilities
-│   ├── formDataValidation.ts     # Form validation logic
-│   ├── exportUtils.ts            # Export to PDF/Excel utilities
-│   └── redux/                    # Redux store configuration
-├── public/                       # Static assets
-│   ├── icons/
-│   ├── images/
-│   ├── drivers/
-│   └── sw.js                     # Service worker
-├── types/                        # TypeScript type definitions
-│   ├── driver.ts
-│   ├── parcel.ts
-│   ├── seller.ts
-│   ├── notification.ts
-│   └── users.ts
-├── data/                         # Mock/sample data
-│   ├── allParcelsData.ts
-│   ├── allDriversData.ts
-│   ├── allSellersData.ts
-│   └── statsData.ts
-├── HowToLiveMapTrack/            # Live tracking implementation
-│   ├── _ParcelMapLiveTracking.tsx
-│   ├── _TrackParcelModal.tsx
-│   └── _serverwebsocket.js
-├── next.config.ts               # Next.js configuration
-├── tsconfig.json                # TypeScript configuration
-├── tailwind.config.ts           # Tailwind CSS configuration
-└── package.json                 # Dependencies & scripts
+```bash
+npm install
 ```
 
-## 🔐 Authentication & Authorization
+2. Configure environment variables in `.env` (or `.env.local`):
 
-The application supports:
+```env
+NODE_ENV=development
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
 
-- **Authentication Methods**: Email/Password with OTP verification
-- **Authorization**: Role-based access control (RBAC) with routes
-  - **Super Admin**: Full system access, manage all entities
-  - **Seller Admin**: Manage own seller operations, drivers, and parcels
-  - **Customer**: Track parcels and view coverage
+# Cloudinary (client-safe vars only)
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+NEXT_PUBLIC_CLOUDINARY_API_KEY=your_api_key
+```
 
-## 🗺️ Real-Time Features
+> Do not expose private secrets in frontend environment files. Keep server-only keys in the backend.
 
-### Live Parcel Tracking
+3. Run the dev server:
 
-- WebSocket connection for real-time parcel position updates
-- Interactive maps using Leaflet/Google Maps
-- Route visualization and ETA calculations
+```bash
+npm run dev
+```
 
-### WebSocket Server
+4. Open:
 
-- Located in `HowToLiveMapTrack/_serverwebsocket.js`
-- Handles live location streaming for tracked parcels
+`http://localhost:3000`
 
-## 🌐 Internationalization (i18n)
+## Available Scripts
 
-Multi-language support with:
+- `npm run dev` - Start development server
+- `npm run build` - Build production bundle
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint
 
-- Language context management (`LanguageContext.tsx`)
-- `useTranslate` hook for easy text translation
-- API endpoint for dynamic translations (`/api/translate`)
-- Persistent language preference
+## Project Structure
 
-## 📊 Dashboard Features
+```text
+quick_hire_frontend/
+├─ app/
+│  ├─ (auth)/               # Auth routes
+│  ├─ (roles)/              # Role-based route groups
+│  ├─ api/                  # App-router API handlers
+│  ├─ layout.tsx
+│  ├─ page.tsx
+│  └─ globals.css
+├─ components/
+│  ├─ Admin/
+│  ├─ Auth/
+│  ├─ Landing/
+│  ├─ Shared/
+│  ├─ Sidebar/
+│  └─ ui/
+├─ redux/
+│  ├─ services/             # RTK Query API slices
+│  ├─ features/
+│  ├─ store.ts
+│  └─ StoreProvider.tsx
+├─ hooks/                   # Custom hooks
+├─ lib/                     # Utilities and validators
+├─ data/                    # Local demo/static data
+├─ public/                  # Static files (icons/images/sw)
+├─ types/                   # Shared TypeScript types
+└─ next.config.ts
+```
 
-### Super Admin Dashboard
+## API Integration
 
-- System-wide analytics and statistics
-- Seller management and performance metrics
-- Driver management and assignment
-- Parcel tracking and statistics
-- Revenue and operational insights
+The frontend communicates with backend endpoints through RTK Query services in `redux/services`.
 
-### Seller Admin Dashboard
+- Base URL comes from `NEXT_PUBLIC_API_URL`
+- Auth, jobs, applications, and dashboard resources are fetched via centralized API slices
 
-- Company-specific analytics
-- Driver management
-- Parcel management and tracking
-- Performance metrics
-- Customer communications
+## Authentication & Roles
 
-## 📁 Data Export
+Current route organization supports:
 
-Export capabilities for:
+- Public/guest pages
+- Auth pages (`signin`, `signup`, password reset, OTP)
+- Role-based dashboard areas under `app/(roles)`
 
-- **PDF Reports**: Using jsPDF with formatted tables
-- **Excel Files**: Using ExcelJS for complex spreadsheets
-- Includes drivers, parcels, sellers, and custom analytics
+Access logic is handled through shared permission utilities and role-aware components.
 
-## 🎨 UI/UX
+## Build & Deployment
 
-- **Component Library**: Custom Radix UI wrapper components
-- **Animations**: Framer Motion for smooth interactions
-- **Icons**: Multiple icon libraries (Hugeicons, Tabler, Lucide)
-- **Responsive**: Mobile-first responsive design
-- **Dark Mode**: Full dark/light theme support with next-themes
-
-## 📱 PWA Support
-
-The application includes Progressive Web App features:
-
-- Service Worker for offline functionality
-- App manifest for installability
-- Next PWA configuration for caching strategies
-- Workbox for advanced cache management
-
-## 🔍 Code Quality
-
-- **Linting**: ESLint configuration for code standards
-- **TypeScript**: Full type safety throughout the application
-- **Validation**: Zod schema validation for forms and API responses
-
-## 🚀 Deployment
-
-### Build for Production
+### Production Build
 
 ```bash
 npm run build
 npm start
 ```
 
-### Environment Configuration
+### Recommended Hosting
 
-Ensure all required environment variables are set in production:
+- Vercel (best for Next.js)
+- Any Node.js host that supports Next.js server runtime
 
-```env
-NEXT_PUBLIC_API_URL=<production-api-url>
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=<production-api-key>
-NEXT_PUBLIC_APP_URL=<production-app-url>
+Before deployment, set production env values (especially `NEXT_PUBLIC_API_URL`) to your deployed backend URL.
+
+## Troubleshooting
+
+- If API requests fail in production, verify CORS and `NEXT_PUBLIC_API_URL`.
+- If images fail, verify allowed image domains in `next.config.ts`.
+- On Windows paths containing `&`, npm scripts can fail. Use PowerShell script shell:
+
+```powershell
+$env:npm_config_script_shell="$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe"
+npm install
 ```
 
-### Supported Platforms
+## Notes for Contributors
 
-- Vercel (recommended for Next.js)
-- Docker containers
-- Traditional Node.js hosting
-- Static hosting with API proxy
-
-## 🤝 Contributing
-
-1. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-2. Commit changes (`git commit -m 'Add AmazingFeature'`)
-3. Push to branch (`git push origin feature/AmazingFeature`)
-4. Open a Pull Request
-
-## 📄 License
-
-This project is proprietary and confidential. Unauthorized copying or distribution is prohibited.
-
-## 📞 Support
-
-For issues, questions, or support:
-
-- Create an issue in the repository
-- Contact the development team
-- Check documentation in project files
-
-## 🔗 Related Resources
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [React Documentation](https://react.dev)
-- [Tailwind CSS](https://tailwindcss.com)
-- [Radix UI](https://www.radix-ui.com)
-- [Redux Toolkit](https://redux-toolkit.js.org)
-
----
-
-**Version**: 1.0.0  
-**Last Updated**: January 2026  
-**Maintained By**: Track Fleet Pro Team
+- Keep changes typed and lint-clean.
+- Reuse shared UI primitives from `components/ui` and shared utilities.
+- Prefer updating existing patterns over introducing new architecture for small features.
