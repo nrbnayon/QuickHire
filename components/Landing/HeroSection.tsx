@@ -39,7 +39,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative bg-[#F8F8FD] overflow-hidden h-[700px] lg:h-[794px] min-w-[1440px] mx-auto">
+    <section className="relative bg-[#F8F8FD] overflow-hidden w-full min-h-[700px] lg:h-[794px] mx-auto">
 
       {/* ── 1. Background geometric SVG pattern ── */}
       <div className="absolute inset-0 pointer-events-none z-0">
@@ -86,12 +86,12 @@ export default function HeroSection() {
 
       {/* ── 4. Left content ── */}
       <div className="relative z-30 h-full flex items-center">
-        <div className="w-full max-w-[1240px] mx-auto px-5 sm:px-8 xl:px-0">
+        <div className="w-full max-w-[1240px] mx-auto px-5 sm:px-8 xl:px-0 py-10 lg:py-0">
           <div className="flex flex-col gap-6 w-full lg:max-w-[50%]">
 
             {/* Headline */}
             <FadeUp delay={0.1}>
-              <h1 className="font-clash font-semibold text-[42px] sm:text-[56px] lg:text-[72px] leading-[1.1] text-[#25324B] tracking-tight">
+              <h1 className="font-clash font-semibold text-[42px] sm:text-[56px] lg:text-[72px] leading-[1.1] text-[#25324B] tracking-tight break-words">
                 Discover
                 <br />
                 more than
@@ -169,7 +169,7 @@ export default function HeroSection() {
                 </form>
 
                 {/* Popular tags */}
-                <p className="text-[15px] text-[#202430]/70">
+                <p className="text-[15px] text-[#202430]/70 break-words">
                   Popular:{" "}
                   {["UI Designer", "UX Researcher", "Android", "Admin"].map((tag, i) => (
                     <button

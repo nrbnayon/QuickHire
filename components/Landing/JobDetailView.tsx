@@ -328,6 +328,10 @@ export default function JobDetailView({ id }: { id: string }) {
   }
 
   const isApplied = hasApplied(job.id || (job as any)._id);
+  const logoSrc =
+    job.logoUrl ||
+    (job as typeof job & { logoURL?: string; logo_url?: string }).logoURL ||
+    (job as typeof job & { logoURL?: string; logo_url?: string }).logo_url;
 
   return (
     <div className="min-h-screen bg-[#F8F8FD]">
@@ -354,9 +358,9 @@ export default function JobDetailView({ id }: { id: string }) {
               className="bg-white border border-[#D6DDEB] p-8"
             >
               <div className="flex flex-col sm:flex-row items-start gap-6">
-                {job.logoUrl ? (
+                {logoSrc ? (
                   <div className="w-20 h-20 shrink-0 rounded overflow-hidden relative">
-                    <Image src={job.logoUrl} alt={job.company} fill className="object-cover" />
+                    <Image src={logoSrc} alt={job.company} fill className="object-cover" />
                   </div>
                 ) : (
                   <div

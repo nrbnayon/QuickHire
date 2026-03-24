@@ -23,10 +23,15 @@ interface JobCardProps {
 
 
 export function JobLogo({ job }: { job: Job }) {
-  if (job.logoUrl) {
+  const logoSrc =
+    job.logoUrl ||
+    (job as Job & { logoURL?: string; logo_url?: string }).logoURL ||
+    (job as Job & { logoURL?: string; logo_url?: string }).logo_url;
+
+  if (logoSrc) {
     return (
       <div className="w-14 h-14 shrink-0 rounded overflow-hidden relative bg-white">
-        <Image src={job.logoUrl} alt={`${job.company} logo`} fill className="object-cover" />
+        <Image src={logoSrc} alt={`${job.company} logo`} fill className="object-cover" />
       </div>
     );
   }
@@ -100,10 +105,7 @@ export default function JobCard({ job, variant = "grid", shadow = false }: JobCa
       className="border border-[#D6DDEB] p-7 flex flex-col gap-4 cursor-pointer hover:border-[#4640DE] hover:shadow-[0_8px_32px_rgba(70,64,222,0.1)] hover:-translate-y-1 transition-all duration-200 bg-white group block"
     >
       <div className="flex items-start justify-between">
-        <div className="w-14 h-14 flex items-center justify-center bg-white shrink-0 rounded overflow-hidden font-semibold text-[18px]"
-          style={{ backgroundColor: job.logoBg, color: job.logoColor }}>
-          {job.logo}
-        </div>
+        <JobLogo job={job} />
         <span className={`text-[13px] font-semibold px-3 py-1.5 rounded-xs border ${badgeStyles[job.type]}`}>
           {job.type}
         </span>
