@@ -1,10 +1,15 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Search, MapPin, Filter, X, ChevronDown, ChevronUp } from "lucide-react";
-import { jobsData, categories, jobTypes, Job, JobCategory, JobType } from "@/data/jobsData";
+import { categories, jobTypes, JobCategory, JobType } from "@/data/jobsData";
 import JobCard from "@/components/Landing/JobCard";
+import { useGetJobsQuery } from "@/redux/services/jobApi";
+import { TableSkeleton } from "@/components/Skeleton/TableSkeleton";
+
+const PAGE_SIZE = 12;
 
 function CategorySidebar({
   selectedCategories,
@@ -20,23 +25,18 @@ function CategorySidebar({
   const [catOpen, setCatOpen] = useState(true);
   const [typeOpen, setTypeOpen] = useState(true);
 
-  const categoryCount = (cat: JobCategory) =>
-    jobsData.filter((j) => j.category === cat).length;
-  const typeCount = (type: JobType) =>
-    jobsData.filter((j) => j.type === type).length;
-
   return (
     <aside className="w-full lg:w-[280px] shrink-0 flex flex-col gap-6">
-      {/* Category Filter */}
+      {/* Employment Type Filter */}
       <div className="bg-white border border-[#D6DDEB] p-6">
         <button
           className="flex items-center justify-between w-full mb-4"
-          onClick={() => setCatOpen(!catOpen)}
+          onClick={() => setTypeOpen(!typeOpen)}
         >
           <h3 className="font-semibold text-[18px] text-[#25324B]">Type of Employment</h3>
-          {catOpen ? <ChevronUp className="w-5 h-5 text-[#7C8493]" /> : <ChevronDown className="w-5 h-5 text-[#7C8493]" />}
+          {typeOpen ? <ChevronUp className="w-5 h-5 text-[#7C8493]" /> : <ChevronDown className="w-5 h-5 text-[#7C8493]" />}
         </button>
-        {catOpen && (
+        {typeOpen && (
           <div className="flex flex-col gap-3">
             {jobTypes.map((type) => (
               <label key={type} className="flex items-center gap-3 cursor-pointer group">
@@ -48,9 +48,6 @@ function CategorySidebar({
                 />
                 <span className="flex-1 text-[15px] text-[#515B6F] group-hover:text-[#25324B] transition-colors">
                   {type}
-                </span>
-                <span className="text-[13px] text-[#7C8493] font-medium">
-                  ({typeCount(type)})
                 </span>
               </label>
             ))}
@@ -80,9 +77,6 @@ function CategorySidebar({
                 <span className="flex-1 text-[15px] text-[#515B6F] group-hover:text-[#25324B] transition-colors">
                   {cat}
                 </span>
-                <span className="text-[13px] text-[#7C8493] font-medium">
-                  ({categoryCount(cat)})
-                </span>
               </label>
             ))}
           </div>
@@ -93,60 +87,81 @@ function CategorySidebar({
 }
 
 export default function JobsPageView() {
-  const [query, setQuery] = useState("");
-  const [locationQuery, setLocationQuery] = useState("");
+  // Input state (not debounced — immediate for UX)
+  const searchParams = useSearchParams();
+
+  const initSearch = searchParams.get("search") || "";
+  const initLocation = searchParams.get("location") || "";
+
+  const [inputQuery, setInputQuery] = useState(initSearch);
+  const [inputLocation, setInputLocation] = useState(initLocation);
+
+  // Debounced state (sent to API after 500ms)
+  const [query, setQuery] = useState(initSearch);
+  const [locationQuery, setLocationQuery] = useState(initLocation);
+
   const [selectedCategories, setSelectedCategories] = useState<JobCategory[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<JobType[]>([]);
   const [showFilters, setShowFilters] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Debounce search inputs
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setQuery(inputQuery);
+      setCurrentPage(1);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [inputQuery]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLocationQuery(inputLocation);
+      setCurrentPage(1);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [inputLocation]);
+
+  // Build API params
+  const apiParams: Record<string, any> = { page: currentPage, limit: PAGE_SIZE };
+  if (query) apiParams.search = query;
+  if (locationQuery) apiParams.location = locationQuery;
+  if (selectedCategories.length === 1) apiParams.category = selectedCategories[0];
+  if (selectedTypes.length === 1) apiParams.type = selectedTypes[0];
+
+  const { data: jobsResp, isLoading, isError } = useGetJobsQuery(apiParams);
+
+  const jobs = jobsResp?.data || [];
+  const total = jobsResp?.pagination?.total || 0;
+  const totalPages = jobsResp?.pagination?.totalPages || 0;
 
   const toggleCategory = (cat: JobCategory) => {
     setSelectedCategories((prev) =>
       prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
     );
+    setCurrentPage(1);
   };
 
   const toggleType = (type: JobType) => {
     setSelectedTypes((prev) =>
       prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
     );
+    setCurrentPage(1);
   };
 
   const clearFilters = () => {
     setSelectedCategories([]);
     setSelectedTypes([]);
+    setInputQuery("");
+    setInputLocation("");
     setQuery("");
     setLocationQuery("");
+    setCurrentPage(1);
   };
 
-  const filtered = useMemo(() => {
-    return jobsData.filter((job) => {
-      const matchesQuery =
-        !query ||
-        job.title.toLowerCase().includes(query.toLowerCase()) ||
-        job.company.toLowerCase().includes(query.toLowerCase()) ||
-        job.description.toLowerCase().includes(query.toLowerCase());
-
-      const matchesLocation =
-        !locationQuery ||
-        job.location.toLowerCase().includes(locationQuery.toLowerCase());
-
-      const matchesCategory =
-        selectedCategories.length === 0 ||
-        selectedCategories.includes(job.category);
-
-      const matchesType =
-        selectedTypes.length === 0 || selectedTypes.includes(job.type);
-
-      return matchesQuery && matchesLocation && matchesCategory && matchesType;
-    });
-  }, [query, locationQuery, selectedCategories, selectedTypes]);
-
   const hasFilters =
-    selectedCategories.length > 0 ||
-    selectedTypes.length > 0 ||
-    query ||
-    locationQuery;
+    selectedCategories.length > 0 || selectedTypes.length > 0 || query || locationQuery;
 
   return (
     <div className="min-h-screen bg-[#F8F8FD]">
@@ -157,7 +172,7 @@ export default function JobsPageView() {
             Find your <span className="text-[#26A4FF]">dream job</span>
           </h1>
           <p className="text-[#515B6F] mb-6 text-[16px]">
-            {filtered.length.toLocaleString()} jobs available
+            {isLoading ? "Searching..." : `${total.toLocaleString()} jobs available`}
           </p>
 
           {/* Search Bar */}
@@ -166,13 +181,13 @@ export default function JobsPageView() {
               <Search className="w-5 h-5 text-[#7C8493] shrink-0" />
               <input
                 type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                value={inputQuery}
+                onChange={(e) => setInputQuery(e.target.value)}
                 placeholder="Job title, keyword, or company"
                 className="flex-1 bg-transparent border-none outline-none text-[15px] text-[#25324B] placeholder:text-[#7C8493]/70"
               />
-              {query && (
-                <button onClick={() => setQuery("")} className="text-[#7C8493] hover:text-[#25324B]">
+              {inputQuery && (
+                <button onClick={() => setInputQuery("")} className="text-[#7C8493] hover:text-[#25324B]">
                   <X className="w-4 h-4" />
                 </button>
               )}
@@ -184,27 +199,31 @@ export default function JobsPageView() {
               <MapPin className="w-5 h-5 text-[#515B6F] shrink-0" />
               <input
                 type="text"
-                value={locationQuery}
-                onChange={(e) => setLocationQuery(e.target.value)}
+                value={inputLocation}
+                onChange={(e) => setInputLocation(e.target.value)}
                 placeholder="Location"
                 className="flex-1 bg-transparent border-none outline-none text-[15px] text-[#25324B] placeholder:text-[#7C8493]/70"
               />
-              {locationQuery && (
-                <button onClick={() => setLocationQuery("")} className="text-[#7C8493] hover:text-[#25324B]">
+              {inputLocation && (
+                <button onClick={() => setInputLocation("")} className="text-[#7C8493] hover:text-[#25324B]">
                   <X className="w-4 h-4" />
                 </button>
               )}
             </div>
 
             <button
-              onClick={() => {}}
+              onClick={() => {
+                setQuery(inputQuery);
+                setLocationQuery(inputLocation);
+                setCurrentPage(1);
+              }}
               className="bg-[#4640DE] text-white font-semibold text-[15px] px-8 py-4 hover:bg-[#3530C4] transition-colors whitespace-nowrap cursor-pointer"
             >
               Search Jobs
             </button>
           </div>
 
-          {/* Active Filters */}
+          {/* Active Filter Chips */}
           {hasFilters && (
             <div className="flex flex-wrap items-center gap-2 mt-4">
               <span className="text-[13px] text-[#7C8493]">Active filters:</span>
@@ -248,7 +267,6 @@ export default function JobsPageView() {
             <Filter className="w-4 h-4" />
             Filters {hasFilters && `(${selectedCategories.length + selectedTypes.length})`}
           </button>
-          {/* View toggle */}
           <div className="flex gap-2">
             {(["grid", "list"] as const).map((mode) => (
               <button
@@ -267,7 +285,7 @@ export default function JobsPageView() {
         </div>
 
         <div className="flex gap-8 items-start">
-          {/* Sidebar - desktop always visible, mobile conditional */}
+          {/* Sidebar */}
           <div className={`${showFilters ? "block" : "hidden"} lg:block`}>
             <CategorySidebar
               selectedCategories={selectedCategories}
@@ -277,12 +295,14 @@ export default function JobsPageView() {
             />
           </div>
 
-          {/* Jobs Grid */}
+          {/* Jobs List */}
           <div className="flex-1 min-w-0">
-            {/* Desktop view toggle */}
+            {/* Desktop view toggle + count */}
             <div className="hidden lg:flex items-center justify-between mb-6">
               <p className="text-[15px] text-[#515B6F]">
-                Showing <span className="font-semibold text-[#25324B]">{filtered.length}</span> results
+                Showing{" "}
+                <span className="font-semibold text-[#25324B]">{jobs.length}</span> of{" "}
+                <span className="font-semibold text-[#25324B]">{total}</span> results
               </p>
               <div className="flex gap-2">
                 {(["grid", "list"] as const).map((mode) => (
@@ -301,7 +321,20 @@ export default function JobsPageView() {
               </div>
             </div>
 
-            {filtered.length === 0 ? (
+            {isLoading ? (
+              <div className="bg-white border border-[#D6DDEB] p-4 rounded">
+                <TableSkeleton rowCount={6} />
+              </div>
+            ) : isError ? (
+              <div className="bg-white border border-[#D6DDEB] p-16 text-center">
+                <p className="text-[#FF6550] font-semibold text-[16px] mb-2">
+                  Could not connect to the server
+                </p>
+                <p className="text-[#7C8493] text-[14px]">
+                  Make sure the backend is running on port 5000
+                </p>
+              </div>
+            ) : jobs.length === 0 ? (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -321,7 +354,7 @@ export default function JobsPageView() {
               </motion.div>
             ) : viewMode === "grid" ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {filtered.map((job, i) => (
+                {jobs.map((job, i) => (
                   <motion.div
                     key={job.id}
                     initial={{ opacity: 0, y: 16 }}
@@ -334,7 +367,7 @@ export default function JobsPageView() {
               </div>
             ) : (
               <div className="bg-white border border-[#D6DDEB] px-6">
-                {filtered.map((job, i) => (
+                {jobs.map((job, i) => (
                   <motion.div
                     key={job.id}
                     initial={{ opacity: 0, x: -16 }}
@@ -344,6 +377,42 @@ export default function JobsPageView() {
                     <JobCard job={job} variant="list" />
                   </motion.div>
                 ))}
+              </div>
+            )}
+
+            {/* Pagination */}
+            {totalPages > 1 && !isLoading && (
+              <div className="flex items-center justify-center gap-2 mt-8 flex-wrap">
+                <button
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="px-5 py-2 border border-[#D6DDEB] bg-white text-[#515B6F] font-semibold text-[14px] hover:border-[#4640DE] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                >
+                  ← Prev
+                </button>
+                {Array.from({ length: Math.min(totalPages, 7) }, (_, idx) => {
+                  const page = idx + 1;
+                  return (
+                    <button
+                      key={page}
+                      onClick={() => setCurrentPage(page)}
+                      className={`w-10 h-10 border font-semibold text-[14px] transition-colors ${
+                        currentPage === page
+                          ? "bg-[#4640DE] text-white border-[#4640DE]"
+                          : "bg-white text-[#515B6F] border-[#D6DDEB] hover:border-[#4640DE]"
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  );
+                })}
+                <button
+                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="px-5 py-2 border border-[#D6DDEB] bg-white text-[#515B6F] font-semibold text-[14px] hover:border-[#4640DE] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                >
+                  Next →
+                </button>
               </div>
             )}
           </div>

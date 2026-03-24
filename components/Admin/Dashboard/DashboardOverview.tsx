@@ -1,26 +1,38 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
   AreaChart, Area, PieChart, Pie, Cell, Legend 
 } from "recharts";
-import { Briefcase, Users, FileText, TrendingUp, Filter, Calendar } from "lucide-react";
-import { jobsData as initialJobs, Job } from "@/data/jobsData";
+import { Briefcase, Users, FileText, TrendingUp, Filter, Calendar, MapPin } from "lucide-react";
+import { Job } from "@/data/jobsData";
 import { StatsCard } from "@/components/Shared/StatsCard";
 import DashboardHeader from "@/components/Shared/DashboardHeader";
+import { useGetDashboardStatsQuery } from "@/redux/services/dashboardApi";
+import { useGetJobsQuery } from "@/redux/services/jobApi";
+import { StatsSkeleton } from "@/components/Skeleton/StatsSkeleton";
 
 const COLORS = ["#4640DE", "#56CDAD", "#26A4FF", "#FFB836", "#FF6550", "#7C8493"];
 
-export default function DashboardOverview() {
-  const [jobs] = useState<Job[]>(initialJobs);
+// Helper to map string icon names from API back to Lucide components
+const iconMap: Record<string, any> = {
+  Briefcase: Briefcase,
+  Users: Users,
+  FileText: FileText,
+  MapPin: MapPin,
+  TrendingUp: TrendingUp,
+};
 
-  // 1. Calculate Stats
+export default function DashboardOverview() {
+  const { data: statsData, isLoading: isLoadingStats } = useGetDashboardStatsQuery();
+  const { data: jobsResp, isLoading: isLoadingJobs } = useGetJobsQuery();
+
+  const jobs: Job[] = jobsResp?.data || [];
+
+  // 1. Calculate Graph Data
   const totalJobs = jobs.length;
-  const featuredJobs = jobs.filter(j => j.featured).length;
-  const remoteJobs = jobs.filter(j => j.type === "Remote").length;
-  const techJobs = jobs.filter(j => j.category === "Technology" || j.category === "Engineering").length;
 
   // 2. Job Statistics by Category (for Pie Chart)
   const categoryData = useMemo(() => {
@@ -35,7 +47,7 @@ export default function DashboardOverview() {
   const trendData = useMemo(() => {
     const dailyCounts: Record<string, number> = {};
     jobs.forEach(job => {
-      const date = new Date(job.postedAt).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      const date = new Date(job.postedAt || new Date()).toLocaleDateString("en-US", { month: "short", day: "numeric" });
       dailyCounts[date] = (dailyCounts[date] || 0) + 1;
     });
     return Object.entries(dailyCounts)
@@ -62,40 +74,26 @@ export default function DashboardOverview() {
       <main className="p-5 md:p-8 space-y-8">
         
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <StatsCard 
-            title="Total Active Jobs" 
-            value={totalJobs} 
-            icon={Briefcase} 
-            iconColor="#4640DE" 
-            iconBgColor="#4640DE10"
-            subtitle="12% from last week"
-          />
-          <StatsCard 
-            title="Total Applications" 
-            value="1,248" 
-            icon={Users} 
-            iconColor="#56CDAD" 
-            iconBgColor="#56CDAD10"
-            subtitle="24% growth in talent"
-          />
-          <StatsCard 
-            title="Remote Opportunities" 
-            value={remoteJobs} 
-            icon={FileText} 
-            iconColor="#26A4FF" 
-            iconBgColor="#26A4FF10"
-            subtitle="Expanding worldwide"
-          />
-          <StatsCard 
-            title="Featured Slots" 
-            value={featuredJobs} 
-            icon={TrendingUp} 
-            iconColor="#FFB836" 
-            iconBgColor="#FFB83610"
-            subtitle="High engagement rate"
-          />
-        </div>
+        {isLoadingStats ? (
+          <StatsSkeleton />
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {statsData?.map((stat, i) => {
+              const IconComp = iconMap[stat.iconName] || Briefcase;
+              return (
+                <StatsCard 
+                  key={i}
+                  title={stat.title} 
+                  value={stat.value} 
+                  icon={IconComp} 
+                  iconColor={stat.iconColor} 
+                  iconBgColor={stat.iconBgColor}
+                  subtitle={stat.subtitle}
+                />
+              );
+            })}
+          </div>
+        )}
 
         {/* Charts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

@@ -1,9 +1,10 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
-import { MapPin, Search, ChevronDown } from "lucide-react";
+import { MapPin, Search } from "lucide-react";
 
 function FadeUp({
   children,
@@ -24,17 +25,24 @@ function FadeUp({
 }
 
 export default function HeroSection() {
+  const router = useRouter();
+  const [keyword, setKeyword] = useState("");
+  const [location, setLocation] = useState("");
+
+  const handleSearch = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const params = new URLSearchParams();
+    if (keyword.trim()) params.set("search", keyword.trim());
+    if (location.trim()) params.set("location", location.trim());
+    const qs = params.toString();
+    router.push(`/jobs${qs ? `?${qs}` : ""}`);
+  };
+
   return (
-    /*
-      The outer <section> is overflow-hidden with a fixed height.
-      This is the single source of truth for the section boundary —
-      every absolutely-positioned child is clipped here, so nothing
-      bleeds outside.
-    */
     <section className="relative bg-[#F8F8FD] overflow-hidden h-[700px] lg:h-[794px] min-w-[1440px] mx-auto">
 
-      {/* ── 1. Background geometric SVG pattern (full section, behind all) ── */}
-     <div className="absolute inset-0 pointer-events-none z-0">
+      {/* ── 1. Background geometric SVG pattern ── */}
+      <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute right-0 top-0 h-full w-[55%] hidden lg:block">
           <Image
             src="/images/Hero-bg-pattern.svg"
@@ -47,16 +55,7 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* ── 2. Hero person image (right half, bottom-anchored) ── */}
-      {/*
-        Strategy matching image 1:
-        • `absolute right-0 bottom-0` → flush to right & bottom of section
-        • `w-[46%] max-w-[530px]` → occupies the right column only
-        • `h-full` → spans full section height
-        • `object-contain object-right-bottom` → full figure visible, no crop
-        • section's own `overflow-hidden` clips anything that might exceed bounds
-        • z-10 — above pattern, below text (z-30)
-      */}
+      {/* ── 2. Hero person image ── */}
       <motion.div
         initial={{ opacity: 0, x: 48 }}
         animate={{ opacity: 1, x: 0 }}
@@ -74,12 +73,6 @@ export default function HeroSection() {
       </motion.div>
 
       {/* ── 3. Bottom-right corner decoration ── */}
-      {/*
-        /images/rightbottom.png is the diagonal accent strip visible in the
-        bottom-right corner of image 1 — it sits on top of the hero image
-        to create the angled edge effect.
-        Position: pinned to bottom-right corner, auto-sized.
-      */}
       <div className="absolute bottom-0 right-0 pointer-events-none z-20 hidden lg:block">
         <Image
           src="/images/rightbottom.png"
@@ -91,11 +84,9 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* ── 4. Left content (text + search) ── */}
+      {/* ── 4. Left content ── */}
       <div className="relative z-30 h-full flex items-center">
         <div className="w-full max-w-[1240px] mx-auto px-5 sm:px-8 xl:px-0">
-
-          {/* Capped at 50% so it never slides under the hero image */}
           <div className="flex flex-col gap-6 w-full lg:max-w-[50%]">
 
             {/* Headline */}
@@ -107,7 +98,6 @@ export default function HeroSection() {
                 <br />
                 <span className="text-[#26A4FF] relative inline-block pb-5">
                   5000+ Jobs
-                  {/* Handwritten wave underline */}
                   <span className="absolute left-0 top-[85%] w-full pointer-events-none">
                     <Image
                       src="/images/hero-wave.svg"
@@ -132,16 +122,18 @@ export default function HeroSection() {
             {/* Search bar */}
             <FadeUp delay={0.34}>
               <div className="flex flex-col gap-4">
-
-                {/* Search card */}
-                <div className="bg-white shadow-[0_20px_60px_rgba(192,192,192,0.22)] flex flex-col sm:flex-row items-stretch w-full max-w-[820px]">
-
+                <form
+                  onSubmit={handleSearch}
+                  className="bg-white shadow-[0_20px_60px_rgba(192,192,192,0.22)] flex flex-col sm:flex-row items-stretch w-full max-w-[820px]"
+                >
                   {/* Job-title field */}
                   <label className="flex items-center gap-3 px-5 flex-1 min-w-0 cursor-text">
                     <Search className="w-5 h-5 text-[#7C8493] shrink-0" />
                     <div className="flex-1 flex flex-col justify-center py-5 min-w-0">
                       <input
                         type="text"
+                        value={keyword}
+                        onChange={(e) => setKeyword(e.target.value)}
                         placeholder="Job title or keyword"
                         className="bg-transparent border-none outline-none text-[15px] text-[#25324B] placeholder:text-[#7C8493]/70 w-full"
                       />
@@ -153,34 +145,44 @@ export default function HeroSection() {
                   <div className="hidden sm:block w-px bg-[#D6DDEB] my-4 shrink-0" />
 
                   {/* Location field */}
-                  <div className="flex items-center gap-3 px-5 sm:min-w-[210px] shrink-0">
+                  <label className="flex items-center gap-3 px-5 sm:min-w-[210px] shrink-0 cursor-text">
                     <MapPin className="w-5 h-5 text-[#515B6F] shrink-0" />
                     <div className="flex-1 flex flex-col justify-center py-5 min-w-0">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="text-[15px] text-[#25324B] whitespace-nowrap">
-                          Florence, Italy
-                        </span>
-                        <ChevronDown className="w-4 h-4 text-[#515B6F] shrink-0" />
-                      </div>
+                      <input
+                        type="text"
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        placeholder="City or country"
+                        className="bg-transparent border-none outline-none text-[15px] text-[#25324B] placeholder:text-[#7C8493]/70 w-full"
+                      />
                       <div className="h-px bg-[#D6DDEB] mt-2 hidden sm:block" />
                     </div>
-                  </div>
+                  </label>
 
                   {/* Search CTA */}
-                  <Link
-                    href="/jobs"
-                    className="bg-[#4640DE] text-white font-semibold text-[16px] px-8 py-5 hover:bg-[#3530C4] active:bg-[#2d28b0] transition-colors duration-200 whitespace-nowrap shrink-0 w-full sm:w-auto text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4640DE] focus-visible:ring-offset-2"
+                  <button
+                    type="submit"
+                    className="bg-[#4640DE] text-white font-semibold text-[16px] px-8 py-5 hover:bg-[#3530C4] active:bg-[#2d28b0] transition-colors duration-200 whitespace-nowrap shrink-0 w-full sm:w-auto text-center"
                   >
                     Search my job
-                  </Link>
-                </div>
+                  </button>
+                </form>
 
                 {/* Popular tags */}
                 <p className="text-[15px] text-[#202430]/70">
-                  Popular :{" "}
-                  <span className="font-semibold text-[#202430]/70">
-                    UI Designer, UX Researcher, Android, Admin
-                  </span>
+                  Popular:{" "}
+                  {["UI Designer", "UX Researcher", "Android", "Admin"].map((tag, i) => (
+                    <button
+                      key={tag}
+                      onClick={() =>
+                        router.push(`/jobs?search=${encodeURIComponent(tag)}`)
+                      }
+                      className="font-semibold text-[#202430]/70 hover:text-[#4640DE] transition-colors"
+                    >
+                      {tag}
+                      {i < 3 ? ", " : ""}
+                    </button>
+                  ))}
                 </p>
               </div>
             </FadeUp>

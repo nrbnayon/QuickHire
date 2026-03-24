@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Plus, Pencil, Trash2, MapPin, Briefcase, Calendar, Globe, DollarSign, Building2 } from "lucide-react";
+import { X, Plus, Pencil, Trash2, MapPin, Briefcase, Calendar, Globe, DollarSign, Building2, UploadCloud, Loader2 } from "lucide-react";
 import { Job, JobCategory, JobType, categories, jobTypes } from "@/data/jobsData";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -28,6 +28,7 @@ const EMPTY_JOB: Omit<Job, "id" | "featured" | "postedAt"> = {
   requirements: [""],
   tags: [],
   logo: "",
+  logoUrl: "",
   logoColor: "#4640DE",
   logoBg: "#F8F8FD",
   companySize: "",
@@ -39,12 +40,14 @@ export default function AdminJobModal({ isOpen, onClose, mode: initialMode, job,
   const [form, setForm] = useState<Job>(job || { ...EMPTY_JOB, id: "", featured: false, postedAt: "" } as Job);
   const [tagInput, setTagInput] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
       setMode(initialMode);
       setForm(job || { ...EMPTY_JOB, id: "", featured: false, postedAt: new Date().toISOString().split("T")[0] } as Job);
       setErrors({});
+      setIsUploading(false);
     }
   }, [isOpen, initialMode, job]);
 
@@ -57,6 +60,32 @@ export default function AdminJobModal({ isOpen, onClose, mode: initialMode, job,
     if (!form.location.trim()) e.location = "Location is required";
     if (!form.description.trim()) e.description = "Description is required";
     return e;
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      setIsUploading(true);
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+
+      setForm((prev) => ({ ...prev, logoUrl: data.url }));
+    } catch (err) {
+      console.error(err);
+      alert("Failed to upload image");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -122,9 +151,15 @@ export default function AdminJobModal({ isOpen, onClose, mode: initialMode, job,
           {/* Header */}
           <div className="px-8 py-6 border-b border-[#D6DDEB] flex items-center justify-between shrink-0 bg-[#F8F8FD]">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 flex items-center justify-center rounded-xl font-semibold text-[18px] text-white" 
-                style={{ backgroundColor: form.logoColor || "#4640DE" }}>
-                {form.logo || "J"}
+              <div 
+                className="w-12 h-12 flex items-center justify-center rounded-xl font-semibold text-[18px] text-white relative overflow-hidden" 
+                style={!form.logoUrl ? { backgroundColor: form.logoColor || "#4640DE" } : {}}
+              >
+                {form.logoUrl ? (
+                  <Image src={form.logoUrl} alt="Logo" fill className="object-cover" />
+                ) : (
+                  form.logo || "J"
+                )}
               </div>
               <div>
                 <h2 className="font-clash font-semibold text-[22px] text-[#25324B]">{headerTitle}</h2>
@@ -161,6 +196,29 @@ export default function AdminJobModal({ isOpen, onClose, mode: initialMode, job,
                   <span className="font-semibold text-[14px] uppercase tracking-wider">Basic Information</span>
                 </div>
                 
+                {mode !== "view" && (
+                  <div className="col-span-full">
+                    <label className="block text-[14px] font-semibold text-[#25324B] mb-2">Company Logo (Optional)</label>
+                    <div className="flex items-center gap-4">
+                      <div className="w-16 h-16 shrink-0 rounded-lg border border-[#D6DDEB] bg-[#F8F8FD] flex items-center justify-center relative overflow-hidden">
+                        {form.logoUrl ? (
+                          <Image src={form.logoUrl} alt="" fill className="object-cover" />
+                        ) : (
+                          <Building2 className="w-6 h-6 text-[#7C8493]" />
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-white border border-[#D6DDEB] text-[#515B6F] text-[13px] font-semibold hover:border-[#4640DE] hover:text-[#4640DE] rounded-lg transition-all">
+                          {isUploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <UploadCloud className="w-4 h-4" />}
+                          {isUploading ? "Uploading..." : "Upload Logo"}
+                          <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={isUploading} />
+                        </label>
+                        <p className="text-[12px] text-[#7C8493] mt-2">Recommended size: 256x256px. Formats: JPG, PNG, WEBP.</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Job Title */}
                   <div className="space-y-1.5">

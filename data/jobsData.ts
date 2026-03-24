@@ -22,6 +22,7 @@ export interface Job {
   requirements: string[];
   tags: string[];
   logo: string;
+  logoUrl?: string; // New field for Cloudinary image URLs
   logoColor: string;
   logoBg: string;
   featured: boolean;

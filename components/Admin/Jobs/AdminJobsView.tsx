@@ -2,16 +2,23 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Plus, Trash2, Eye, Search, X, Briefcase, Pencil } from "lucide-react";
-import { jobsData as initialData, Job } from "@/data/jobsData";
+import { Job } from "@/data/jobsData";
 import DashboardHeader from "@/components/Shared/DashboardHeader";
 import AdminJobModal from "./AdminJobModal";
 import { cn } from "@/lib/utils";
 import { StatsCard } from "@/components/Shared/StatsCard";
 import { DeleteConfirmationModal } from "@/components/Shared/DeleteConfirmationModal";
 import { TablePagination } from "@/components/Shared/TablePagination";
+import Image from "next/image";
+import { 
+  useGetJobsQuery, 
+  useCreateJobMutation, 
+  useUpdateJobMutation, 
+  useDeleteJobMutation 
+} from "@/redux/services/jobApi";
+import { TableSkeleton } from "@/components/Skeleton/TableSkeleton";
 
 export default function AdminJobsView() {
-  const [jobs, setJobs] = useState<Job[]>(initialData);
   const [query, setQuery] = useState("");
   const [deleteId, setDeleteId] = useState<string | null>(null);
   
@@ -26,36 +33,49 @@ export default function AdminJobsView() {
     job: null
   });
 
-  const filtered = jobs.filter(
-    (j) =>
-      j.title.toLowerCase().includes(query.toLowerCase()) ||
-      j.company.toLowerCase().includes(query.toLowerCase()) ||
-      j.category.toLowerCase().includes(query.toLowerCase())
-  );
+  // RTK Queries
+  const { data: jobsResp, isLoading } = useGetJobsQuery({
+    page: currentPage,
+    limit: pageSize,
+    search: query // dynamic real-time backend fuzzy search
+  });
 
-  // Pagination Logic
-  const totalPages = Math.ceil(filtered.length / pageSize);
-  const paginatedJobs = filtered.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  const [createJob] = useCreateJobMutation();
+  const [updateJob] = useUpdateJobMutation();
+  const [deleteJob] = useDeleteJobMutation();
 
-  const handleSave = (job: Job) => {
-    if (modal.mode === "add") {
-       setJobs((prev) => [job, ...prev]);
-    } else {
-       setJobs((prev) => prev.map(j => j.id === job.id ? job : j));
+  const jobs = jobsResp?.data || [];
+  const totalItems = jobsResp?.pagination?.total || 0;
+  const totalPages = jobsResp?.pagination?.totalPages || 0;
+
+  const handleSave = async (job: Job) => {
+    try {
+      if (modal.mode === "add") {
+         await createJob(job).unwrap();
+      } else {
+         await updateJob({ id: job.id, data: job }).unwrap();
+      }
+      setModal({ ...modal, open: false });
+    } catch (error) {
+      console.error("Failed to save job", error);
     }
-    setModal({ ...modal, open: false });
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (deleteId) {
-      setJobs((prev) => prev.filter((j) => j.id !== deleteId));
-      setDeleteId(null);
+      try {
+        await deleteJob(deleteId).unwrap();
+        setDeleteId(null);
+      } catch (error) {
+        console.error("Failed to delete job", error);
+      }
     }
   };
 
   const openModal = (mode: "view" | "edit" | "add", job: Job | null = null) => {
     setModal({ open: true, mode, job });
   };
+
 
   return (
     <div className="flex flex-col flex-1 h-full bg-[#F5F6FA] dark:bg-background">
@@ -136,18 +156,25 @@ export default function AdminJobsView() {
                   <th className="text-left px-4 py-4 text-[13px] font-semibold text-[#25324B] hidden sm:table-cell uppercase tracking-wider">Company</th>
                   <th className="text-left px-4 py-4 text-[13px] font-semibold text-[#25324B] hidden md:table-cell uppercase tracking-wider">Category</th>
                   <th className="text-left px-4 py-4 text-[13px] font-semibold text-[#25324B] hidden lg:table-cell uppercase tracking-wider">Type</th>
-                  <th className="text-right px-6 py-4 text-[13px] font-semibold text-[#25324B] uppercase tracking-wider">Actions</th>
+                  <th className="text-center px-6 py-4 text-[13px] font-semibold text-[#25324B] uppercase tracking-wider">Location</th>
+                  <th className="text-center px-6 py-4 text-[13px] font-semibold text-[#25324B] uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {paginatedJobs.length === 0 ? (
+                {isLoading ? (
+                   <tr>
+                     <td colSpan={7} className="p-0">
+                       <TableSkeleton rowCount={5} />
+                     </td>
+                   </tr>
+                ) : jobs.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-6 py-20 text-center text-[#7C8493] text-[15px]">
+                    <td colSpan={7} className="px-6 py-20 text-center text-[#7C8493] text-[15px]">
                       {query ? `No results found for "${query}"` : "No job listings yet"}
                     </td>
                   </tr>
                 ) : (
-                  paginatedJobs.map((job, i) => (
+                  jobs.map((job: Job, i: number) => (
                     <motion.tr
                       key={job.id}
                       initial={{ opacity: 0 }}
@@ -158,9 +185,14 @@ export default function AdminJobsView() {
                     >
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-lg flex items-center justify-center font-semibold text-[14px] shrink-0 border border-[#D6DDEB]/30 shadow-sm"
-                            style={{ backgroundColor: job.logoBg, color: job.logoColor }}>
-                            {job.logo}
+                          <div 
+                            className="w-10 h-10 rounded-lg flex items-center justify-center font-semibold text-[14px] shrink-0 border border-[#D6DDEB]/30 shadow-sm relative overflow-hidden"
+                            style={!job.logoUrl ? { backgroundColor: job.logoBg, color: job.logoColor } : { backgroundColor: "#fff" }}>
+                            {job.logoUrl ? (
+                              <Image src={job.logoUrl} alt="" fill className="object-cover" />
+                            ) : (
+                              job.logo
+                            )}
                           </div>
                           <div>
                             <span className="font-semibold text-[14px] text-[#25324B] group-hover:text-[#4640DE] transition-colors text-left block">
@@ -178,32 +210,36 @@ export default function AdminJobsView() {
                       </td>
                       <td className="px-4 py-4 hidden lg:table-cell">
                         <span className={cn("px-2.5 py-1 text-[12px] font-semibold rounded-full border", 
-                          job.type === "Full-Time" ? "text-[#56CDAD] border-[#56CDAD] bg-[#56CDAD]/10" :
-                          job.type === "Part-Time" ? "text-[#FFB836] border-[#FFB836] bg-[#FFB836]/10" :
-                          job.type === "Contract" ? "text-[#FF6550] border-[#FF6550] bg-[#FF6550]/10" :
-                          "text-[#4640DE] border-[#4640DE] bg-[#4640DE]/10"
+                          job.type === "Full-Time" ? "bg-[#56CDAD]/10 text-[#56CDAD] border-[#56CDAD]/20" :
+                          job.type === "Part-Time" ? "bg-[#FFB836]/10 text-[#FFB836] border-[#FFB836]/20" :
+                          job.type === "Contract" ? "bg-[#FF6550]/10 text-[#FF6550] border-[#FF6550]/20" :
+                          "bg-[#26A4FF]/10 text-[#26A4FF] border-[#26A4FF]/20"
                         )}>
                           {job.type}
                         </span>
                       </td>
-                      <td className="px-6 py-4" onClick={(e) => e.stopPropagation()}>
-                        <div className="flex items-center gap-1.5 justify-end">
-                          <button onClick={() => openModal("view", job)}
-                            className="p-2 text-[#7C8493] hover:text-[#4640DE] hover:bg-[#4640DE]/10 rounded-lg transition-all"
-                            title="View Details">
-                            <Eye className="w-4.5 h-4.5" />
-                          </button>
-                          <button onClick={() => openModal("edit", job)}
-                            className="p-2 text-blue-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-all"
-                            title="Edit">
-                            <Pencil className="w-4.5 h-4.5" />
-                          </button>
-                          <button
-                            onClick={() => setDeleteId(job.id)}
-                            className="p-2 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
-                            title="Delete"
+                      <td className="px-4 py-4 text-[14px] font-medium text-[#515B6F] hidden xl:table-cell text-center">
+                        {job.location}
+                      </td>
+                      <td className="text-center px-6 py-4" onClick={(e) => e.stopPropagation()}>
+                        <div className="flex items-center justify-center gap-2 opacity-90 group-hover:opacity-100 transition-opacity">
+                          <button 
+                            onClick={(e) => { e.stopPropagation(); openModal("view", job); }} 
+                            className="p-2 text-[#4640DE] bg-[#4640DE]/10 hover:bg-[#4640DE]/20 rounded-lg transition-colors"
                           >
-                            <Trash2 className="w-4.5 h-4.5" />
+                            <Eye className="w-4 h-4" />
+                          </button>
+                          <button 
+                            onClick={(e) => { e.stopPropagation(); openModal("edit", job); }} 
+                            className="p-2 text-[#FFB836] bg-[#FFB836]/10 hover:bg-[#FFB836]/20 rounded-lg transition-colors"
+                          >
+                            <Pencil className="w-4 h-4" />
+                          </button>
+                          <button 
+                            onClick={(e) => { e.stopPropagation(); setDeleteId(job.id); }} 
+                            className="p-2 text-[#FF6550] bg-[#FF6550]/10 hover:bg-[#FF6550]/20 rounded-lg transition-colors"
+                          >
+                            <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
                       </td>
@@ -218,7 +254,7 @@ export default function AdminJobsView() {
           <TablePagination 
             currentPage={currentPage}
             totalPages={totalPages}
-            totalItems={filtered.length}
+            totalItems={totalItems}
             itemsPerPage={pageSize}
             onPageChange={setCurrentPage}
             onPageSizeChange={setPageSize}
