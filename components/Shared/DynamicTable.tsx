@@ -253,7 +253,7 @@ export function DynamicTable<T extends Record<string, any>>({
         <div className="p-6 border-b border-border">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             {title && (
-              <h2 className="text-xl font-bold text-foreground">{title}</h2>
+              <h2 className="text-xl font-semibold text-foreground">{title}</h2>
             )}
             {filter?.enabled && (
               <div className="relative w-full max-w-sm">

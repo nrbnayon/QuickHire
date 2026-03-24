@@ -50,7 +50,7 @@ function ApplyModal({ jobTitle, company, onClose }: { jobTitle: string; company:
       >
         {/* Header */}
         <div className="bg-[#4640DE] px-8 py-6">
-          <h2 className="font-bold text-[22px] text-white">{submitted ? "Application Sent!" : `Apply for ${jobTitle}`}</h2>
+          <h2 className="font-semibold text-[22px] text-white">{submitted ? "Application Sent!" : `Apply for ${jobTitle}`}</h2>
           <p className="text-white/70 text-[14px] mt-1">{company}</p>
         </div>
 
@@ -59,9 +59,9 @@ function ApplyModal({ jobTitle, company, onClose }: { jobTitle: string; company:
             <div className="w-16 h-16 bg-[#56CDAD]/15 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 className="w-8 h-8 text-[#56CDAD]" />
             </div>
-            <h3 className="font-bold text-[20px] text-[#25324B] mb-2">Application Submitted!</h3>
+            <h3 className="font-semibold text-[20px] text-[#25324B] mb-2">Application Submitted!</h3>
             <p className="text-[#515B6F] mb-6">We&apos;ve received your application for <strong>{jobTitle}</strong> at {company}. We&apos;ll be in touch soon.</p>
-            <button onClick={onClose} className="bg-[#4640DE] text-white font-bold px-8 py-3 hover:bg-[#3530C4] transition-colors">
+            <button onClick={onClose} className="bg-[#4640DE] text-white font-semibold px-8 py-3 hover:bg-[#3530C4] transition-colors">
               Close
             </button>
           </div>
@@ -123,14 +123,14 @@ function ApplyModal({ jobTitle, company, onClose }: { jobTitle: string; company:
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 border-2 border-[#D6DDEB] text-[#515B6F] font-bold py-3 hover:border-[#4640DE] hover:text-[#4640DE] transition-colors"
+                className="flex-1 border-2 border-[#D6DDEB] text-[#515B6F] font-semibold py-3 hover:border-[#4640DE] hover:text-[#4640DE] transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 bg-[#4640DE] text-white font-bold py-3 hover:bg-[#3530C4] transition-colors flex items-center justify-center gap-2 disabled:opacity-70"
+                className="flex-1 bg-[#4640DE] text-white font-semibold py-3 hover:bg-[#3530C4] transition-colors flex items-center justify-center gap-2 disabled:opacity-70"
               >
                 {loading ? "Submitting..." : <><Send className="w-4 h-4" /> Submit Application</>}
               </button>
@@ -173,7 +173,7 @@ export default function JobDetailView({ id }: { id: string }) {
             >
               <div className="flex flex-col sm:flex-row items-start gap-6">
                 <div
-                  className="w-20 h-20 flex items-center justify-center rounded font-bold text-[24px] shrink-0"
+                  className="w-20 h-20 flex items-center justify-center rounded font-semibold text-[24px] shrink-0"
                   style={{ backgroundColor: job.logoBg, color: job.logoColor }}
                 >
                   {job.logo}
@@ -181,14 +181,14 @@ export default function JobDetailView({ id }: { id: string }) {
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
-                      <h1 className="font-bold text-[26px] sm:text-[30px] text-[#25324B] mb-1">{job.title}</h1>
+                      <h1 className="font-semibold text-[26px] sm:text-[30px] text-[#25324B] mb-1">{job.title}</h1>
                       <p className="text-[#515B6F] text-[16px] flex items-center gap-2 flex-wrap">
                         <span className="font-semibold">{job.company}</span>
                         <span className="w-1 h-1 rounded-full bg-[#D6DDEB]" />
                         <span className="flex items-center gap-1"><MapPin className="w-4 h-4" />{job.location}</span>
                       </p>
                     </div>
-                    <span className={`px-4 py-1.5 rounded-full border-2 font-bold text-[13px] ${
+                    <span className={`px-4 py-1.5 rounded-full border-2 font-semibold text-[13px] ${
                       job.type === "Full-Time" ? "text-[#56CDAD] border-[#56CDAD] bg-[#56CDAD]/10" :
                       job.type === "Part-Time" ? "text-[#FFB836] border-[#FFB836] bg-[#FFB836]/10" :
                       job.type === "Contract" ? "text-[#FF6550] border-[#FF6550] bg-[#FF6550]/10" :
@@ -210,7 +210,7 @@ export default function JobDetailView({ id }: { id: string }) {
 
               <button
                 onClick={() => setShowApply(true)}
-                className="mt-6 w-full sm:w-auto bg-[#4640DE] text-white font-bold text-[16px] px-10 py-4 hover:bg-[#3530C4] transition-colors flex items-center justify-center gap-2"
+                className="mt-6 w-full sm:w-auto bg-[#4640DE] text-white font-semibold text-[16px] px-10 py-4 hover:bg-[#3530C4] transition-colors flex items-center justify-center gap-2"
               >
                 Apply Now <Send className="w-4 h-4" />
               </button>
@@ -224,12 +224,12 @@ export default function JobDetailView({ id }: { id: string }) {
               className="bg-white border border-[#D6DDEB] p-8 flex flex-col gap-7"
             >
               <div>
-                <h2 className="font-bold text-[22px] text-[#25324B] mb-4">About this role</h2>
+                <h2 className="font-semibold text-[22px] text-[#25324B] mb-4">About this role</h2>
                 <p className="text-[16px] text-[#515B6F] leading-relaxed">{job.description}</p>
               </div>
 
               <div>
-                <h3 className="font-bold text-[20px] text-[#25324B] mb-4">Responsibilities</h3>
+                <h3 className="font-semibold text-[20px] text-[#25324B] mb-4">Responsibilities</h3>
                 <ul className="flex flex-col gap-3">
                   {job.responsibilities.map((item, i) => (
                     <li key={i} className="flex items-start gap-3 text-[15px] text-[#515B6F]">
@@ -241,7 +241,7 @@ export default function JobDetailView({ id }: { id: string }) {
               </div>
 
               <div>
-                <h3 className="font-bold text-[20px] text-[#25324B] mb-4">Requirements</h3>
+                <h3 className="font-semibold text-[20px] text-[#25324B] mb-4">Requirements</h3>
                 <ul className="flex flex-col gap-3">
                   {job.requirements.map((item, i) => (
                     <li key={i} className="flex items-start gap-3 text-[15px] text-[#515B6F]">
@@ -254,7 +254,7 @@ export default function JobDetailView({ id }: { id: string }) {
 
               <button
                 onClick={() => setShowApply(true)}
-                className="w-full sm:w-auto self-start bg-[#4640DE] text-white font-bold text-[15px] px-8 py-3.5 hover:bg-[#3530C4] transition-colors flex items-center gap-2"
+                className="w-full sm:w-auto self-start bg-[#4640DE] text-white font-semibold text-[15px] px-8 py-3.5 hover:bg-[#3530C4] transition-colors flex items-center gap-2"
               >
                 Apply Now <Send className="w-4 h-4" />
               </button>
@@ -270,7 +270,7 @@ export default function JobDetailView({ id }: { id: string }) {
               transition={{ delay: 0.15 }}
               className="bg-white border border-[#D6DDEB] p-6"
             >
-              <h3 className="font-bold text-[18px] text-[#25324B] mb-5">Job Overview</h3>
+              <h3 className="font-semibold text-[18px] text-[#25324B] mb-5">Job Overview</h3>
               <div className="flex flex-col gap-4">
                 {[
                   { icon: Clock, label: "Job Type", value: job.type },
@@ -300,11 +300,11 @@ export default function JobDetailView({ id }: { id: string }) {
               transition={{ delay: 0.2 }}
               className="bg-[#4640DE] p-6 text-white"
             >
-              <h3 className="font-bold text-[18px] mb-2">Interested in this job?</h3>
+              <h3 className="font-semibold text-[18px] mb-2">Interested in this job?</h3>
               <p className="text-white/70 text-[14px] mb-5">Submit your application now to be considered.</p>
               <button
                 onClick={() => setShowApply(true)}
-                className="w-full bg-white text-[#4640DE] font-bold py-3 hover:bg-[#F8F8FD] transition-colors text-[15px]"
+                className="w-full bg-white text-[#4640DE] font-semibold py-3 hover:bg-[#F8F8FD] transition-colors text-[15px]"
               >
                 Apply Now
               </button>
@@ -318,11 +318,11 @@ export default function JobDetailView({ id }: { id: string }) {
                 transition={{ delay: 0.25 }}
                 className="bg-white border border-[#D6DDEB] p-6"
               >
-                <h3 className="font-bold text-[18px] text-[#25324B] mb-4">Similar Jobs</h3>
+                <h3 className="font-semibold text-[18px] text-[#25324B] mb-4">Similar Jobs</h3>
                 <div className="flex flex-col divide-y divide-[#D6DDEB]">
                   {relatedJobs.map((rj) => (
                     <Link key={rj.id} href={`/jobs/${rj.id}`} className="py-3 flex items-center gap-3 hover:opacity-80 transition-opacity group">
-                      <div className="w-10 h-10 rounded font-bold text-[14px] flex items-center justify-center shrink-0"
+                      <div className="w-10 h-10 rounded font-semibold text-[14px] flex items-center justify-center shrink-0"
                         style={{ backgroundColor: rj.logoBg, color: rj.logoColor }}>
                         {rj.logo}
                       </div>

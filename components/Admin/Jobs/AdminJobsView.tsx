@@ -120,7 +120,7 @@ export default function AdminJobsView() {
 
           <button
             onClick={() => openModal("add")}
-            className="flex items-center gap-2 bg-[#4640DE] text-white font-bold text-[14px] px-6 py-2.5 hover:bg-[#3530C4] transition-all rounded-lg whitespace-nowrap shadow-[0_4px_14px_rgba(70,64,222,0.25)] hover:-translate-y-0.5"
+            className="flex items-center gap-2 bg-[#4640DE] text-white font-semibold text-[14px] px-6 py-2.5 hover:bg-[#3530C4] transition-all rounded-lg whitespace-nowrap shadow-[0_4px_14px_rgba(70,64,222,0.25)] hover:-translate-y-0.5"
           >
             <Plus className="w-4 h-4" /> Add New Job
           </button>
@@ -132,11 +132,11 @@ export default function AdminJobsView() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-[#D6DDEB] bg-[#F8F8FD]">
-                  <th className="text-left px-6 py-4 text-[13px] font-bold text-[#25324B] uppercase tracking-wider">Job Post</th>
-                  <th className="text-left px-4 py-4 text-[13px] font-bold text-[#25324B] hidden sm:table-cell uppercase tracking-wider">Company</th>
-                  <th className="text-left px-4 py-4 text-[13px] font-bold text-[#25324B] hidden md:table-cell uppercase tracking-wider">Category</th>
-                  <th className="text-left px-4 py-4 text-[13px] font-bold text-[#25324B] hidden lg:table-cell uppercase tracking-wider">Type</th>
-                  <th className="text-right px-6 py-4 text-[13px] font-bold text-[#25324B] uppercase tracking-wider">Actions</th>
+                  <th className="text-left px-6 py-4 text-[13px] font-semibold text-[#25324B] uppercase tracking-wider">Job Post</th>
+                  <th className="text-left px-4 py-4 text-[13px] font-semibold text-[#25324B] hidden sm:table-cell uppercase tracking-wider">Company</th>
+                  <th className="text-left px-4 py-4 text-[13px] font-semibold text-[#25324B] hidden md:table-cell uppercase tracking-wider">Category</th>
+                  <th className="text-left px-4 py-4 text-[13px] font-semibold text-[#25324B] hidden lg:table-cell uppercase tracking-wider">Type</th>
+                  <th className="text-right px-6 py-4 text-[13px] font-semibold text-[#25324B] uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -158,7 +158,7 @@ export default function AdminJobsView() {
                     >
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-[14px] shrink-0 border border-[#D6DDEB]/30 shadow-sm"
+                          <div className="w-10 h-10 rounded-lg flex items-center justify-center font-semibold text-[14px] shrink-0 border border-[#D6DDEB]/30 shadow-sm"
                             style={{ backgroundColor: job.logoBg, color: job.logoColor }}>
                             {job.logo}
                           </div>
@@ -172,12 +172,12 @@ export default function AdminJobsView() {
                       </td>
                       <td className="px-4 py-4 text-[14px] text-[#515B6F] hidden sm:table-cell font-medium">{job.company}</td>
                       <td className="px-4 py-4 hidden md:table-cell">
-                        <span className="px-2.5 py-1 bg-[#4640DE]/5 text-[#4640DE] text-[12px] font-bold rounded-full border border-[#4640DE]/10">
+                        <span className="px-2.5 py-1 bg-[#4640DE]/5 text-[#4640DE] text-[12px] font-semibold rounded-full border border-[#4640DE]/10">
                           {job.category}
                         </span>
                       </td>
                       <td className="px-4 py-4 hidden lg:table-cell">
-                        <span className={cn("px-2.5 py-1 text-[12px] font-bold rounded-full border", 
+                        <span className={cn("px-2.5 py-1 text-[12px] font-semibold rounded-full border", 
                           job.type === "Full-Time" ? "text-[#56CDAD] border-[#56CDAD] bg-[#56CDAD]/10" :
                           job.type === "Part-Time" ? "text-[#FFB836] border-[#FFB836] bg-[#FFB836]/10" :
                           job.type === "Contract" ? "text-[#FF6550] border-[#FF6550] bg-[#FF6550]/10" :

@@ -15,7 +15,7 @@ function QuickHireLogo() {
       <div className="w-8 h-8 bg-[#4640DE] rounded-full flex items-center justify-center shrink-0">
         <Image src="/icons/logo.svg" alt="Logo" width={32} height={32} />
       </div>
-      <span className="font-bold text-[22px] text-[#25324B] tracking-tight leading-none">
+      <span className="font-semibold text-[22px] text-[#25324B] tracking-tight leading-none">
         QuickHire
       </span>
     </Link>
@@ -75,7 +75,7 @@ export default function PublicNavbar() {
                 {role === "admin" && (
                   <Link
                     href="/admin/dashboard"
-                    className="font-bold text-[14px] text-[#4640DE] bg-[#4640DE]/10 px-4 py-2 rounded-lg hover:bg-[#4640DE]/20 transition-all mr-2"
+                    className="font-semibold text-[14px] text-[#4640DE] bg-[#4640DE]/10 px-4 py-2 rounded-lg hover:bg-[#4640DE]/20 transition-all mr-2"
                   >
                     Dashboard
                   </Link>
@@ -97,14 +97,14 @@ export default function PublicNavbar() {
               <>
                 <Link
                   href="/signin"
-                  className="font-bold text-[16px] text-[#4640DE] px-6 py-3 hover:bg-[#CCCCF5]/30 rounded transition-colors"
+                  className="font-semibold text-[16px] text-[#4640DE] px-6 py-3 hover:bg-[#CCCCF5]/30 rounded transition-colors"
                 >
                   Login
                 </Link>
                 <div className="w-px h-10 bg-[#D6DDEB]" />
                 <Link
                   href="/signup"
-                  className="font-bold text-[16px] text-white bg-[#4640DE] px-6 py-3 hover:bg-[#3530C4] transition-colors"
+                  className="font-semibold text-[16px] text-white bg-[#4640DE] px-6 py-3 hover:bg-[#3530C4] transition-colors"
                 >
                   Sign Up
                 </Link>
@@ -148,14 +148,14 @@ export default function PublicNavbar() {
               <div className="flex gap-3 pt-4">
                 <Link
                   href="/signin"
-                  className="flex-1 text-center font-bold text-[15px] text-[#4640DE] border-2 border-[#4640DE] py-3 rounded transition-colors hover:bg-[#CCCCF5]/30"
+                  className="flex-1 text-center font-semibold text-[15px] text-[#4640DE] border-2 border-[#4640DE] py-3 rounded transition-colors hover:bg-[#CCCCF5]/30"
                   onClick={() => setMobileOpen(false)}
                 >
                   Login
                 </Link>
                 <Link
                   href="/signup"
-                  className="flex-1 text-center font-bold text-[15px] text-white bg-[#4640DE] py-3 rounded transition-colors hover:bg-[#3530C4]"
+                  className="flex-1 text-center font-semibold text-[15px] text-white bg-[#4640DE] py-3 rounded transition-colors hover:bg-[#3530C4]"
                   onClick={() => setMobileOpen(false)}
                 >
                   Sign Up
@@ -166,7 +166,7 @@ export default function PublicNavbar() {
                 {role === "admin" && (
                   <Link
                     href="/admin/dashboard"
-                    className="block w-full py-3 px-4 font-bold text-[16px] text-white bg-[#4640DE] hover:bg-[#3530C4] text-center rounded transition-all"
+                    className="block w-full py-3 px-4 font-semibold text-[16px] text-white bg-[#4640DE] hover:bg-[#3530C4] text-center rounded transition-all"
                     onClick={() => setMobileOpen(false)}
                   >
                     Admin Dashboard

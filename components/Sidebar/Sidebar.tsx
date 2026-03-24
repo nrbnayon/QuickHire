@@ -189,8 +189,8 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
     const iconClasses = cn(
         "h-6 w-6 shrink-0 transition-colors duration-200",
         isActive
-          ? "text-white font-bold"
-          : "text-foreground group-hover:text-foreground font-bold"
+          ? "text-white font-semibold"
+          : "text-foreground group-hover:text-foreground font-semibold"
     );
 
     // 1. If it's a valid React Element (pre-rendered JSX like <Bell />)
@@ -336,7 +336,7 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                           className={cn(
                             "flex items-center gap-3 p-3 rounded-md transition-all duration-200 group flex-1 relative",
                             isActive
-                              ? "bg-primary text-white font-bold"
+                              ? "bg-primary text-white font-semibold"
                               : "hover:text-foreground hover:bg-primary/30"
                           )}
                         >
@@ -414,7 +414,7 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
                                 className={cn(
                                   "flex items-center gap-3 px-3 py-2 rounded-md transition-all duration-200 text-sm",
                                   isSubLinkActive
-                                    ? "bg-gradient-purple text-white font-bold"
+                                    ? "bg-gradient-purple text-white font-semibold"
                                     : "text-secondary hover:text-primary hover:bg-gray-50"
                                 )}
                               >

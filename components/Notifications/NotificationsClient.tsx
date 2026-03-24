@@ -167,7 +167,7 @@ export default function NotificationsClient() {
                     <button
                         onClick={() => { setActiveTab("all"); setCurrentPage(1); }}
                         className={cn(
-                            "pb-4 text-sm font-bold transition-all relative min-w-fit cursor-pointer",
+                            "pb-4 text-sm font-semibold transition-all relative min-w-fit cursor-pointer",
                             activeTab === "all" ? "text-primary" : "text-gray-400 hover:text-secondary"
                         )}
                     >
@@ -177,7 +177,7 @@ export default function NotificationsClient() {
                     <button
                         onClick={() => { setActiveTab("unread"); setCurrentPage(1); }}
                         className={cn(
-                            "pb-4 text-sm font-bold transition-all relative min-w-fit cursor-pointer",
+                            "pb-4 text-sm font-semibold transition-all relative min-w-fit cursor-pointer",
                             activeTab === "unread" ? "text-primary" : "text-gray-400 hover:text-secondary"
                         )}
                     >
@@ -208,13 +208,13 @@ export default function NotificationsClient() {
                                 </div>
                                 <div className="flex-1 space-y-1">
                                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-1">
-                                        <h3 className="text-sm font-bold text-foreground">
+                                        <h3 className="text-sm font-semibold text-foreground">
                                             {notification.title}
                                             {notification.tracking_no && (
                                                 <span className="ml-2 text-primary font-medium">#{notification.tracking_no}</span>
                                             )}
                                         </h3>
-                                        <span className="text-[10px] md:text-xs font-bold text-secondary uppercase tracking-wider">
+                                        <span className="text-[10px] md:text-xs font-semibold text-secondary uppercase tracking-wider">
                                             {formatTimestamp(notification.timestamp)}
                                         </span>
                                     </div>
@@ -227,7 +227,7 @@ export default function NotificationsClient() {
                     ) : (
                         <div className="py-20 text-center text-secondary">
                             <Bell className="w-12 h-12 mx-auto mb-4 opacity-10" />
-                            <p className="font-bold">No notifications found</p>
+                            <p className="font-semibold">No notifications found</p>
                         </div>
                     )}
                 </div>
@@ -273,12 +273,12 @@ export default function NotificationsClient() {
                                     {getIcon(selectedNotification.type)}
                                 </div>
                                 <div className="flex-1">
-                                    <h2 className="text-xl font-bold text-foreground mb-1">
+                                    <h2 className="text-xl font-semibold text-foreground mb-1">
                                         {selectedNotification.title}
                                     </h2>
                                     {selectedNotification.priority && (
                                         <span className={cn(
-                                            "inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border",
+                                            "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border",
                                             PRIORITY_COLORS[selectedNotification.priority]
                                         )}>
                                             {selectedNotification.priority.toUpperCase()}
@@ -309,8 +309,8 @@ export default function NotificationsClient() {
                                     <div className="flex items-start gap-3">
                                         <Hash className="w-5 h-5 text-gray-400 mt-0.5" />
                                         <div>
-                                            <p className="text-xs font-bold text-gray-500 mb-1">Tracking Number</p>
-                                            <p className="text-sm font-bold text-primary">{selectedNotification.tracking_no}</p>
+                                            <p className="text-xs font-semibold text-gray-500 mb-1">Tracking Number</p>
+                                            <p className="text-sm font-semibold text-primary">{selectedNotification.tracking_no}</p>
                                         </div>
                                     </div>
                                 )}
@@ -319,7 +319,7 @@ export default function NotificationsClient() {
                                     <div className="flex items-start gap-3">
                                         <User className="w-5 h-5 text-gray-400 mt-0.5" />
                                         <div>
-                                            <p className="text-xs font-bold text-gray-500 mb-1">Driver</p>
+                                            <p className="text-xs font-semibold text-gray-500 mb-1">Driver</p>
                                             <p className="text-sm font-medium text-foreground">{selectedNotification.driver_name}</p>
                                         </div>
                                     </div>
@@ -329,7 +329,7 @@ export default function NotificationsClient() {
                                     <div className="flex items-start gap-3">
                                         <User className="w-5 h-5 text-gray-400 mt-0.5" />
                                         <div>
-                                            <p className="text-xs font-bold text-gray-500 mb-1">Seller</p>
+                                            <p className="text-xs font-semibold text-gray-500 mb-1">Seller</p>
                                             <p className="text-sm font-medium text-foreground">{selectedNotification.seller_name}</p>
                                         </div>
                                     </div>
@@ -339,7 +339,7 @@ export default function NotificationsClient() {
                                     <div className="flex items-start gap-3">
                                         <Info className="w-5 h-5 text-gray-400 mt-0.5" />
                                         <div className="flex-1">
-                                            <p className="text-xs font-bold text-gray-500 mb-2">Additional Details</p>
+                                            <p className="text-xs font-semibold text-gray-500 mb-2">Additional Details</p>
                                             <div className="space-y-2">
                                                 {Object.entries(selectedNotification.metadata).map(([key, value]) => (
                                                     <div key={key} className="flex justify-between items-center">
@@ -362,14 +362,14 @@ export default function NotificationsClient() {
                         <div className="p-6 border-t border-gray-100 flex gap-3">
                             <button
                                 onClick={closeModal}
-                                className="flex-1 px-6 py-3 rounded-xl border border-gray-200 text-sm font-bold text-gray-700 hover:bg-gray-50 transition-colors"
+                                className="flex-1 px-6 py-3 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
                             >
                                 Close
                             </button>
                             {/* {selectedNotification.action_url && (
                                 <button
                                     onClick={() => handleActionClick(selectedNotification.action_url)}
-                                    className="flex-1 px-6 py-3 rounded-xl bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
+                                    className="flex-1 px-6 py-3 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
                                 >
                                     View Details
                                     <ExternalLink className="w-4 h-4" />

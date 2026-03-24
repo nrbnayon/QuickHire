@@ -19,7 +19,7 @@ export default function FeaturedJobsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="font-clash font-bold text-[32px] sm:text-[40px] lg:text-[48px] leading-[1.1] text-[#25324B]"
+            className="font-clash font-semibold text-[32px] sm:text-[40px] lg:text-[48px] leading-[1.1] text-[#25324B]"
           >
             Featured <span className="text-[#26A4FF]">Jobs</span>
           </motion.h2>

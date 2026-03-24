@@ -154,7 +154,7 @@ export default function PrivacyPolicyClient() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-foreground dark:text-gray-50">
+          <h1 className="text-2xl font-semibold text-foreground dark:text-gray-50">
             Privacy and policy
           </h1>
           <p className="text-sm text-gray-500 mt-1">

@@ -100,7 +100,7 @@ export default function HeroSection() {
 
             {/* Headline */}
             <FadeUp delay={0.1}>
-              <h1 className="font-clash font-bold text-[42px] sm:text-[56px] lg:text-[72px] leading-[1.1] text-[#25324B] tracking-tight">
+              <h1 className="font-clash font-semibold text-[42px] sm:text-[56px] lg:text-[72px] leading-[1.1] text-[#25324B] tracking-tight">
                 Discover
                 <br />
                 more than
@@ -169,7 +169,7 @@ export default function HeroSection() {
                   {/* Search CTA */}
                   <Link
                     href="/jobs"
-                    className="bg-[#4640DE] text-white font-bold text-[16px] px-8 py-5 hover:bg-[#3530C4] active:bg-[#2d28b0] transition-colors duration-200 whitespace-nowrap shrink-0 w-full sm:w-auto text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4640DE] focus-visible:ring-offset-2"
+                    className="bg-[#4640DE] text-white font-semibold text-[16px] px-8 py-5 hover:bg-[#3530C4] active:bg-[#2d28b0] transition-colors duration-200 whitespace-nowrap shrink-0 w-full sm:w-auto text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4640DE] focus-visible:ring-offset-2"
                   >
                     Search my job
                   </Link>

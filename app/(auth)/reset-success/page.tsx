@@ -31,7 +31,7 @@ export default function ResetSuccessPage() {
           </div>
 
           <div className="space-y-4">
-            <h1 className="text-3xl sm:text-4xl font-bold text-primary">Success!</h1>
+            <h1 className="text-3xl sm:text-4xl font-semibold text-primary">Success!</h1>
             <p className="text-lg sm:text-xl text-secondary max-w-sm mx-auto">
               Password Reset successful! You can now signin with your new password.
             </p>

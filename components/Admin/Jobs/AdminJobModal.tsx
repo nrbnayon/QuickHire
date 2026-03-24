@@ -122,12 +122,12 @@ export default function AdminJobModal({ isOpen, onClose, mode: initialMode, job,
           {/* Header */}
           <div className="px-8 py-6 border-b border-[#D6DDEB] flex items-center justify-between shrink-0 bg-[#F8F8FD]">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 flex items-center justify-center rounded-xl font-bold text-[18px] text-white" 
+              <div className="w-12 h-12 flex items-center justify-center rounded-xl font-semibold text-[18px] text-white" 
                 style={{ backgroundColor: form.logoColor || "#4640DE" }}>
                 {form.logo || "J"}
               </div>
               <div>
-                <h2 className="font-clash font-bold text-[22px] text-[#25324B]">{headerTitle}</h2>
+                <h2 className="font-clash font-semibold text-[22px] text-[#25324B]">{headerTitle}</h2>
                 <p className="text-[13px] text-[#7C8493]">{mode === "view" ? "Published for your network" : "Configure all parameters below"}</p>
               </div>
             </div>
@@ -158,7 +158,7 @@ export default function AdminJobModal({ isOpen, onClose, mode: initialMode, job,
               <div className="space-y-5">
                 <div className="flex items-center gap-2 text-[#4640DE]">
                   <Briefcase className="w-4 h-4" />
-                  <span className="font-bold text-[14px] uppercase tracking-wider">Basic Information</span>
+                  <span className="font-semibold text-[14px] uppercase tracking-wider">Basic Information</span>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -266,7 +266,7 @@ export default function AdminJobModal({ isOpen, onClose, mode: initialMode, job,
               <div className="space-y-6">
                 <div className="flex items-center gap-2 text-[#4640DE] pt-4">
                   <Building2 className="w-4 h-4" />
-                  <span className="font-bold text-[14px] uppercase tracking-wider">Role Details</span>
+                  <span className="font-semibold text-[14px] uppercase tracking-wider">Role Details</span>
                 </div>
 
                 <div className="space-y-1.5">
@@ -290,7 +290,7 @@ export default function AdminJobModal({ isOpen, onClose, mode: initialMode, job,
                     <div key={i} className="flex gap-2">
                        {mode === "view" ? (
                          <div className="flex gap-3 text-[14px] text-[#515B6F] bg-[#F8F8FD] p-3 rounded-lg flex-1">
-                           <span className="text-[#4640DE] font-bold">•</span>
+                           <span className="text-[#4640DE] font-semibold">•</span>
                            <span>{r}</span>
                          </div>
                        ) : (
@@ -309,7 +309,7 @@ export default function AdminJobModal({ isOpen, onClose, mode: initialMode, job,
                     </div>
                   ))}
                   {mode !== "view" && (
-                    <button type="button" onClick={() => addListItem("responsibilities")} className="flex items-center gap-1.5 text-[13px] text-[#4640DE] font-bold hover:underline px-2">
+                    <button type="button" onClick={() => addListItem("responsibilities")} className="flex items-center gap-1.5 text-[13px] text-[#4640DE] font-semibold hover:underline px-2">
                       <Plus className="w-4 h-4" /> Add Responsibility
                     </button>
                   )}
@@ -322,7 +322,7 @@ export default function AdminJobModal({ isOpen, onClose, mode: initialMode, job,
                     <div key={i} className="flex gap-2">
                        {mode === "view" ? (
                          <div className="flex gap-3 text-[14px] text-[#515B6F] bg-[#F8F8FD] p-3 rounded-lg flex-1">
-                           <span className="text-[#4640DE] font-bold">•</span>
+                           <span className="text-[#4640DE] font-semibold">•</span>
                            <span>{r}</span>
                          </div>
                        ) : (
@@ -341,7 +341,7 @@ export default function AdminJobModal({ isOpen, onClose, mode: initialMode, job,
                     </div>
                   ))}
                   {mode !== "view" && (
-                    <button type="button" onClick={() => addListItem("requirements")} className="flex items-center gap-1.5 text-[13px] text-[#4640DE] font-bold hover:underline px-2">
+                    <button type="button" onClick={() => addListItem("requirements")} className="flex items-center gap-1.5 text-[13px] text-[#4640DE] font-semibold hover:underline px-2">
                       <Plus className="w-4 h-4" /> Add Requirement
                     </button>
                   )}
@@ -360,14 +360,14 @@ export default function AdminJobModal({ isOpen, onClose, mode: initialMode, job,
                       className="flex-1 px-4 py-2 border border-[#D6DDEB] bg-[#F8F8FD] rounded-lg text-[13px] outline-none focus:border-[#4640DE]" 
                       placeholder="Add tag (e.g. Remote, Senior)..."
                     />
-                    <button type="button" onClick={addTag} className="px-5 bg-white border-2 border-[#D6DDEB] text-[#515B6F] text-[13px] font-bold hover:border-[#4640DE] hover:text-[#4640DE] rounded-lg transition-all">
+                    <button type="button" onClick={addTag} className="px-5 bg-white border-2 border-[#D6DDEB] text-[#515B6F] text-[13px] font-semibold hover:border-[#4640DE] hover:text-[#4640DE] rounded-lg transition-all">
                       Add
                     </button>
                   </div>
                 )}
                 <div className="flex flex-wrap gap-2">
                   {form.tags.map((tag) => (
-                    <span key={tag} className="flex items-center gap-1.5 px-4 py-1.5 bg-[#4640DE]/5 text-[#4640DE] text-[12px] font-bold rounded-full border border-[#4640DE]/10 group">
+                    <span key={tag} className="flex items-center gap-1.5 px-4 py-1.5 bg-[#4640DE]/5 text-[#4640DE] text-[12px] font-semibold rounded-full border border-[#4640DE]/10 group">
                       {tag}
                       {mode !== "view" && (
                         <button type="button" onClick={() => setForm({ ...form, tags: form.tags.filter(t => t !== tag) })} className="hover:text-red-500">
@@ -387,7 +387,7 @@ export default function AdminJobModal({ isOpen, onClose, mode: initialMode, job,
             <button 
               type="button" 
               onClick={onClose}
-              className="px-6 py-3 font-bold text-[14px] text-[#515B6F] hover:text-[#25324B] transition-colors"
+              className="px-6 py-3 font-semibold text-[14px] text-[#515B6F] hover:text-[#25324B] transition-colors"
             >
               Cancel
             </button>
@@ -397,7 +397,7 @@ export default function AdminJobModal({ isOpen, onClose, mode: initialMode, job,
                   <button 
                     type="button"
                     onClick={() => { onDelete(job.id); onClose(); }}
-                    className="px-6 py-3 bg-red-50 text-red-500 font-bold text-[14px] rounded-xl hover:bg-red-100 transition-colors flex items-center gap-2"
+                    className="px-6 py-3 bg-red-50 text-red-500 font-semibold text-[14px] rounded-xl hover:bg-red-100 transition-colors flex items-center gap-2"
                   >
                     <Trash2 className="w-4 h-4" /> Delete Post
                   </button>
@@ -405,7 +405,7 @@ export default function AdminJobModal({ isOpen, onClose, mode: initialMode, job,
                 <button 
                   type="button"
                   onClick={() => setMode("edit")}
-                  className="px-8 py-3 bg-[#4640DE] text-white font-bold text-[14px] rounded-xl hover:bg-[#3530C4] shadow-[0_10px_30px_rgba(70,64,222,0.2)] transition-all flex items-center gap-2"
+                  className="px-8 py-3 bg-[#4640DE] text-white font-semibold text-[14px] rounded-xl hover:bg-[#3530C4] shadow-[0_10px_30px_rgba(70,64,222,0.2)] transition-all flex items-center gap-2"
                 >
                   <Pencil className="w-4 h-4" /> Edit Details
                 </button>
@@ -414,7 +414,7 @@ export default function AdminJobModal({ isOpen, onClose, mode: initialMode, job,
               <button 
                 type="submit"
                 form="job-modal-form"
-                className="px-10 py-3 bg-[#4640DE] text-white font-bold text-[14px] rounded-xl hover:bg-[#3530C4] shadow-[0_10px_30px_rgba(70,64,222,0.2)] transition-all flex items-center gap-2"
+                className="px-10 py-3 bg-[#4640DE] text-white font-semibold text-[14px] rounded-xl hover:bg-[#3530C4] shadow-[0_10px_30px_rgba(70,64,222,0.2)] transition-all flex items-center gap-2"
               >
                 {mode === "add" ? <Plus className="w-4 h-4" /> : <Pencil className="w-4 h-4" />}
                 {mode === "add" ? "Create Listing" : "Save Changes"}

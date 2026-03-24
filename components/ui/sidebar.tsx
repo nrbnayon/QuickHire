@@ -139,7 +139,7 @@ export const MobileSidebar = ({
       >
         <div className="flex justify-end z-40 w-full">
           <IconMenu2
-            className="font-bold text-primary hover:scale-110 transition duration-150 cursor-pointer"
+            className="font-semibold text-primary hover:scale-110 transition duration-150 cursor-pointer"
             onClick={() => setOpen(!open)}
           />
         </div>

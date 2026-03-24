@@ -37,7 +37,7 @@ export function StatsCard({
     >
       <div className="flex flex-col justify-center gap-2">
         <h3 className="text-foreground text-sm font-semibold">{title}</h3>
-        <div className="text-3xl font-bold text-foreground">{value}</div>
+        <div className="text-3xl font-semibold text-foreground">{value}</div>
         {subtitle && (
           <div className="flex items-center gap-1 text-xs">
             {percentage && (

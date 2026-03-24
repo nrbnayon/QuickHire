@@ -17,7 +17,7 @@ export default function DashboardHeader({
   return (
     <div className="bg-white flex flex-row justify-between items-center py-2 px-4 md:px-8 border-b border-border gap-4">
       <div className="flex flex-col items-start justify-center">
-        <h1 className="text-base md:text-2xl lg:text-3xl font-bold text-foreground">
+        <h1 className="text-base md:text-2xl lg:text-3xl font-semibold text-foreground">
           {title}
         </h1>
         {description && (
@@ -54,10 +54,10 @@ export default function DashboardHeader({
             />
           </div>
           <div className="hidden md:flex flex-col">
-            <p className="text-sm font-bold text-foreground font-nunito">
+            <p className="text-sm font-semibold text-foreground font-nunito">
               {name || "User"}
             </p>
-            <p className="text-xs text-gray-500 font-bold capitalize">
+            <p className="text-xs text-gray-500 font-semibold capitalize">
               {role || "User"}
             </p>
           </div>

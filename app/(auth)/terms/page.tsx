@@ -23,7 +23,7 @@ export default function TermsOfServicePage() {
               priority
             />
           </div>
-          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">Terms of Service</h1>
+          <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">Terms of Service</h1>
           <p className="text-lg text-secondary">Last updated: {new Date().toLocaleDateString()}</p>
         </div>
 

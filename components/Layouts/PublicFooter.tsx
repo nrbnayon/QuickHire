@@ -16,7 +16,7 @@ export default function PublicFooter() {
               <div className="w-8 h-8 bg-[#4640DE] rounded-full flex items-center justify-center shrink-0">
                 <Image src="/icons/logo.svg" alt="Logo" width={32} height={32} />
               </div>
-              <span className="font-bold text-[22px] text-white tracking-tight">QuickHire</span>
+              <span className="font-semibold text-[22px] text-white tracking-tight">QuickHire</span>
             </Link>
             <p className="text-[15px] text-white/50 leading-relaxed">
               Great platform for the job seeker that searching for new career heights and passionate about startups.
@@ -42,7 +42,7 @@ export default function PublicFooter() {
 
           {/* About */}
           <div className="flex flex-col gap-5">
-            <h3 className="font-bold text-[17px] text-white">About</h3>
+            <h3 className="font-semibold text-[17px] text-white">About</h3>
             <ul className="flex flex-col gap-3">
               {["Companies", "Pricing", "Terms", "Advice", "Privacy Policy"].map((item) => (
                 <li key={item}>
@@ -56,7 +56,7 @@ export default function PublicFooter() {
 
           {/* Resources */}
           <div className="flex flex-col gap-5">
-            <h3 className="font-bold text-[17px] text-white">Resources</h3>
+            <h3 className="font-semibold text-[17px] text-white">Resources</h3>
             <ul className="flex flex-col gap-3">
               {["Help Docs", "Guide", "Updates", "Contact Us"].map((item) => (
                 <li key={item}>
@@ -70,7 +70,7 @@ export default function PublicFooter() {
 
           {/* Newsletter */}
           <div className="flex flex-col gap-5">
-            <h3 className="font-bold text-[17px] text-white">Get Job Notifications</h3>
+            <h3 className="font-semibold text-[17px] text-white">Get Job Notifications</h3>
             <p className="text-[13px] text-white/50 leading-relaxed">
               The latest job news, articles, sent to your inbox weekly.
             </p>
@@ -80,7 +80,7 @@ export default function PublicFooter() {
                 placeholder="Email Address"
                 className="flex-1 min-w-0 px-4 py-3 bg-white/8 border border-white/15 text-white text-[14px] outline-none placeholder:text-white/40 focus:border-white/40 transition-colors font-[Epilogue,sans-serif]"
               />
-              <button className="px-4 py-3 bg-[#4640DE] text-white font-bold text-[14px] hover:bg-[#3530C4] transition-colors whitespace-nowrap shrink-0 cursor-pointer">
+              <button className="px-4 py-3 bg-[#4640DE] text-white font-semibold text-[14px] hover:bg-[#3530C4] transition-colors whitespace-nowrap shrink-0 cursor-pointer">
                 Subscribe
               </button>
             </div>

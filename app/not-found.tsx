@@ -78,7 +78,7 @@ const CreativeNotFound = () => {
 
         {/* Error Title */}
         <div className="mb-6">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-semibold text-white mb-4">
             <span className="bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
               Oops!
             </span>

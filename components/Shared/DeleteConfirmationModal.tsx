@@ -56,7 +56,7 @@ export function DeleteConfirmationModal({
               />
             </div>
 
-            <h3 className="text-xl font-bold text-primary ">{title}</h3>
+            <h3 className="text-xl font-semibold text-primary ">{title}</h3>
             <p className="mt-2 text-sm text-secondary  ">
               {description}
             </p>

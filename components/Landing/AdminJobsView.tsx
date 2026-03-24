@@ -86,7 +86,7 @@ function AddJobModal({ onClose, onAdd }: { onClose: () => void; onAdd: (job: Job
         className="relative bg-white w-full max-w-[720px] my-8 shadow-2xl"
       >
         <div className="bg-[#4640DE] px-8 py-5 flex items-center justify-between">
-          <h2 className="font-bold text-[20px] text-white">Add New Job Listing</h2>
+          <h2 className="font-semibold text-[20px] text-white">Add New Job Listing</h2>
           <button onClick={onClose} className="text-white/70 hover:text-white transition-colors">
             <X className="w-5 h-5" />
           </button>
@@ -239,11 +239,11 @@ function AddJobModal({ onClose, onAdd }: { onClose: () => void; onAdd: (job: Job
 
           <div className="flex gap-3 pt-2 sticky bottom-0 bg-white py-4 -mx-8 px-8 border-t border-[#D6DDEB]">
             <button type="button" onClick={onClose}
-              className="flex-1 border-2 border-[#D6DDEB] text-[#515B6F] font-bold py-3 hover:border-[#4640DE] hover:text-[#4640DE] transition-colors text-[14px]">
+              className="flex-1 border-2 border-[#D6DDEB] text-[#515B6F] font-semibold py-3 hover:border-[#4640DE] hover:text-[#4640DE] transition-colors text-[14px]">
               Cancel
             </button>
             <button type="submit"
-              className="flex-1 bg-[#4640DE] text-white font-bold py-3 hover:bg-[#3530C4] transition-colors text-[14px] flex items-center justify-center gap-2">
+              className="flex-1 bg-[#4640DE] text-white font-semibold py-3 hover:bg-[#3530C4] transition-colors text-[14px] flex items-center justify-center gap-2">
               <Plus className="w-4 h-4" /> Add Job Listing
             </button>
           </div>
@@ -301,7 +301,7 @@ export default function AdminJobsView() {
 
           <button
             onClick={() => setShowAdd(true)}
-            className="flex items-center gap-2 bg-[#4640DE] text-white font-bold text-[14px] px-5 py-2.5 hover:bg-[#3530C4] transition-colors rounded-lg whitespace-nowrap"
+            className="flex items-center gap-2 bg-[#4640DE] text-white font-semibold text-[14px] px-5 py-2.5 hover:bg-[#3530C4] transition-colors rounded-lg whitespace-nowrap"
           >
             <Plus className="w-4 h-4" /> Add New Job
           </button>
@@ -320,7 +320,7 @@ export default function AdminJobsView() {
                 <Briefcase className="w-5 h-5" style={{ color: stat.color }} />
               </div>
               <div>
-                <p className="font-bold text-[22px] text-[#25324B]">{stat.value}</p>
+                <p className="font-semibold text-[22px] text-[#25324B]">{stat.value}</p>
                 <p className="text-[12px] text-[#7C8493]">{stat.label}</p>
               </div>
             </div>
@@ -333,12 +333,12 @@ export default function AdminJobsView() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-[#D6DDEB] bg-[#F8F8FD]">
-                  <th className="text-left px-6 py-4 text-[13px] font-bold text-[#25324B]">Job</th>
-                  <th className="text-left px-4 py-4 text-[13px] font-bold text-[#25324B] hidden sm:table-cell">Company</th>
-                  <th className="text-left px-4 py-4 text-[13px] font-bold text-[#25324B] hidden md:table-cell">Category</th>
-                  <th className="text-left px-4 py-4 text-[13px] font-bold text-[#25324B] hidden lg:table-cell">Type</th>
-                  <th className="text-left px-4 py-4 text-[13px] font-bold text-[#25324B] hidden lg:table-cell">Posted</th>
-                  <th className="text-right px-6 py-4 text-[13px] font-bold text-[#25324B]">Actions</th>
+                  <th className="text-left px-6 py-4 text-[13px] font-semibold text-[#25324B]">Job</th>
+                  <th className="text-left px-4 py-4 text-[13px] font-semibold text-[#25324B] hidden sm:table-cell">Company</th>
+                  <th className="text-left px-4 py-4 text-[13px] font-semibold text-[#25324B] hidden md:table-cell">Category</th>
+                  <th className="text-left px-4 py-4 text-[13px] font-semibold text-[#25324B] hidden lg:table-cell">Type</th>
+                  <th className="text-left px-4 py-4 text-[13px] font-semibold text-[#25324B] hidden lg:table-cell">Posted</th>
+                  <th className="text-right px-6 py-4 text-[13px] font-semibold text-[#25324B]">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -359,7 +359,7 @@ export default function AdminJobsView() {
                     >
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded flex items-center justify-center font-bold text-[14px] shrink-0"
+                          <div className="w-10 h-10 rounded flex items-center justify-center font-semibold text-[14px] shrink-0"
                             style={{ backgroundColor: job.logoBg, color: job.logoColor }}>
                             {job.logo}
                           </div>
@@ -426,17 +426,17 @@ export default function AdminJobsView() {
             <div className="w-14 h-14 bg-[#FF6550]/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <Trash2 className="w-6 h-6 text-[#FF6550]" />
             </div>
-            <h3 className="font-bold text-[20px] text-[#25324B] mb-2">Delete Job Listing</h3>
+            <h3 className="font-semibold text-[20px] text-[#25324B] mb-2">Delete Job Listing</h3>
             <p className="text-[#515B6F] text-[15px] mb-6">
               Are you sure you want to delete this job listing? This action cannot be undone.
             </p>
             <div className="flex gap-3">
               <button onClick={() => setDeleteId(null)}
-                className="flex-1 border-2 border-[#D6DDEB] text-[#515B6F] font-bold py-3 hover:border-[#4640DE] hover:text-[#4640DE] transition-colors rounded-lg">
+                className="flex-1 border-2 border-[#D6DDEB] text-[#515B6F] font-semibold py-3 hover:border-[#4640DE] hover:text-[#4640DE] transition-colors rounded-lg">
                 Cancel
               </button>
               <button onClick={() => handleDelete(deleteId)}
-                className="flex-1 bg-[#FF6550] text-white font-bold py-3 hover:bg-[#e04a37] transition-colors rounded-lg flex items-center justify-center gap-2">
+                className="flex-1 bg-[#FF6550] text-white font-semibold py-3 hover:bg-[#e04a37] transition-colors rounded-lg flex items-center justify-center gap-2">
                 <Trash2 className="w-4 h-4" /> Delete
               </button>
             </div>

@@ -108,7 +108,7 @@ export default function DashboardOverview() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-clash font-bold text-[18px] text-[#25324B]">Job Posting Volume</h3>
+                <h3 className="font-clash font-semibold text-[18px] text-[#25324B]">Job Posting Volume</h3>
                 <p className="text-[13px] text-[#7C8493]">Real-time trajectory of new job listings</p>
               </div>
               <div className="flex items-center gap-2">
@@ -147,7 +147,7 @@ export default function DashboardOverview() {
             className="bg-white dark:bg-card border border-[#D6DDEB] rounded-2xl p-7 shadow-sm flex flex-col gap-6"
           >
             <div>
-              <h3 className="font-clash font-bold text-[18px] text-[#25324B]">Department Shares</h3>
+              <h3 className="font-clash font-semibold text-[18px] text-[#25324B]">Department Shares</h3>
               <p className="text-[13px] text-[#7C8493]">Breakdown of jobs by category</p>
             </div>
 
@@ -171,8 +171,8 @@ export default function DashboardOverview() {
                 </PieChart>
               </ResponsiveContainer>
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
-                <span className="block text-[24px] font-bold text-[#25324B]">{totalJobs}</span>
-                <span className="text-[10px] uppercase font-bold text-[#7C8493]">Jobs</span>
+                <span className="block text-[24px] font-semibold text-[#25324B]">{totalJobs}</span>
+                <span className="text-[10px] uppercase font-semibold text-[#7C8493]">Jobs</span>
               </div>
             </div>
 
@@ -183,7 +183,7 @@ export default function DashboardOverview() {
                      <span className="w-2 h-2 rounded-full" style={{ backgroundColor: COLORS[i] }} />
                      <span className="text-[#515B6F] font-medium">{cat.name}</span>
                    </div>
-                   <span className="font-bold text-[#25324B]">{Math.round((cat.value / totalJobs) * 100)}%</span>
+                   <span className="font-semibold text-[#25324B]">{Math.round((cat.value / totalJobs) * 100)}%</span>
                  </div>
                ))}
             </div>
@@ -199,7 +199,7 @@ export default function DashboardOverview() {
             animate={{ opacity: 1, x: 0 }}
             className="bg-white dark:bg-card border border-[#D6DDEB] rounded-2xl p-7 shadow-sm"
           >
-            <h3 className="font-clash font-bold text-[18px] text-[#25324B] mb-6">Employment Types</h3>
+            <h3 className="font-clash font-semibold text-[18px] text-[#25324B] mb-6">Employment Types</h3>
             <div className="h-[250px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={typeData}>
@@ -220,8 +220,8 @@ export default function DashboardOverview() {
              className="bg-white dark:bg-card border border-[#D6DDEB] rounded-2xl p-7 shadow-sm"
           >
             <div className="flex items-center justify-between mb-6">
-               <h3 className="font-clash font-bold text-[18px] text-[#25324B]">Quick Insights</h3>
-               <span className="px-3 py-1 bg-[#4640DE10] text-[#4640DE] text-[10px] font-bold rounded-lg uppercase">Real-Time</span>
+               <h3 className="font-clash font-semibold text-[18px] text-[#25324B]">Quick Insights</h3>
+               <span className="px-3 py-1 bg-[#4640DE10] text-[#4640DE] text-[10px] font-semibold rounded-lg uppercase">Real-Time</span>
             </div>
 
             <div className="space-y-6">
@@ -235,7 +235,7 @@ export default function DashboardOverview() {
                       <item.icon className="w-6 h-6" style={{ color: item.color }} />
                    </div>
                    <div>
-                     <h4 className="font-bold text-[14px] text-[#25324B] mb-0.5">{item.label}</h4>
+                     <h4 className="font-semibold text-[14px] text-[#25324B] mb-0.5">{item.label}</h4>
                      <p className="text-[14px] font-semibold text-[#4640DE]">{item.value}</p>
                      <p className="text-[12px] text-[#7C8493]">{item.desc}</p>
                    </div>

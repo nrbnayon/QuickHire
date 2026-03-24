@@ -33,7 +33,7 @@ function CategorySidebar({
           className="flex items-center justify-between w-full mb-4"
           onClick={() => setCatOpen(!catOpen)}
         >
-          <h3 className="font-bold text-[18px] text-[#25324B]">Type of Employment</h3>
+          <h3 className="font-semibold text-[18px] text-[#25324B]">Type of Employment</h3>
           {catOpen ? <ChevronUp className="w-5 h-5 text-[#7C8493]" /> : <ChevronDown className="w-5 h-5 text-[#7C8493]" />}
         </button>
         {catOpen && (
@@ -64,7 +64,7 @@ function CategorySidebar({
           className="flex items-center justify-between w-full mb-4"
           onClick={() => setCatOpen(!catOpen)}
         >
-          <h3 className="font-bold text-[18px] text-[#25324B]">Category</h3>
+          <h3 className="font-semibold text-[18px] text-[#25324B]">Category</h3>
           {catOpen ? <ChevronUp className="w-5 h-5 text-[#7C8493]" /> : <ChevronDown className="w-5 h-5 text-[#7C8493]" />}
         </button>
         {catOpen && (
@@ -153,7 +153,7 @@ export default function JobsPageView() {
       {/* Header Search Bar */}
       <div className="bg-white border-b border-[#D6DDEB]">
         <div className="max-w-[1240px] mx-auto px-5 sm:px-8 lg:px-0 py-8">
-          <h1 className="font-bold text-[28px] sm:text-[36px] text-[#25324B] mb-2">
+          <h1 className="font-semibold text-[28px] sm:text-[36px] text-[#25324B] mb-2">
             Find your <span className="text-[#26A4FF]">dream job</span>
           </h1>
           <p className="text-[#515B6F] mb-6 text-[16px]">
@@ -198,7 +198,7 @@ export default function JobsPageView() {
 
             <button
               onClick={() => {}}
-              className="bg-[#4640DE] text-white font-bold text-[15px] px-8 py-4 hover:bg-[#3530C4] transition-colors whitespace-nowrap cursor-pointer"
+              className="bg-[#4640DE] text-white font-semibold text-[15px] px-8 py-4 hover:bg-[#3530C4] transition-colors whitespace-nowrap cursor-pointer"
             >
               Search Jobs
             </button>
@@ -310,7 +310,7 @@ export default function JobsPageView() {
                 <div className="w-16 h-16 bg-[#4640DE]/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Search className="w-8 h-8 text-[#4640DE]" />
                 </div>
-                <h3 className="font-bold text-[20px] text-[#25324B] mb-2">No jobs found</h3>
+                <h3 className="font-semibold text-[20px] text-[#25324B] mb-2">No jobs found</h3>
                 <p className="text-[#515B6F]">Try adjusting your search or filters</p>
                 <button
                   onClick={clearFilters}

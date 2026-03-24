@@ -72,7 +72,7 @@ export default function DashboardNotFound() {
           {/* Title */}
           <motion.h1
             variants={itemVariants}
-            className="text-2xl md:text-2xl lg:text-3xl font-bold text-primary tracking-tight"
+            className="text-2xl md:text-2xl lg:text-3xl font-semibold text-primary tracking-tight"
           >
             {lastSegment
               ? `${lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1)}`

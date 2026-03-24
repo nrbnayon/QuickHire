@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
               priority
             />
           </div>
-          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">Privacy Policy</h1>
+          <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">Privacy Policy</h1>
           <p className="text-lg text-secondary">Last updated: {new Date().toLocaleDateString()}</p>
         </div>
 

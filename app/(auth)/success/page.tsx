@@ -30,7 +30,7 @@ export default function SuccessPage() {
           </div>
 
           <div className="space-y-4">
-            <h1 className="text-3xl sm:text-4xl font-bold text-primary">Congratulations!</h1>
+            <h1 className="text-3xl sm:text-4xl font-semibold text-primary">Congratulations!</h1>
             <p className="text-lg sm:text-xl text-secondary max-w-sm mx-auto">
               Your account has been created successfully. Log in to explore more.
             </p>

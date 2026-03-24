@@ -235,7 +235,7 @@ export default function ProfileClient() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">
+          <h1 className="text-2xl font-semibold text-foreground">
             Welcome {user.name}!
           </h1>
           <p className="text-sm text-secondary mt-1">
@@ -282,7 +282,7 @@ export default function ProfileClient() {
             />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-foreground">{user.name}</h2>
+            <h2 className="text-2xl font-semibold text-foreground">{user.name}</h2>
             <p className="text-sm text-secondary">
               Update your username and manage your account
             </p>
