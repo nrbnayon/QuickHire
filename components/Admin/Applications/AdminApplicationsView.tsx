@@ -91,6 +91,7 @@ function ApplicationDetailModal({
           )}
 
           <button
+            type="button"
             onClick={onClose}
             className="mt-2 w-full border-2 border-[#D6DDEB] text-[#515B6F] font-semibold py-3 hover:border-[#4640DE] hover:text-[#4640DE] transition-colors"
           >
@@ -141,7 +142,7 @@ export default function AdminApplicationsView() {
           className="flex-1 bg-transparent border-none outline-none text-[14px] text-[#25324B] placeholder:text-[#7C8493]/70"
         />
         {search && (
-          <button onClick={() => setSearch("")} className="text-[#7C8493] hover:text-[#25324B]">
+          <button type="button" onClick={() => setSearch("")} className="text-[#7C8493] hover:text-[#25324B]">
             <X className="w-4 h-4" />
           </button>
         )}
@@ -230,6 +231,7 @@ export default function AdminApplicationsView() {
         {totalPages > 1 && !isLoading && (
           <div className="flex items-center justify-center gap-2 py-5 border-t border-[#D6DDEB]">
             <button
+              type="button"
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
               className="px-4 py-2 border border-[#D6DDEB] bg-white text-[#515B6F] text-[13px] font-semibold hover:border-[#4640DE] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
@@ -238,6 +240,7 @@ export default function AdminApplicationsView() {
             </button>
             {Array.from({ length: Math.min(totalPages, 7) }, (_, idx) => (
               <button
+                type="button"
                 key={idx + 1}
                 onClick={() => setPage(idx + 1)}
                 className={`w-9 h-9 border text-[13px] font-semibold transition-colors ${
@@ -250,6 +253,7 @@ export default function AdminApplicationsView() {
               </button>
             ))}
             <button
+              type="button"
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
               className="px-4 py-2 border border-[#D6DDEB] bg-white text-[#515B6F] text-[13px] font-semibold hover:border-[#4640DE] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"

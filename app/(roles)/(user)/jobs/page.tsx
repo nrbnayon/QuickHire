@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import JobsPageView from "@/components/Landing/JobsPageView";
 
 export const metadata = {
@@ -6,5 +7,9 @@ export const metadata = {
 };
 
 export default function JobsPage() {
-  return <JobsPageView />;
+  return (
+    <Suspense fallback={<div className="p-8">Loading jobs...</div>}>
+      <JobsPageView />
+    </Suspense>
+  );
 }
