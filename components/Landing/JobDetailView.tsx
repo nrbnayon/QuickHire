@@ -130,7 +130,7 @@ function ApplyModal({
             {/* Name */}
             <div>
               <label className="block text-[14px] font-semibold text-[#25324B] mb-2">
-                Full Name *
+                Full Name <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -147,7 +147,7 @@ function ApplyModal({
             {/* Email */}
             <div>
               <label className="block text-[14px] font-semibold text-[#25324B] mb-2">
-                Email Address *
+                Email Address <span className="text-red-500">*</span>
               </label>
               <input
                 type="email"
@@ -164,7 +164,7 @@ function ApplyModal({
             {/* Resume URL */}
             <div>
               <label className="block text-[14px] font-semibold text-[#25324B] mb-2">
-                Resume Link (URL) *
+                Resume Link (URL) <span className="text-red-500">*</span>
               </label>
               <input
                 type="url"
@@ -197,7 +197,7 @@ function ApplyModal({
             {/* Cover Note */}
             <div>
               <label className="block text-[14px] font-semibold text-[#25324B] mb-2">
-                Cover Note *
+                Cover Note <span className="text-red-500">*</span>
               </label>
               <textarea
                 value={form.coverNote}
@@ -217,14 +217,14 @@ function ApplyModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 border-2 border-[#D6DDEB] text-[#515B6F] font-semibold py-3 hover:border-[#4640DE] hover:text-[#4640DE] transition-colors"
+                className="flex-1 border-2 border-[#D6DDEB] text-[#515B6F] font-semibold py-3 hover:border-[#4640DE] hover:text-[#4640DE] transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={isLoading}
-                className="flex-1 bg-[#4640DE] text-white font-semibold py-3 hover:bg-[#3530C4] transition-colors flex items-center justify-center gap-2 disabled:opacity-70"
+                className="flex-1 bg-[#4640DE] text-white font-semibold py-3 hover:bg-[#3530C4] transition-colors flex items-center justify-center gap-2 disabled:opacity-70 cursor-pointer"
               >
                 {isLoading ? (
                   <>
@@ -404,7 +404,7 @@ export default function JobDetailView({ id }: { id: string }) {
 
               <button
                 onClick={() => setShowApply(true)}
-                className="mt-6 w-full sm:w-auto bg-[#4640DE] text-white font-semibold text-[16px] px-10 py-4 hover:bg-[#3530C4] transition-colors flex items-center justify-center gap-2"
+                className="mt-6 w-full sm:w-auto bg-[#4640DE] text-white font-semibold text-[16px] px-10 py-4 hover:bg-[#3530C4] transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 Apply Now <Send className="w-4 h-4" />
               </button>
@@ -454,7 +454,7 @@ export default function JobDetailView({ id }: { id: string }) {
 
               <button
                 onClick={() => setShowApply(true)}
-                className="w-full sm:w-auto self-start bg-[#4640DE] text-white font-semibold text-[15px] px-8 py-3.5 hover:bg-[#3530C4] transition-colors flex items-center gap-2"
+                className="w-full sm:w-auto self-start bg-[#4640DE] text-white font-semibold text-[15px] px-8 py-3.5 hover:bg-[#3530C4] transition-colors flex items-center gap-2 cursor-pointer"
               >
                 Apply Now <Send className="w-4 h-4" />
               </button>
@@ -506,7 +506,7 @@ export default function JobDetailView({ id }: { id: string }) {
               </p>
               <button
                 onClick={() => setShowApply(true)}
-                className="w-full bg-white text-[#4640DE] font-semibold py-3 hover:bg-[#F8F8FD] transition-colors text-[15px]"
+                className="w-full bg-white text-[#4640DE] font-semibold py-3 hover:bg-[#F8F8FD] transition-colors text-[15px] cursor-pointer"
               >
                 Apply Now
               </button>

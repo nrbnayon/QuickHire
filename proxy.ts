@@ -257,14 +257,15 @@ function applySecurityHeaders(
       "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
-      "img-src 'self' data: blob: https:",
-      "connect-src 'self' https:",
+      "img-src 'self' data: blob: https: http://localhost:5000 res.cloudinary.com",
+      "connect-src 'self' https: http://localhost:5000",
       "media-src 'self'",
       "object-src 'none'",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",
-      "upgrade-insecure-requests",
+      // Commented out to allow local HTTP calls without forcing HTTPS
+      // "upgrade-insecure-requests",
     ].join("; "),
   );
 

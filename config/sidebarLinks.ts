@@ -2,6 +2,7 @@ import type React from "react";
 import type { IconSvgElement } from "@hugeicons/react";
 import {
 	Bell,
+	FileText,
 	List,
 	ShieldCheck,
 } from "lucide-react";
@@ -37,6 +38,12 @@ export const sidebarLinks: SidebarLink[] = [
 		label: "Job Management",
 		href: "/admin/jobs",
 		icon: PackageAddIcon,
+		roles: ["admin"],
+	},
+	{
+		label: "Applications",
+		href: "/admin/applications",
+		icon: FileText,
 		roles: ["admin"],
 	},
 	{
