@@ -28,6 +28,7 @@ export default function HeroSection() {
           width={650}
           height={700}
           className="hidden lg:block h-full w-auto object-cover object-left opacity-90"
+          style={{ width: "auto" }}
           priority
         />
       </div>
@@ -40,9 +41,16 @@ export default function HeroSection() {
               Discover<br />more than<br />
               <span className="text-[#26A4FF] relative inline-block pb-4">
                 5000+ Jobs
-                <div className="absolute -bottom-1 left-0 w-full mt-2">
-                  <Image src="/images/hero-wave.svg" alt="" width={380} height={20} className="w-full h-auto" />
-                </div>
+                <span className="absolute top-[80%] left-0 w-full mt-1">
+                  <Image
+                    src="/images/hero-wave.svg"
+                    alt=""
+                    width={380}
+                    height={20}
+                    className="w-full h-auto"
+                    style={{ height: "auto" }}
+                  />
+                </span>
               </span>
             </h1>
           </FadeUp>

@@ -1,4 +1,3 @@
-@import url('https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -8,7 +7,7 @@
 @theme inline {
   --color-background:              var(--background);
   --color-foreground:              var(--foreground);
-  --font-clash:                    "Clash Display", sans-serif;
+  --font-clash:                    var(--font-clash-display), "Clash Display", sans-serif;
   --font-sans:                     var(--font-inter);
   --font-mono:                     var(--font-geist-mono);
 

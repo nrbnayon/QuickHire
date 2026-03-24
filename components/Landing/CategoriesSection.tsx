@@ -90,7 +90,7 @@ export default function CategoriesSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Link href="#" className="flex items-center gap-2 text-[#4640DE] font-semibold text-[15px] hover:gap-3 transition-all duration-200 whitespace-nowrap">
+            <Link href="/jobs" className="flex items-center gap-2 text-[#4640DE] font-semibold text-[15px] hover:gap-3 transition-all duration-200 whitespace-nowrap">
               Show all jobs <ArrowRight className="w-5 h-5" />
             </Link>
           </motion.div>

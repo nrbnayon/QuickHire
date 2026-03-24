@@ -1,10 +1,38 @@
 // app\layout.tsx
 import type { Metadata, Viewport } from "next";
 import { Epilogue, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Toaster } from "sonner";
 import StoreProvider from "@/redux/StoreProvider";
+
+const clashDisplay = localFont({
+  src: [
+    {
+      path: "./fonts/ClashDisplay-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/ClashDisplay-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "./fonts/ClashDisplay-Semibold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "./fonts/ClashDisplay-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-clash-display",
+  display: "swap",
+});
 
 const epilogue = Epilogue({
   variable: "--font-inter",
@@ -96,43 +124,44 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
+import Script from "next/script";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: process.env.NEXT_PUBLIC_APP_NAME || "Your App",
+    applicationCategory: "Dashboard Management System",
+    operatingSystem: "Web",
+    description:
+      "Streamline your workflow with our intuitive admin panel. Manage users, monitor analytics, and customize settings with ease. Empower your team to make data-driven decisions and optimize performance. Experience the future of administration today.",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5",
+      ratingCount: "1",
+    },
+  };
+
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "SoftwareApplication",
-              name: process.env.NEXT_PUBLIC_APP_NAME || "Your App",
-              applicationCategory: "Dashboard Management System",
-              operatingSystem: "Web",
-              description:
-                "Streamline your workflow with our intuitive admin panel. Manage users, monitor analytics, and customize settings with ease. Empower your team to make data-driven decisions and optimize performance. Experience the future of administration today.",
-              offers: {
-                "@type": "Offer",
-                price: "0",
-                priceCurrency: "USD",
-              },
-              aggregateRating: {
-                "@type": "AggregateRating",
-                ratingValue: "5",
-                ratingCount: "1",
-              },
-            }),
-          }}
-        />
-      </head>
       <body
-        className={`${epilogue.variable} ${geistMono.variable} antialiased bg-background font-sans`}
+        className={`${epilogue.variable} ${geistMono.variable} ${clashDisplay.variable} antialiased bg-background font-sans`}
         suppressHydrationWarning
       >
+        <Script
+          id="json-ld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

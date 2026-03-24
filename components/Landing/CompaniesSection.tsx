@@ -1,55 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const companies = [
-  {
-    name: "Vodafone",
-    svg: (
-      <svg viewBox="0 0 120 40" className="h-8 w-auto" fill="none">
-        <circle cx="20" cy="20" r="14" fill="#E60000" />
-        <path d="M14 16 Q20 26 26 16" stroke="white" strokeWidth="3" strokeLinecap="round" fill="none" />
-        <text x="38" y="26" fontFamily="sans-serif" fontWeight="700" fontSize="16" fill="#25324B">vodafone</text>
-      </svg>
-    ),
-  },
-  {
-    name: "Intel",
-    svg: (
-      <svg viewBox="0 0 80 40" className="h-8 w-auto" fill="none">
-        <text x="4" y="28" fontFamily="sans-serif" fontWeight="700" fontSize="20" fill="#0071C5">intel.</text>
-      </svg>
-    ),
-  },
-  {
-    name: "Tesla",
-    svg: (
-      <svg viewBox="0 0 100 40" className="h-8 w-auto" fill="none">
-        <text x="4" y="28" fontFamily="sans-serif" fontWeight="700" fontSize="18" letterSpacing="6" fill="#CC0000">TESLA</text>
-      </svg>
-    ),
-  },
-  {
-    name: "AMD",
-    svg: (
-      <svg viewBox="0 0 70 40" className="h-8 w-auto" fill="none">
-        <text x="4" y="28" fontFamily="sans-serif" fontWeight="900" fontSize="20" fill="#ED1C24">AMD</text>
-      </svg>
-    ),
-  },
-  {
-    name: "Talkit",
-    svg: (
-      <svg viewBox="0 0 90 40" className="h-8 w-auto" fill="none">
-        <text x="4" y="28" fontFamily="sans-serif" fontWeight="700" fontSize="20" fill="#25324B">Talkit</text>
-      </svg>
-    ),
-  },
+  { name: "Vodafone", src: "/images/vodafone-c1.png" },
+  { name: "Intel", src: "/images/intel-c2.png" },
+  { name: "Tesla", src: "/images/tesla-c3.png" },
+  { name: "AMD", src: "/images/amd-c4.png" },
+  { name: "Talkit", src: "/images/talkit-c5.png" },
 ];
 
 export default function CompaniesSection() {
   return (
-    <section className="bg-white py-12 px-5 sm:px-8 lg:px-[124px]">
+    <section className="bg-white py-12 px-5 sm:px-8 lg:px-[124px] overflow-hidden">
       <div className="max-w-[1240px] mx-auto">
         <motion.p
           initial={{ opacity: 0, y: 16 }}
@@ -60,19 +24,40 @@ export default function CompaniesSection() {
         >
           Companies we helped grow
         </motion.p>
-        <div className="flex flex-wrap items-center justify-between gap-8 sm:gap-12">
-          {companies.map((company, i) => (
+        
+        {/* Marquee Container with fade edge masks */}
+        <div className="relative w-full">
+          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10" />
+          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10" />
+          
+          <div className="flex overflow-hidden">
             <motion.div
-              key={company.name}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="opacity-30 hover:opacity-80 grayscale hover:grayscale-0 transition-all duration-300 cursor-pointer"
+              initial={{ x: 0 }}
+              animate={{ x: "-50%" }}
+              transition={{
+                duration: 25,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              className="flex items-center gap-16 sm:gap-24 whitespace-nowrap"
             >
-              {company.svg}
+              {/* Double the list for seamless loop */}
+              {[...companies, ...companies].map((company, i) => (
+                <div
+                  key={i}
+                  className="flex items-center justify-center min-w-[120px] opacity-100 transition-all duration-300"
+                >
+                  <Image
+                    src={company.src}
+                    alt={company.name}
+                    width={140}
+                    height={48}
+                    className="h-8 w-auto object-contain"
+                  />
+                </div>
+              ))}
             </motion.div>
-          ))}
+          </div>
         </div>
       </div>
     </section>

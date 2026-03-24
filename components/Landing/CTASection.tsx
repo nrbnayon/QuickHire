@@ -41,6 +41,7 @@ export default function CTASection() {
                   src="/images/Dashboard-Company.png"
                   alt="Dashboard Preview"
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-contain object-left-top scale-110 lg:scale-125 translate-x-10 lg:translate-x-20 pt-10"
                 />
              </div>
