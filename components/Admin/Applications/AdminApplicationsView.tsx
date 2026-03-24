@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Search, Mail, FileText, X, ChevronRight, ExternalLink, Loader2 } from "lucide-react";
 import { useGetApplicationsQuery } from "@/redux/services/applicationApi";
 import { TableSkeleton } from "@/components/Skeleton/TableSkeleton";
+import DashboardHeader from "@/components/Shared/DashboardHeader";
 
 function ApplicationDetailModal({
   app,
@@ -122,21 +123,15 @@ export default function AdminApplicationsView() {
     : applications;
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* Page Header */}
-      <div className="flex items-start justify-between">
-        <div>
-          <h1 className="font-semibold text-[24px] sm:text-[28px] text-[#25324B]">
-            Applications
-          </h1>
-          <p className="text-[#515B6F] text-[14px] mt-1">
-            {total} total applications received
-          </p>
-        </div>
-      </div>
+    <div className="flex flex-col flex-1 h-full bg-[#F5F6FA] dark:bg-background overflow-y-auto">
+      <DashboardHeader 
+        title="Applications" 
+        description={`${total} total applications received`}
+      />
 
-      {/* Search */}
-      <div className="bg-white border border-[#D6DDEB] flex items-center gap-3 px-4 py-3 max-w-[380px]">
+      <main className="p-5 md:p-8 flex flex-col gap-6">
+        {/* Search */}
+        <div className="bg-white border border-[#D6DDEB] flex items-center gap-3 px-4 py-3 max-w-[380px]">
         <Search className="w-4 h-4 text-[#7C8493] shrink-0" />
         <input
           type="text"
@@ -264,6 +259,7 @@ export default function AdminApplicationsView() {
           </div>
         )}
       </div>
+      </main>
 
       {selectedApp && (
         <ApplicationDetailModal app={selectedApp} onClose={() => setSelectedApp(null)} />

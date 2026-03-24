@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { useGetJobQuery } from "@/redux/services/jobApi";
 import { useSubmitApplicationMutation } from "@/redux/services/applicationApi";
+import { useAppliedJobs } from "@/hooks/useAppliedJobs";
 import JobCard from "./JobCard";
 
 interface ApplyForm {
@@ -33,11 +34,13 @@ function ApplyModal({
   jobTitle,
   company,
   onClose,
+  onSuccess,
 }: {
   jobId: string;
   jobTitle: string;
   company: string;
   onClose: () => void;
+  onSuccess: () => void;
 }) {
   const [form, setForm] = useState<ApplyForm>({
     name: "",
@@ -79,6 +82,7 @@ function ApplyModal({
         portfolio: form.portfolio || undefined,
       }).unwrap();
       setSubmitted(true);
+      onSuccess();
     } catch (err: any) {
       const msg =
         err?.data?.message ||
@@ -275,6 +279,7 @@ function DetailSkeleton() {
 export default function JobDetailView({ id }: { id: string }) {
   const { data: job, isLoading, isError } = useGetJobQuery(id);
   const [showApply, setShowApply] = useState(false);
+  const { hasApplied, markApplied } = useAppliedJobs();
 
   if (isLoading) {
     return (
@@ -321,6 +326,8 @@ export default function JobDetailView({ id }: { id: string }) {
       </div>
     );
   }
+
+  const isApplied = hasApplied(job.id || (job as any)._id);
 
   return (
     <div className="min-h-screen bg-[#F8F8FD]">
@@ -402,12 +409,22 @@ export default function JobDetailView({ id }: { id: string }) {
                 </div>
               </div>
 
-              <button
-                onClick={() => setShowApply(true)}
-                className="mt-6 w-full sm:w-auto bg-[#4640DE] text-white font-semibold text-[16px] px-10 py-4 hover:bg-[#3530C4] transition-colors flex items-center justify-center gap-2 cursor-pointer"
-              >
-                Apply Now <Send className="w-4 h-4" />
-              </button>
+              {/* Apply Button Under Header */}
+              {isApplied ? (
+                <button
+                  disabled
+                  className="mt-6 w-full sm:w-auto bg-[#56CDAD] text-white font-semibold text-[16px] px-10 py-4 flex items-center justify-center gap-2 cursor-not-allowed opacity-90"
+                >
+                  Already Applied <CheckCircle2 className="w-5 h-5" />
+                </button>
+              ) : (
+                <button
+                  onClick={() => setShowApply(true)}
+                  className="mt-6 w-full sm:w-auto bg-[#4640DE] text-white font-semibold text-[16px] px-10 py-4 hover:bg-[#3530C4] transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  Apply Now <Send className="w-4 h-4" />
+                </button>
+              )}
             </motion.div>
 
             {/* Description */}
@@ -452,12 +469,22 @@ export default function JobDetailView({ id }: { id: string }) {
                 </div>
               )}
 
-              <button
-                onClick={() => setShowApply(true)}
-                className="w-full sm:w-auto self-start bg-[#4640DE] text-white font-semibold text-[15px] px-8 py-3.5 hover:bg-[#3530C4] transition-colors flex items-center gap-2 cursor-pointer"
-              >
-                Apply Now <Send className="w-4 h-4" />
-              </button>
+              {/* Apply Button Under Body */}
+              {isApplied ? (
+                <button
+                  disabled
+                  className="w-full sm:w-auto self-start bg-[#56CDAD] text-white font-semibold text-[15px] px-8 py-3.5 flex items-center gap-2 cursor-not-allowed opacity-90"
+                >
+                  Already Applied <CheckCircle2 className="w-5 h-5" />
+                </button>
+              ) : (
+                <button
+                  onClick={() => setShowApply(true)}
+                  className="w-full sm:w-auto self-start bg-[#4640DE] text-white font-semibold text-[15px] px-8 py-3.5 hover:bg-[#3530C4] transition-colors flex items-center gap-2 cursor-pointer"
+                >
+                  Apply Now <Send className="w-4 h-4" />
+                </button>
+              )}
             </motion.div>
           </div>
 
@@ -504,12 +531,21 @@ export default function JobDetailView({ id }: { id: string }) {
               <p className="text-white/70 text-[14px] mb-5">
                 Submit your application now to be considered.
               </p>
-              <button
-                onClick={() => setShowApply(true)}
-                className="w-full bg-white text-[#4640DE] font-semibold py-3 hover:bg-[#F8F8FD] transition-colors text-[15px] cursor-pointer"
-              >
-                Apply Now
-              </button>
+              {isApplied ? (
+                <button
+                  disabled
+                  className="w-full bg-[#56CDAD] text-white font-semibold py-3 flex justify-center items-center gap-2 cursor-not-allowed opacity-90"
+                >
+                  Applied <CheckCircle2 className="w-4 h-4" />
+                </button>
+              ) : (
+                <button
+                  onClick={() => setShowApply(true)}
+                  className="w-full bg-white text-[#4640DE] font-semibold py-3 hover:bg-[#F8F8FD] transition-colors text-[15px] cursor-pointer"
+                >
+                  Apply Now
+                </button>
+              )}
             </motion.div>
           </div>
         </div>
@@ -521,6 +557,7 @@ export default function JobDetailView({ id }: { id: string }) {
           jobTitle={job.title}
           company={job.company}
           onClose={() => setShowApply(false)}
+          onSuccess={() => markApplied(job.id || (job as any)._id)}
         />
       )}
     </div>
