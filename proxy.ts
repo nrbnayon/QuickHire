@@ -181,7 +181,7 @@ const ROLE_ROUTES: Record<Role, string[]> = {
 
 /** After signin, each role lands here */
 const ROLE_DEFAULT_PATHS: Record<Role, string> = {
-  [ROLES.ADMIN]: "/admin",
+  [ROLES.ADMIN]: "/admin/dashboard",
   [ROLES.USER]: "/", //[ROLES.USER]: "/user",
 };
 

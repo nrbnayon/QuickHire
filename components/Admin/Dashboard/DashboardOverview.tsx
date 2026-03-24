@@ -102,39 +102,77 @@ export default function DashboardOverview() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="lg:col-span-2 bg-white dark:bg-card border border-[#D6DDEB] rounded-2xl p-7 shadow-sm flex flex-col gap-6"
+            className="lg:col-span-2 bg-gradient-to-br from-white via-[#FAFBFF] to-[#F5F6FA] dark:from-card dark:via-card dark:to-card border border-[#D6DDEB]/60 rounded-3xl p-8 shadow-md hover:shadow-lg transition-all duration-300 flex flex-col gap-6 relative overflow-hidden"
           >
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="font-clash font-semibold text-[18px] text-[#25324B]">Job Posting Volume</h3>
-                <p className="text-[13px] text-[#7C8493]">Real-time trajectory of new job listings</p>
+            {/* Decorative gradient background */}
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-[#4640DE] to-[#56CDAD] rounded-full opacity-5 blur-3xl" />
+            
+            <div className="flex items-center justify-between relative z-10">
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <h3 className="font-clash font-bold text-[22px] bg-gradient-to-r from-[#25324B] to-[#4640DE] bg-clip-text text-transparent">Job Posting Volume</h3>
+                  <span className="px-2.5 py-1 bg-gradient-to-r from-[#4640DE]/10 to-[#56CDAD]/10 text-[11px] font-semibold text-[#4640DE] rounded-full uppercase tracking-wide">Live</span>
+                </div>
+                <p className="text-[13px] text-[#7C8493] font-medium">Real-time trajectory of new job listings across all departments</p>
               </div>
-              <div className="flex items-center gap-2">
-                <button className="p-2 border border-[#D6DDEB] rounded-lg hover:bg-[#F8F8FD] transition-colors">
-                  <Calendar className="w-4 h-4 text-[#7C8493]" />
+              <div className="flex items-center gap-3 ml-4 hidden">
+                <button className="p-3 bg-gradient-to-br from-[#4640DE]/10 to-[#56CDAD]/10 border border-[#4640DE]/20 rounded-xl hover:from-[#4640DE]/15 hover:to-[#56CDAD]/15 transition-all duration-200 hover:shadow-md hover:scale-105">
+                  <Calendar className="w-5 h-5 text-[#4640DE]" />
                 </button>
               </div>
             </div>
 
-            <div className="h-[300px] w-full">
+            <div className="h-[320px] w-full relative z-10">
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={trendData}>
+                <AreaChart data={trendData} margin={{ top: 10, right: 20, left: -10, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#4640DE" stopOpacity={0.1}/>
+                      <stop offset="5%" stopColor="#4640DE" stopOpacity={0.25}/>
+                      <stop offset="50%" stopColor="#56CDAD" stopOpacity={0.08}/>
                       <stop offset="95%" stopColor="#4640DE" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F5F6FA" />
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "#7C8493" }} dy={10} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "#7C8493" }} />
+                  <CartesianGrid strokeDasharray="4 4" vertical={false} stroke="#E5E7EB" opacity={0.3} />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "#7C8493", fontWeight: 500 }} dy={12} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "#7C8493", fontWeight: 500 }} />
                   <Tooltip 
-                    contentStyle={{ borderRadius: "12px", border: "none", boxShadow: "0 10px 40px rgba(0,0,0,0.1)" }}
-                    itemStyle={{ color: "#4640DE", fontWeight: "bold" }}
+                    contentStyle={{ 
+                      borderRadius: "16px", 
+                      border: "2px solid #4640DE",
+                      backgroundColor: "#ffffff",
+                      boxShadow: "0 20px 60px rgba(70, 64, 222, 0.2)",
+                      padding: "12px 16px"
+                    }}
+                    itemStyle={{ color: "#4640DE", fontWeight: "bold", fontSize: "14px" }}
+                    labelStyle={{ color: "#25324B", fontWeight: "bold", fontSize: "13px" }}
                   />
-                  <Area type="monotone" dataKey="count" stroke="#4640DE" strokeWidth={3} fillOpacity={1} fill="url(#colorCount)" />
+                  <Area 
+                    type="natural" 
+                    dataKey="count" 
+                    stroke="#4640DE" 
+                    strokeWidth={3.5}
+                    fillOpacity={1} 
+                    fill="url(#colorCount)"
+                    isAnimationActive={true}
+                    animationDuration={800}
+                  />
                 </AreaChart>
               </ResponsiveContainer>
+            </div>
+
+            {/* Bottom stats pill */}
+            <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-[#4640DE]/5 to-[#56CDAD]/5 border border-[#4640DE]/10 rounded-xl relative z-10">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-[#4640DE]" />
+                <span className="text-[13px] font-semibold text-[#25324B]">Trend:</span>
+              </div>
+              <span className="text-[13px] font-bold text-[#4640DE]">
+                {trendData.length > 1 
+                  ? trendData[trendData.length - 1]?.count > trendData[0]?.count 
+                    ? "↑ Increasing"
+                    : "↓ Decreasing"
+                  : "—"}
+              </span>
             </div>
           </motion.div>
 

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
-import { Home, ArrowLeft } from "lucide-react";
+import { Home,  Layout } from "lucide-react";
 
 export default function DashboardNotFound() {
   const pathname = usePathname();
@@ -110,11 +110,11 @@ export default function DashboardNotFound() {
             className="border-2 hover:bg-gray-50 transition-all duration-300"
           >
             <Link
-              href="javascript:history.back()"
+               href="/"
               className="flex items-center gap-2 hover:text-foreground bg-gray hover:bg-gray-50 transition-all duration-300"
             >
-              <ArrowLeft className="w-4 h-4 hover:text-foreground" />
-              Go Back
+              <Home className="w-4 h-4 hover:text-foreground" />
+              Go Home
             </Link>
           </Button>
 
@@ -123,8 +123,8 @@ export default function DashboardNotFound() {
             size="lg"
             className="bg-primary! hover:bg-primary/80! text-white shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <Link href="/dashboard" className="flex items-center gap-2">
-              <Home className="w-4 h-4" />
+            <Link href="/admin/dashboard" className="flex items-center gap-2">
+              <Layout className="w-4 h-4" />
               Go to Dashboard
             </Link>
           </Button>
