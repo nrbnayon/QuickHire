@@ -17,12 +17,13 @@ const badgeStyles: Record<BadgeVariant, string> = {
 interface JobCardProps {
   job: Job;
   variant?: "grid" | "list";
+  shadow?: boolean;
 }
 
 export function JobLogo({ job }: { job: Job }) {
   return (
     <div
-      className="w-14 h-14 flex items-center justify-center shrink-0 rounded font-semibold text-[18px]"
+      className="w-14 h-14 flex items-center justify-center shrink-0 rounded font-semibold text-[18px] border-none"
       style={{ backgroundColor: job.logoBg, color: job.logoColor }}
     >
       {job.logo}
@@ -30,30 +31,54 @@ export function JobLogo({ job }: { job: Job }) {
   );
 }
 
-export default function JobCard({ job, variant = "grid" }: JobCardProps) {
+export default function JobCard({ job, variant = "grid", shadow = false }: JobCardProps) {
   if (variant === "list") {
     return (
       <Link
         href={`/jobs/${job.id}`}
-        className="flex items-center gap-5 py-5 border-b border-[#D6DDEB] first:border-t hover:bg-white hover:px-3 hover:-mx-3 transition-all duration-200 cursor-pointer group"
+        className={`flex items-start gap-6 p-6 transition-all duration-300 cursor-pointer group bg-white border border-white hover:border-[#4640DE] active:scale-[0.98] ${
+          shadow ? "shadow-[0_2px_18px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_32px_rgba(70,64,222,0.08)]" : ""
+        }`}
       >
+        {/* Logo Left */}
         <JobLogo job={job} />
-        <div className="flex-1 min-w-0">
-          <p className="font-semibold text-[16px] text-[#25324B] mb-1 group-hover:text-[#4640DE] transition-colors truncate">
+
+        {/* Content Right */}
+        <div className="flex-1 min-w-0 flex flex-col gap-2">
+          {/* Title */}
+          <h3 className="font-semibold text-[18px] sm:text-[20px] text-[#25324B] group-hover:text-[#4640DE] transition-colors truncate leading-tight">
             {job.title}
-          </p>
-          <div className="flex items-center flex-wrap gap-2 text-[13px] text-[#7C8493]">
-            <span>{job.company}</span>
-            <span>•</span>
-            <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{job.location}</span>
-            <span className={`px-2.5 py-0.5 border text-[11px] font-semibold rounded-full ${badgeStyles[job.type]}`}>
+          </h3>
+
+          {/* Metadata Row */}
+          <div className="flex items-center gap-2 text-[15px] sm:text-[16px] text-[#7C8493] font-medium mb-1">
+            <span className="truncate">{job.company}</span>
+            <span className="w-1 h-1 rounded-full bg-[#D6DDEB] shrink-0" />
+            <span className="truncate">{job.location}</span>
+          </div>
+
+          {/* Badges Row */}
+          <div className="flex flex-wrap gap-2 pt-1">
+            {/* Employment Type Badge */}
+            <span className={`px-4 py-1.5 border text-[12px] font-semibold rounded-full ${badgeStyles[job.type]}`}>
               {job.type}
             </span>
+            <div className="w-[1px] h-4 bg-[#D6DDEB] self-center mx-1" />
+            {/* Tags Badges (from job.tags) */}
+            {job.tags.slice(0, 2).map((tag, idx) => (
+              <span
+                key={tag}
+                className={`px-4 py-1.5 border text-[12px] font-semibold rounded-full ${
+                  idx === 0
+                    ? "text-[#FFB836] border-[#FFB836] bg-[#FFB836]/10" // Marketing style
+                    : "text-[#4640DE] border-[#4640DE] bg-[#4640DE]/10" // Design style
+                }`}
+              >
+                {tag}
+              </span>
+            ))}
           </div>
         </div>
-        <span className="text-[#4640DE] font-semibold text-[13px] whitespace-nowrap hover:text-[#3530C4] flex items-center gap-1 shrink-0">
-          Apply <ArrowRight className="w-3.5 h-3.5" />
-        </span>
       </Link>
     );
   }
@@ -68,7 +93,7 @@ export default function JobCard({ job, variant = "grid" }: JobCardProps) {
           style={{ backgroundColor: job.logoBg, color: job.logoColor }}>
           {job.logo}
         </div>
-        <span className={`text-[13px] font-semibold px-3 py-1.5 rounded-full border-2 ${badgeStyles[job.type]}`}>
+        <span className={`text-[13px] font-semibold px-3 py-1.5 rounded-xs border ${badgeStyles[job.type]}`}>
           {job.type}
         </span>
       </div>
