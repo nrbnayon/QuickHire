@@ -39,7 +39,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative bg-[#F8F8FD] overflow-hidden w-full min-h-[700px] lg:h-[794px] mx-auto">
+    <section className="relative bg-[#F8F8FD] overflow-hidden w-full min-h-[700px] lg:h-[794px] mx-auto 2xl:max-w-[1440px]">
 
       {/* ── 1. Background geometric SVG pattern ── */}
       <div className="absolute inset-0 pointer-events-none z-0">

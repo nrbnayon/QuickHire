@@ -154,12 +154,14 @@ export default function DashboardOverview() {
                 <PieChart>
                   <Pie
                     data={categoryData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={80}
-                    paddingAngle={5}
+                    innerRadius={50}
+                    outerRadius={100}
+                    paddingAngle={4}
+                    startAngle={-90}
+                    cornerRadius={4}
+                    endAngle={270}
                     dataKey="value"
+                    stroke="none"
                   >
                     {categoryData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

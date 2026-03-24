@@ -317,6 +317,26 @@ export default function AdminJobModal({ isOpen, onClose, mode: initialMode, job,
                       </select>
                     )}
                   </div>
+
+                  {/* Featured */}
+                  <div className="space-y-1.5 md:col-span-2">
+                    <label className="text-[14px] font-semibold text-[#25324B]">Featured Listing</label>
+                    {mode === "view" ? (
+                      <p className="text-[15px] text-[#515B6F] p-3 border-b border-[#D6DDEB]/50">
+                        {form.featured ? "Yes" : "No"}
+                      </p>
+                    ) : (
+                      <label className="flex items-center justify-between px-4 py-3 bg-[#F8F8FD] border border-[#D6DDEB] rounded-lg cursor-pointer">
+                        <span className="text-[14px] text-[#25324B] font-medium">Show this job in featured sections</span>
+                        <input
+                          type="checkbox"
+                          checked={Boolean(form.featured)}
+                          onChange={(e) => setForm({ ...form, featured: e.target.checked })}
+                          className="w-4 h-4 accent-[#4640DE] cursor-pointer"
+                        />
+                      </label>
+                    )}
+                  </div>
                 </div>
               </div>
 
