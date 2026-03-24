@@ -75,6 +75,14 @@ export default function PublicNavbar() {
           <div className="hidden md:flex items-center gap-4">
             {isAuthenticated ? (
               <>
+                {role === "admin" && (
+                  <Link
+                    href="/admin/dashboard"
+                    className="font-bold text-[14px] text-[#4640DE] bg-[#4640DE]/10 px-4 py-2 rounded-lg hover:bg-[#4640DE]/20 transition-all mr-2"
+                  >
+                    Dashboard
+                  </Link>
+                )}
                 <Link href="/profile" className="flex items-center gap-2.5 group">
                   <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-[#D6DDEB] group-hover:border-[#4640DE] transition-colors relative bg-[#F8F8FD]">
                     <Image src={image || "/images/avatar.png"} alt="Profile" fill className="object-cover" sizes="36px" />
@@ -157,7 +165,16 @@ export default function PublicNavbar() {
                 </Link>
               </div>
             ) : (
-              <div className="pt-4">
+              <div className="pt-4 space-y-2">
+                {role === "admin" && (
+                  <Link
+                    href="/admin/dashboard"
+                    className="block w-full py-3 px-4 font-bold text-[16px] text-white bg-[#4640DE] hover:bg-[#3530C4] text-center rounded transition-all"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Admin Dashboard
+                  </Link>
+                )}
                 <button
                   onClick={() => { setShowLogoutModal(true); setMobileOpen(false); }}
                   className="w-full flex items-center gap-2 text-red-500 font-semibold py-3 px-4 rounded hover:bg-red-50 transition-colors"

@@ -452,17 +452,11 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
   }
 
   // ─────────────────────────────────────────────────────────────────────────
-  //  STEP 6 — Root "/" — role-aware redirect
+  //  STEP 6 — Root "/" — allow public landing access for all
   // ─────────────────────────────────────────────────────────────────────────
   if (pathname === "/") {
-    if (isAuthenticated && isValidRole(userRole)) {
-      const dest = getRoleDefaultPath(userRole);
-      if (dest !== "/" && dest !== "") {
-        devLog("🏠 Root redirect", { to: dest });
-        return redirectTo(dest, request);
-      }
-    }
-    return allow(); // landing / marketing page or user dashboard switch
+    devLog("🏠 Root path — allowing landing access");
+    return allow();
   }
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -492,14 +486,14 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
   // 9a. Not authenticated →  /signin?redirect=<original path>
   if (!isAuthenticated) {
     const dest = encodeURIComponent(pathname + search);
-    devLog("🔒 Not authenticated — redirecting to  /signin", { pathname });
-    return redirectTo(` /signin?redirect=${dest}`, request);
+    devLog("🔒 Not authenticated — redirecting to /signin", { pathname });
+    return redirectTo(`/signin?redirect=${dest}`, request);
   }
 
   // 9b. Authenticated but role cookie absent or unrecognized
   if (!userRole || !isValidRole(userRole)) {
     devLog("⚠️  Invalid or missing role cookie", { userRole });
-    return redirectTo(" /signin?error=missing_role", request);
+    return redirectTo("/signin?error=missing_role", request);
   }
 
   // 9c. Universal protected routes — any valid role
